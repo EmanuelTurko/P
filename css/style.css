@@ -240,12 +240,12 @@ button {
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .nav-link.show,
 .navbar-light .navbar-nav .show>.nav-link {
-    color: #f76d37;
+    color: #ad8fb9;
 }
 
 .navbar-light .navbar-nav .nav-link:focus,
 .navbar-light .navbar-nav .nav-link:hover {
-    color: #f76d37;
+    color: #ad8fb9;
 }
 
 .navbar {
@@ -328,7 +328,7 @@ button {
 }
 
 .learnmore_bt a:hover {
-    background-color: #f76d37;
+    background-color: #ad8fb9;
     color: #fff;
 }
 
@@ -363,7 +363,7 @@ button {
 #main_slider .carousel-control-prev:focus,
 #main_slider .carousel-control-prev:hover {
     color: #ffffff;
-    background-color: #f76d37;
+    background-color: #ad8fb9;
 }
 
 /* banner section end */
@@ -389,7 +389,7 @@ button {
     width: 100%;
     float: left;
     font-size: 40px;
-    color: #f76d37;
+    color: #ad8fb9;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -451,8 +451,8 @@ button {
     width: 100%;
     float: left;
     text-align: center;
-    font-size: 40px;
-    color: #f76d37;
+    font-size: 80px;
+    color: #ad8fb9;
     font-weight: bold;
 }
 
@@ -538,12 +538,12 @@ img.image {
 }
 
 .seemore_bt a:hover {
-    background-color: #f76d37;
+    background-color: #ad8fb9;
     color: #ffffff;
 }
 
 a:hover {
-    color: #f76d37;
+    color: #ad8fb9;
     text-decoration: underline;
 }
 
@@ -611,7 +611,7 @@ a:hover {
 
 .box_main {
     width: 100%;
-    background-color: #f76d37;
+    background-color: #ad8fb9;
     padding: 40px 30px;
     box-shadow: 0px 0px 18px -6px;
 }
@@ -677,7 +677,7 @@ a:hover {
 
 .readmore_bt a:hover {
     color: #ffffff;
-    background-color: #f76d37;
+    background-color:  #ad8fb9;
 }
 
 /* services section end */
@@ -697,7 +697,7 @@ a:hover {
     width: 100%;
     float: left;
     font-size: 40px;
-    color: #f76d37;
+    color:  #ad8fb9;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
 }
@@ -755,7 +755,7 @@ a:hover {
     width: 100%;
     float: left;
     font-size: 24px;
-    color: #f76d37;
+    color: #ad8fb9;
     text-transform: uppercase;
     padding-left: 100px;
     font-weight: bold;
@@ -792,7 +792,7 @@ a:hover {
 }
 
 .carousel-indicators .active {
-    background-color: #f76d37;
+    background-color: #ad8fb9;
 }
 
 /* client section end */
@@ -813,7 +813,7 @@ a:hover {
     float: left;
     font-size: 40px;
     text-align: center;
-    color: #f76d37;
+    color: #ad8fb9;
     font-weight: bold;
 }
 
@@ -884,7 +884,7 @@ a:hover {
     text-align: center;
     font-size: 16px;
     color: #ffffff;
-    background-color: #d33a11;
+    background-color: #ad8fb9;
     padding: 15px 50px 12px 50px;
     border-radius: 30px;
     display: block;
@@ -892,7 +892,7 @@ a:hover {
 
 .main_bt a {
     color: #ffffff;
-    background-color: #d33a11;
+    background-color: #ad8fb9;
 }
 
 .main_bt a:hover {
@@ -952,7 +952,7 @@ a:hover {
 }
 
 .footer_menu li a:hover {
-    color: #f76d37;
+    color:  #ad8fb9;
 }
 
 .dummy_text {
@@ -984,7 +984,7 @@ a:hover {
 }
 
 .location_text li a:hover {
-    color: #f76d37;
+    color: #ad8fb9;
 }
 
 .padding_left_10 {
@@ -1017,7 +1017,7 @@ a:hover {
 }
 
 .copyright_text a:hover {
-    color: #f76d37;
+    color: #ad8fb9;
 }
 
 
