@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- basic -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <!-- site metas -->
+      <title>SpaceShop</title>
+      <meta name="keywords" content="">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!-- bootstrap css -->
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+      <!-- style css -->
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+      <!-- Responsive-->
+      <link rel="stylesheet" href="css/responsive.css">
+      <!-- fevicon -->
+      <link rel="icon" href="images/fevicon.png" type="image/gif" />
+      <!-- Scrollbar Custom CSS -->
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+      <!-- Tweaks for older IEs-->
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+      <!-- owl stylesheets --> 
+      <link rel="stylesheet" href="css/owl.carousel.min.css">
+      <link rel="stylesheet" href="css/owl.theme.default.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+      <style>
+          body {
+            padding-bottom: 50px; /* Adjust this value as needed */
+         }
+         .footer_section {
+            margin-top: 0px; /* Adjust this value as needed */
+         }
+        </style>
+    </head>
+   <body>
+         <!--header section start -->
+         <div class="header_section">
+            <div class="container-fluid">
+               <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                  <div class="logo"><a href="index.html"><img src="images/logo1.png"></a></div>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                           <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="about.html">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="tours.html">Tours</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="items.html">Browse</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="history.html">Purchase History</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="login.html">Login</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="register.html">Register</a>
+                        </li>
+                        <a class="nav-link" href="cart.html">
+                           <i class="fa fa-rocket" style="color:#ad8fb9;font-size: 32px;" aria-hidden="true"></i>
+                           <span class="cart-badge">0</span>
+                         </a>
+                     </ul>
+                  </div>
+               </nav>
+            </div>
+         </div>
+         <!--header section end -->
+<!-- registration section start -->
+<div class="registration_section layout_padding">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-6 offset-md-3">
+             <div class="registration_form">
+                <h2>Register</h2>
+                <form action="index.html" onsubmit="return validateForm()">
+                   <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="text" class="form-control" id="username" placeholder="Enter your username" oninput="validateUsername()">
+                      <span id="usernameError" class="error"></span>
+                   </div>
+                   <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control" id="password" placeholder="Enter your password" minlength="6" required oninput="validatePassword()">
+                      <span id="passwordError" class="error"></span>
+                   </div>
+                   <button type="submit" class="btn btn-primary">Register</button>
+                   <a href="login.html" class="btn btn-primary">Already Registered?</a>
+                </form>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+ <!-- registration section end -->
+        <!-- footer section start -->
+        <div class="footer_section margin_top90">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <h3 class="useful_text">About</h3>
+                        <p class="footer_text">Explore the wonders of space through captivating tours at SpaceShop, where you can embark on unforgettable journeys and indulge in a remarkable gift shop filled with celestial treasures.</p>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <h1 class="useful_text">Contact Us</h1>
+                        <div class="location_text">
+                            <ul>
+                                <li>
+                                    <a href="https://www.google.com/maps?opi=89978449&rlz=1C1GCEA_enIL1022IL1022&lqi=ChxrZW5uZWR5IHNwYWNlIGNlbnRlciBhZGRyZXNzIgVIAYgBAUjIrwhaIhAAEAEQAhgAGAEYAiIUa2VubmVkeSBzcGFjZSBjZW50ZXKSARNoaXN0b3JpY2FsX2xhbmRtYXJrqgE9EAEyHxABIhsrypXXkBNCR7BMHHQ44m4nN01SgjNqRXgmqM4yGBACIhRrZW5uZWR5IHNwYWNlIGNlbnRlcg&vet=12ahUKEwiOsbyFhMb_AhVFxQIHHbhTAasQ1YkKegQIFBAB..i&cs=1&um=1&ie=UTF-8&fb=1&gl=il&sa=X&geocode=Kf3GZaOVS-eIMd1p-EbyOXOL&daddr=Florida+32899,+United+States">
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i><span class="padding_left_50">   Address: Kennedy Space Center, Florida 32899, United States.</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-phone" aria-hidden="true"></i><span class="padding_left_10">    Call: +1 321-867-5000</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-envelope" aria-hidden="true"></i><span class="padding_left_10">Email: KennedySpaceShop@gmail.com</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <!-- footer section end -->
+          <!-- copyright section start -->
+          <div class="copyright_section">
+             <div class="container">
+                <p class="copyright_text">2023 All Rights Reserved. Design by <a href="https://github.com/EmanuelTurko/">E.Turko & H.Miterany</a></p>
+             </div>
+          </div>
+          <!-- copyright section end -->
+         <!-- Javascript files-->
+         <script src="js/jquery.min.js"></script>
+         <script src="js/popper.min.js"></script>
+         <script src="js/bootstrap.bundle.min.js"></script>
+         <script src="js/jquery-3.0.0.min.js"></script>
+         <script src="js/plugin.js"></script>
+         <!-- sidebar -->
+         <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+         <script src="js/custom.js"></script>   
+         <script src="js/User.js"></script>  
+      </body>
+   </html>

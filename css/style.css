@@ -258,11 +258,6 @@ button {
     font-size: 18px;
     color: #fff;
 }
-
-.logo {
-
-}
-
 /* header section end */
 
 /* banner section start */
@@ -397,7 +392,7 @@ button {
 .about_text {
     width: 100%;
     float: left;
-    font-size: 16px;
+    font-size: 32px;
     color: #f3f3f3;
     margin: 0px;
     padding-top: 10px;
@@ -406,12 +401,20 @@ button {
 .about_text {
     width: 100%;
     float: left;
-    font-size: 16px;
+    font-size: 21px;
     color: #fafafa;
     margin: 0px;
     padding-top: 10px;
 }
-
+.about_section .about_img {
+    text-align: center;
+    margin-top: 140px;
+ }
+ 
+ .about_section .about_img img {
+    width: 500%;
+    max-width: 800px;
+ }
 .read_bt {
     width: 175px;
     float: left;
@@ -459,7 +462,7 @@ button {
 .gallery_text {
     width: 100%;
     float: left;
-    font-size: 16px;
+    font-size: 32px;
     text-align: center;
     margin: 0px;
     padding-top: 20px;
@@ -606,12 +609,11 @@ a:hover {
 }
 
 .box_main:hover {
-    background-color: #ffffff;
+    background-color: #ad8fb9;
 }
 
 .box_main {
     width: 100%;
-    background-color: #ad8fb9;
     padding: 40px 30px;
     box-shadow: 0px 0px 18px -6px;
 }
@@ -629,8 +631,8 @@ a:hover {
 }
 
 .box_main:hover .readmore_bt a {
-    color: #ffffff;
-    background-color: #000;
+    color: #000;
+    background-color: #ffffff;
 }
 
 .services_section_2 {
@@ -668,7 +670,7 @@ a:hover {
     width: 100%;
     float: left;
     font-size: 18px;
-    background-color: #070603;
+    background-color: #ad8fb9;
     color: #ffffff;
     text-align: center;
     padding: 8px;
@@ -677,7 +679,7 @@ a:hover {
 
 .readmore_bt a:hover {
     color: #ffffff;
-    background-color:  #ad8fb9;
+    background-color:  #ffffff;
 }
 
 /* services section end */
@@ -909,15 +911,14 @@ a:hover {
 /* footer section start */
 
 .footer_section {
-    width: 100%;
-    float: left;
     background-color: #000000;
-    height: auto;
     padding: 95px 0px;
 }
-
+.row {
+    display: flex;
+    justify-content: center;
+}
 .useful_text {
-    width: 100%;
     font-size: 24px;
     color: #ffffff;
     margin-bottom: 15px;
@@ -925,47 +926,9 @@ a:hover {
 }
 
 .footer_text {
-    width: 100%;
-    float: left;
     font-size: 14px;
     color: #ffffff;
     margin: 0px;
-}
-
-.footer_menu {
-    width: 100%;
-    float: left;
-}
-
-.footer_menu ul {
-    margin: 0px;
-    padding: 0px;
-}
-
-.footer_menu li {
-    font-size: 14px;
-    color: #ffffff;
-}
-
-.footer_menu li a {
-    color: #ffffff;
-}
-
-.footer_menu li a:hover {
-    color:  #ad8fb9;
-}
-
-.dummy_text {
-    width: 30%;
-    float: left;
-    font-size: 14px;
-    color: #ffffff;
-    margin: 0px;
-}
-
-.location_text {
-    width: 100%;
-    float: left;
 }
 
 .location_text ul {
@@ -986,12 +949,6 @@ a:hover {
 .location_text li a:hover {
     color: #ad8fb9;
 }
-
-.padding_left_10 {
-    padding-left: 10px;
-}
-
-
 /* footer section end */
 
 /* copyright section start */
@@ -1007,13 +964,13 @@ a:hover {
     width: 100%;
     float: left;
     font-size: 16px;
-    color: #252525;
+    color: #4e4e4e;
     text-align: center;
     margin-left: 0px;
 }
 
 .copyright_text a {
-    color: #252525;
+    color: #ad8fb9;
 }
 
 .copyright_text a:hover {
@@ -1026,3 +983,71 @@ a:hover {
 .margin_top90 {
     margin-top: 90px;
 }
+.invalid {
+    border: 1px solid red;
+ }
+ .error {
+    color: red;
+ }
+ /*register / login forms */
+ .login_section {
+    width: 100%;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../images/background.jpg);
+    height: auto;
+    padding-bottom: 100px;
+    background-attachment: fixed;
+}
+
+.login_form {
+    max-width: 300px; /* Adjust this value as needed */
+    width: 60%;
+    padding: -20px;
+}
+
+.registration_section {
+    width: 100%;
+    float: left;
+    background-image: url(../images/background.jpg);
+    height: auto;
+    padding-bottom: 100px;
+    background-attachment: scroll;
+}
+label[for="username"],
+label[for="password"] {
+    color: #ad8fb9;
+}
+
+.btn.btn-primary,
+.login_form .btn.btn-primary {
+    background-color: #ad8fb9;
+    border-color: #ad8fb9;
+}
+
+a.btn-register,
+.login_form a.btn-primary {
+    background-color: #ad8fb9;
+}
+.fa-map-marker {
+    color: red;
+}
+.fa-phone {
+    color: green;
+}
+.fa-envelope {
+    color: yellow;
+}
+/* Cart */
+
+.cart-badge {
+    position: absolute;
+    top: 45px;
+    right: 16px;
+    background-color: #000;
+    color: #ad8fb9;
+    font-size: 9px;
+    padding: 3px 6px;
+    border-radius: 100%;
+  }
