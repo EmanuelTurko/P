@@ -60,23 +60,22 @@ app.post('/register', (req, res) => {
 
 // Handle login form submission
 app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-
-  // Check if the user exists in the database
-  Register.findOne({ username, password })
-    .then((user) => {
-      if (user) {
-        res.redirect('/index.html');
-      } else {
-        res.send('Invalid credentials');
-      }
-    })
-    .catch((error) => {
-      console.error('Error logging in:', error);
-      res.status(500).send('Login failed');
-    });
-});
-
+    const { username, password } = req.body;
+  
+    // Check if the user exists in the database
+    Register.findOne({ username })
+      .then((user) => {
+        if (user && user.password === password) {
+          res.sendStatus(200); // Login successful
+        } else {
+          res.status(401).send('Invalid credentials'); // Login failed
+        }
+      })
+      .catch((error) => {
+        console.error('Error logging in:', error);
+        res.status(500).send('Login failed');
+      });
+  });
 // Serve login.html
 app.get('/login.html', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\login.html'));

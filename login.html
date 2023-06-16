@@ -76,14 +76,14 @@
           <div class="col-md-6 offset-md-3">
              <div class="login_form">
                 <h2 class="login_title">Login</h2>
-                <form action="/login" method="POST">
+                <form onsubmit="return validateForm(event)">
                    <div class="form-group">
                       <label for="username">Username</label>
-                      <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+                      <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
                    </div>
                    <div class="form-group">
                       <label for="password">Password</label>
-                      <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                      <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                    </div>
                    <button type="submit" class="btn btn-primary">Login</button>
                    <a href="register.html" class="btn btn-primary">Still Not Registered?</a>
@@ -92,8 +92,8 @@
           </div>
        </div>
     </div>
- </div>
- <!-- login -->
+</div>
+<!-- login -->
       <!-- footer -->
       <div class="footer_section margin_top90">
         <div class="container">

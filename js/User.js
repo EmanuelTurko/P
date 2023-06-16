@@ -1,4 +1,5 @@
-function validateForm() {
+function validateForm(event) {
+    event.preventDefault(); // Prevent the form from submitting
     var usernameInput = document.getElementById("username");
     var passwordInput = document.getElementById("password");
   
@@ -20,42 +21,36 @@ function validateForm() {
       passwordInput.classList.remove("invalid");
       document.getElementById("passwordError").textContent = "";
     }
-  
-    // Create an object with the registration data
-    var registrationData = {
-      username: usernameInput.value,
-      password: passwordInput.value
-    };
-  
-    // Send the registration data to the server
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/register", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          // Registration successful
-          console.log("User registered successfully");
-          // Redirect the user to index.html after successful registration
-          window.location.href = '/index.html';
-        } else if (xhr.readyState === 4 && xhr.status !== 200) {
-          // Registration failed
-          console.error("Error registering user");
-          // You can display an error message to the user or perform any other action here
-        }
-      };
-    xhr.send(JSON.stringify(registrationData));
-  
-    return false; // Prevent the form from submitting
-  }
-  function hideLinksOnRegistration() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('registered') === 'true') {
-      const loginLink = document.querySelector('a[href="login.html"]');
-      const registerLink = document.querySelector('a[href="register.html"]');
-      loginLink.style.display = 'none';
-      registerLink.style.display = 'none';
-    }
-  }
-  
-  // Call the function to hide links on registration
-  hideLinksOnRegistration();
+// Create an object with the login data
+var loginData = {
+    username: usernameInput.value,
+    password: passwordInput.value
+  };
+
+   // Send the login data to the server using the Fetch API
+   fetch("/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(loginData)
+  })
+    .then(function(response) {
+      if (response.ok) {
+        // Login successful
+        window.location.href = "/index.html";
+      } else {
+        // Login failed
+        return response.text().then(function(error) {
+          throw new Error(error);
+        });
+      }
+    })
+    .catch(function(error) {
+      alert("Login failed: " + error.message);
+    });
+}
+
+// Attach the event listener to the login form
+var loginForm = document.getElementById("loginForm");
+loginForm.addEventListener("submit", validateForm);
