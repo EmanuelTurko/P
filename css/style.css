@@ -1003,7 +1003,14 @@ a:hover {
     padding-bottom: 100px;
     background-attachment: fixed;
 }
-
+.login_title{
+    width: 100%;
+    float: left;
+    font-size: 40px;
+    color: #ad8fb9;
+    font-weight: bold;
+    text-transform: uppercase; 
+}
 .login_form {
     max-width: 300px; 
     width: 60%;
