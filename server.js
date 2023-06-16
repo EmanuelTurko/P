@@ -58,7 +58,7 @@ app.post('/register', (req, res) => {
     });
 });
 
-// Handle login form submission
+/// Handle login form submission
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
   
@@ -66,9 +66,9 @@ app.post('/login', (req, res) => {
     Register.findOne({ username })
       .then((user) => {
         if (user && user.password === password) {
-          res.sendStatus(200); // Login successful
+          res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\index.html'));
         } else {
-          res.status(401).send('Invalid credentials'); // Login failed
+          res.status(200).send('Invalid username or password');
         }
       })
       .catch((error) => {
@@ -76,10 +76,10 @@ app.post('/login', (req, res) => {
         res.status(500).send('Login failed');
       });
   });
-// Serve login.html
-app.get('/login.html', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\login.html'));
-});
+  // Serve login.html
+  app.get('/login.html', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\login.html'));
+  });
 
 // Start the server
 app.listen(port, () => {
