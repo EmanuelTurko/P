@@ -8,7 +8,7 @@ const path = require('path');
 
 // Connect to MongoDB
 mongoose
-  .connect('mongodb://localhost:27017/Customer', { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect('mongodb://127.0.0.1:27017/Customer', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
   })
@@ -36,7 +36,7 @@ app.use(express.static(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matal
 
 // Set the default route to redirect to index.html
 app.get('/', (req, res) => {
-  res.redirect('/index.html');
+    res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\index.html'));
 });
 
 // Handle registration form submission
@@ -47,14 +47,39 @@ app.post('/register', (req, res) => {
   const newUser = new Register({ username, password });
 
   // Save the new user document to the "register" collection
-  newUser.save()
+  newUser
+    .save()
     .then(() => {
-      res.send('Registration successful');
+      res.redirect('/index.html?registered=true');
     })
     .catch((error) => {
       console.error('Error registering user:', error);
       res.status(500).send('Registration failed');
     });
+});
+
+// Handle login form submission
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Check if the user exists in the database
+  Register.findOne({ username, password })
+    .then((user) => {
+      if (user) {
+        res.redirect('/index.html');
+      } else {
+        res.send('Invalid credentials');
+      }
+    })
+    .catch((error) => {
+      console.error('Error logging in:', error);
+      res.status(500).send('Login failed');
+    });
+});
+
+// Serve login.html
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\login.html'));
 });
 
 // Start the server

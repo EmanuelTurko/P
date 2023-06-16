@@ -31,18 +31,31 @@ function validateForm() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/register", true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        // Registration successful
-        console.log("User registered successfully");
-        // You can redirect the user to a success page or perform any other action here
-      } else if (xhr.readyState === 4 && xhr.status !== 200) {
-        // Registration failed
-        console.error("Error registering user");
-        // You can display an error message to the user or perform any other action here
-      }
-    };
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Registration successful
+          console.log("User registered successfully");
+          // Redirect the user to index.html after successful registration
+          window.location.href = '/index.html';
+        } else if (xhr.readyState === 4 && xhr.status !== 200) {
+          // Registration failed
+          console.error("Error registering user");
+          // You can display an error message to the user or perform any other action here
+        }
+      };
     xhr.send(JSON.stringify(registrationData));
   
     return false; // Prevent the form from submitting
   }
+  function hideLinksOnRegistration() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('registered') === 'true') {
+      const loginLink = document.querySelector('a[href="login.html"]');
+      const registerLink = document.querySelector('a[href="register.html"]');
+      loginLink.style.display = 'none';
+      registerLink.style.display = 'none';
+    }
+  }
+  
+  // Call the function to hide links on registration
+  hideLinksOnRegistration();
