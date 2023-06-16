@@ -167,13 +167,13 @@ $(function () {
 			highlight: function ( element, errorClass, validClass ) {
 				$( element ).parents( ".col-md-4, .col-md-12" ).addClass( "has-error" ).removeClass( "has-success" );
 			},
-			unhighlight: function (element, errorClass, validClass) {
+			un-highlight: function (element, errorClass, validClass) {
 				$( element ).parents( ".col-md-4, .col-md-12" ).addClass( "has-success" ).removeClass( "has-error" );
 			}
 		} );
 	});
 	
-	/* heroslider
+	/* hero slider
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 	
 	var swiper = new Swiper('.heroslider', {
