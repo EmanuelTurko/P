@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const app = express();
 const port = 3000;
@@ -32,11 +33,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Serve static files from the 'public' directory
-app.use(express.static(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P')));
+app.use(express.static(path.resolve(__dirname, 'public')));
+
+// Configure session middleware
+app.use(
+  session({
+    secret: 'your-secret-key',
+    resave: true,
+    saveUninitialized: true
+  })
+);
 
 // Set the default route to redirect to index.html
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\index.html'));
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
 // Handle registration form submission
@@ -58,28 +68,37 @@ app.post('/register', (req, res) => {
     });
 });
 
-/// Handle login form submission
+// Handle login form submission
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-  
-    // Check if the user exists in the database
-    Register.findOne({ username })
-      .then((user) => {
-        if (user && user.password === password) {
-          res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\index.html'));
-        } else {
-          res.status(200).send('Invalid username or password');
-        }
-      })
-      .catch((error) => {
-        console.error('Error logging in:', error);
-        res.status(500).send('Login failed');
-      });
+  const { username, password } = req.body;
+
+  // Check if the user exists in the database
+  Register.findOne({ username })
+    .then((user) => {
+      if (user && user.password === password) {
+        // Set the username in the session
+        req.session.username = username;
+        res.redirect('/index.html');
+      } else {
+        res.status(401).send('Invalid username or password');
+      }
+    })
+    .catch((error) => {
+      console.error('Error logging in:', error);
+      res.status(500).send('Login failed');
+    });
+});
+
+// Handle logout
+app.get('/logout', (req, res) => {
+  // Destroy the session
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error logging out:', err);
+    }
+    res.redirect('/login.html');
   });
-  // Serve login.html
-  app.get('/login.html', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\login.html'));
-  });
+});
 
 // Start the server
 app.listen(port, () => {
