@@ -15,7 +15,6 @@
 
 @import url(animate.min.css);
 @import url(normalize.css);
-@import url(icomoon.css);
 @import url(css/font-awesome.min.css);
 @import url(meanmenu.css);
 @import url(owl.carousel.min.css);
@@ -272,7 +271,7 @@ button {
     background-repeat: no-repeat;
 }
 
-.banner_taital {
+.banner_title {
     width: 100%;
     float: left;
     padding: 100px 0px;
@@ -374,13 +373,13 @@ button {
     background-attachment: fixed;
 }
 
-.about_taital_main {
+.about_title_main {
     width: 100%;
     float: left;
     padding: 120px 0px;
 }
 
-.about_taital {
+.about_title {
     width: 100%;
     float: left;
     font-size: 40px;
@@ -450,7 +449,7 @@ button {
     background-attachment: fixed;
 }
 
-.gallery_taital {
+.gallery_title{
     width: 100%;
     float: left;
     text-align: center;
@@ -523,14 +522,14 @@ img.image {
     text-align: center;
 }
 
-.seemore_bt {
+.see-more_bt {
     width: 170px;
     margin: 0 auto;
     text-align: center;
     display: flex;
 }
 
-.seemore_bt a {
+.see-more_bt a {
     width: 100%;
     text-align: center;
     font-size: 18px;
@@ -540,7 +539,7 @@ img.image {
     margin-top: 40px;
 }
 
-.seemore_bt a:hover {
+.see-more_bt a:hover {
     background-color: #ad8fb9;
     color: #ffffff;
 }
@@ -563,7 +562,7 @@ a:hover {
     background-attachment: fixed;
 }
 
-.services_taital {
+.services_title {
     width: 100%;
     float: left;
     font-size: 40px;
@@ -657,7 +656,7 @@ a:hover {
     text-align: center;
 }
 
-.readmore_bt {
+.read-more_bt {
     width: 175px;
     padding-top: 40px;
     margin: 0 auto;
@@ -666,7 +665,7 @@ a:hover {
     padding-bottom: 40px;
 }
 
-.readmore_bt a {
+.read-more_bt a {
     width: 100%;
     float: left;
     font-size: 18px;
@@ -677,7 +676,7 @@ a:hover {
     text-transform: uppercase;
 }
 
-.readmore_bt a:hover {
+.read-more_bt a:hover {
     color: #ffffff;
     background-color:  #ffffff;
 }
@@ -695,7 +694,7 @@ a:hover {
     background-attachment: fixed;
 }
 
-.client_taital {
+.client_title {
     width: 100%;
     float: left;
     font-size: 40px;
@@ -1002,7 +1001,7 @@ a:hover {
 }
 
 .login_form {
-    max-width: 300px; /* Adjust this value as needed */
+    max-width: 300px; 
     width: 60%;
     padding: -20px;
 }

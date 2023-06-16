@@ -560,7 +560,7 @@
 
     var ARROW_RIGHT_KEYCODE = 39; // KeyboardEvent.which value for right arrow key
 
-    var TOUCHEVENT_COMPAT_WAIT = 500; // Time for mouse compat events to fire after touch
+    var TOUCH_EVENT_COMPAT_WAIT = 500; // Time for mouse compat events to fire after touch
 
     var Default = {
       interval: 5000,
@@ -770,7 +770,7 @@
 
               _this2.touchTimeout = setTimeout(function (event) {
                 return _this2.cycle(event);
-              }, TOUCHEVENT_COMPAT_WAIT + _this2._config.interval);
+              }, TOUCH_EVENT_COMPAT_WAIT + _this2._config.interval);
             });
           }
         }

@@ -5,12 +5,12 @@
 "use strict";
 	var tpj = jQuery;
 
-	var revapi486;
+	var rev_api486;
 	tpj(document).ready(function () {
 		if (tpj("#rev_slider_486_1").revolution == undefined) {
 			revslider_showDoubleJqueryError("#rev_slider_486_1");
 		} else {
-			revapi486 = tpj("#rev_slider_486_1").show().revolution({
+			rev_api486 = tpj("#rev_slider_486_1").show().revolution({
 				sliderType: "standard",
 				jsFileLocation: "revolution/js/",
 				sliderLayout: "fullscreen",
@@ -23,17 +23,17 @@
 					mouseScrollReverse: "default",
 					onHoverStop: "on",
 					touch: {
-						touchenabled: "on",
+						touchable: "on",
 						swipe_threshold: 75,
 						swipe_min_touches: 1,
 						swipe_direction: "horizontal",
 						drag_block_vertical: false
 					},
 					arrows: {
-						  style: "gyges",
+						  style: "gyres",
 						  enable: true,
-						  hide_onmobile: false,
-						  hide_onleave: true,
+						  hide_mobile: false,
+						  hide_leave: true,
 						  hide_delay: 200,
 						  hide_delay_mobile: 1200,
 						  tmp: '',
@@ -52,10 +52,10 @@
 					  },
 					bullets: {
 						enable: true,
-						hide_onmobile: true,
+						hide_mobile: true,
 						hide_under: 800,
 						style: "hebe",
-						hide_onleave: false,
+						hide_leave: false,
 						direction: "horizontal",
 						h_align: "center",
 						v_align: "bottom",
@@ -67,18 +67,18 @@
 				},
 				viewPort: {
 					enable: true,
-					outof: "pause",
+					out_of: "pause",
 					visible_area: "70%",
-					presize: false
+					pre_size: false
 				},
 				responsiveLevels: [1240, 1024, 778, 480],
 				visibilityLevels: [1240, 1024, 778, 480],
-				gridwidth: [1240, 1024, 778, 480],
-				gridheight: [500, 450, 400, 350],
+				grid_width: [1240, 1024, 778, 480],
+				grid_height: [500, 450, 400, 350],
 				lazyType: "none",
 				parallax: {
 					type: "scroll",
-					origo: "enterpoint",
+					origin: "centerpoint",
 					speed: 400,
 					levels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 46, 47, 48, 49, 50, 55],
 					type: "scroll",
@@ -93,7 +93,7 @@
 				hideThumbsOnMobile: "off",
 				hideSliderAtLimit: 0,
 				hideCaptionAtLimit: 0,
-				hideAllCaptionAtLilmit: 0,
+				hideAllCaptionAtLimit: 0,
 				debugMode: false,
 				fallbacks: {
 					simplifyAll: "off",
