@@ -38,3 +38,34 @@ var configMoon = {
     texturize	:false, 
 }
 load_moon_phases(configMoon,example_1)
+
+function example_2(moon){     
+    var phMax = []
+    for (var nDay in moon.phase){
+        if (moon.phase[nDay].isPhaseLimit){
+            phMax.push(
+                '<div>' +
+                '<span>' + nDay + '</span>' +
+                moon.phase[nDay].svg  +
+                '<div>' + moon.phase[nDay].phaseName  + '</div>' +
+                '</div>' 
+            ) 
+        }
+    }
+    var width = 100 / phMax.length
+    var html = "<b>" + moon.monthName + " "+ moon.year + "</b>"
+    phMax.forEach(function(element){
+        html += '<div style="width:'+width+'%">' + element + '</div>' 
+    })
+    document.getElementById("ex2").innerHTML = html
+}   
+var configMoon = {
+    lang  		:'en', 
+    month 		:new Date().getMonth() + 1,
+    year  		:new Date().getFullYear(),
+    size		:"100%", 
+    lightColor	:"rgb(255,255,230)", 
+    shadeColor	:"transparent", 
+    texturize	:true, 
+}
+load_moon_phases(configMoon,example_2)
