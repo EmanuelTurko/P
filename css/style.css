@@ -16,13 +16,9 @@
 @import url(animate.min.css);
 @import url(normalize.css);
 @import url(css/font-awesome.min.css);
-@import url(meanmenu.css);
 @import url(owl.carousel.min.css);
-@import url(swiper.min.css);
-@import url(slick.css);
 @import url(jquery.fancybox.min.css);
 @import url(jquery-ui.css);
-@import url(nice-select.css);
 
 /*--------------------------------------------------------------------- skeleton ---------------------------------------------------------------------*/
 
@@ -303,11 +299,11 @@ button {
     padding-bottom: 30px;
 }
 
-.learnmore_bt {
+.learn-more_bt {
     width: 170px;
 }
 
-.learnmore_bt a {
+.learn-more_bt a {
     width: 100%;
     float: left;
     padding-right: 0;
@@ -321,7 +317,7 @@ button {
     text-transform: uppercase;
 }
 
-.learnmore_bt a:hover {
+.learn-more_bt a:hover {
     background-color: #ad8fb9;
     color: #fff;
 }
@@ -621,15 +617,15 @@ a:hover {
     color: #000;
 }
 
-.box_main:hover .tation_text {
+.box_main:hover .station_text {
     color: #000;
 }
 
-.box_main:hover .readmore_bt {
+.box_main:hover .read-more_bt {
     display: block;
 }
 
-.box_main:hover .readmore_bt a {
+.box_main:hover .read-more_bt a {
     color: #000;
     background-color: #ffffff;
 }
@@ -648,7 +644,7 @@ a:hover {
     text-align: center;
 }
 
-.tation_text {
+.station_text {
     width: 100%;
     font-size: 14px;
     color: #ffffff;
