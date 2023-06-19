@@ -20,7 +20,7 @@ function updateNavbar() {
 // Check if the user is logged in
 function checkLoggedIn() {
     // Replace this condition with your logic to determine if the user is logged in
-    var isLoggedIn = false; // Example: Set it to true if the user is logged in
+    var isLoggedIn = true; // Example: Set it to true if the user is logged in
     
     if (isLoggedIn) {
       // User is logged in, hide the login and register buttons
