@@ -915,7 +915,7 @@ a:hover {
     display: flex;
     justify-content: center;
     padding: 20px 50px 12px 50px;
-
+/*about + top  right bottom left*/
 }
 .useful_text {
     font-size: 24px;
@@ -1002,7 +1002,7 @@ a:hover {
 .login_title{
     width: 100%;
     float: left;
-    font-size: 40px;
+    font-size: 42px;
     color: #ad8fb9;
     font-weight: bold;
     text-transform: uppercase; 
@@ -1023,6 +1023,7 @@ a:hover {
 }
 label[for="username"],
 label[for="password"] {
+    font-size: 25px;
     color: #ad8fb9;
 }
 
