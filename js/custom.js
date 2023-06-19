@@ -170,10 +170,10 @@ $(function () {
 			un-highlight: function (element, errorClass, validClass) {
 				$( element ).parents( ".col-md-4, .col-md-12" ).addClass( "has-success" ).removeClass( "has-error" );
 			}
-		} );
+		});
 	});
 	
-	/* hero slider
+	/* heroslider
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 	
 	var swiper = new Swiper('.heroslider', {
@@ -342,4 +342,3 @@ $(function () {
 	
 	 
      });
-	});
