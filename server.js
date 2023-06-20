@@ -38,10 +38,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+
 // Serve static files from the 'css' directory
 app.use('/css', express.static(path.join(__dirname, 'css')));
 // Serve static files from the 'images' directory
 app.use('/images', express.static(path.join(__dirname, 'images')));
+// Serve static files from the 'js' directory
+app.use('/js', express.static(path.join(__dirname, 'js')));
+
+// Serve HTML files dynamically
+app.get('/:page.html', (req, res) => {
+  const { page } = req.params;
+  res.sendFile(path.join(__dirname, `${page}.html`));
+});
+
 // Handle registration form submission
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
