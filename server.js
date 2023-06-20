@@ -1,10 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 const port = 3000;
-const path = require('path');
 
 // Connect to MongoDB
 mongoose
@@ -32,13 +32,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Serve static files from the 'public' directory
-app.use(express.static(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Set the default route to redirect to index.html
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
-
+// Serve static files from the 'css' directory
+app.use('/css', express.static(path.join(__dirname, 'css')));
+// Serve static files from the 'images' directory
+app.use('/images', express.static(path.join(__dirname, 'images')));
 // Handle registration form submission
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
@@ -60,37 +63,34 @@ app.post('/register', (req, res) => {
 
 /// Handle login form submission
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-  
-    // Check if the user exists in the database
-    Register.findOne({ username })
-      .then((user) => {
-        if (user && user.password === password) {
-          res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\index.html'));
-        } else {
-          res.status(200).send('Invalid username or password');
-        }
-      })
-      .catch((error) => {
-        console.error('Error logging in:', error);
-        res.status(500).send('Login failed');
-      });
-  });
-  // Serve login.html
-  app.get('/login.html', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'C:\\Users\\Berse\\.vscode\\Matala\\IntApps\\P\\P\\login.html'));
-  });
+  const { username, password } = req.body;
+
+  // Check if the user exists in the database
+  Register.findOne({ username })
+    .then((user) => {
+      if (user && user.password === password) {
+        res.sendFile(path.join(__dirname, 'index.html'));
+      } else {
+        res.status(200).send('Invalid username or password');
+      }
+    })
+    .catch((error) => {
+      console.error('Error logging in:', error);
+      res.status(500).send('Login failed');
+    });
+});
+
+// Serve login.html
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.html'));
+});
+
 // Handle logout
 app.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        console.error('Error logging out:', err);
-        res.sendStatus(500); // Send an error response
-      } else {
-        res.redirect('/login.html'); // Redirect to the login page
-      }
-    });
-  });
+  // Perform any logout logic here
+  res.redirect('/login.html'); // Redirect to the login page
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
