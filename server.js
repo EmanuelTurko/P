@@ -5,11 +5,14 @@ const path = require('path');
 const session = require('express-session');
 const crypto = require('crypto');
 const secret = crypto.randomBytes(64).toString('hex');
+const cookieParser = require('cookie-parser');
+
 
 
 
 const app = express();
 const port = 3000;
+app.use(cookieParser());
 
 // Connect to MongoDB
 mongoose
@@ -101,6 +104,10 @@ app.post('/login', async (req, res) => {
     if (user && user.password === password) {
       // Update the isLoggedIn status to true
       isLoggedIn = true;
+
+      // Set the username as a cookie
+      res.cookie('username', user.name);
+
       res.sendFile(path.join(__dirname, 'index.html'));
     } else {
       res.sendFile(path.join(__dirname, 'login.html'));

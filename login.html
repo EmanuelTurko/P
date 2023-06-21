@@ -28,48 +28,50 @@
        }
        </style>
     </head>
-   <body>
+    <body onload="pageLoaded()">
      <!--header-->
 <div class="header_section">
     <div class="container-fluid">
-       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div class="logo">
-             <a href="index.html">
-                <img src="images/logo1.png">
-             </a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-             <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                   <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                   <a class="nav-link" href="about.html">About Us</a>
-                </li>
-                <li class="nav-item">
-                   <a class="nav-link" href="tours.html">Tours</a>
-                </li>
-                <li class="nav-item">
-                   <a class="nav-link" href="items.html">Browse</a>
-                </li>
-                <li class="nav-item">
-                   <a class="nav-link" href="history.html">Purchase History</a>
-                </li>
-                <li class="nav-item">
-                   <a class="nav-link" href="login.html">Login</a>
-                </li>
-                <li class="nav-item">
-                   <a class="nav-link" href="register.html">Register</a>
-                </li>
-                <a class="nav-link" href="cart.html">
-                   <i class="fa fa-rocket" style="color:#ad8fb9;font-size: 32px;" aria-hidden="true"></i>
-                   <span class="cart-badge">0</span>
-                </a>
-             </ul>
-          </div>
+      <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light" hidden>
+         <div class="logo">
+           <a href="index.html">
+             <img src="images/logo1.png">
+           </a>
+         </div>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarNav">
+           <ul class="navbar-nav ml-auto">
+             <li class="nav-item active">
+               <a class="nav-link" href="index.html">Home</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="about.html">About Us</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="tours.html">Tours</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="items.html">Browse</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="history.html">Purchase History</a>
+             </li>
+             <li class="nav-item" id="logout" style="display: none;">
+              <a class="nav-link" href="#" id="logout-link">Logout</a>
+            </li>
+             <li class="nav-item" id="login">
+               <a class="nav-link" href="login.html">Login</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="cart.html">
+                 <i class="fa fa-rocket" style="color:#ad8fb9;font-size: 32px;" aria-hidden="true"></i>
+                 <span class="cart-badge" >0</span>
+               </a>
+             </li>
+           </ul>
+         </div>
        </nav>
     </div>
  </div>
