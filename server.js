@@ -119,7 +119,6 @@ app.get('/api/login-status', (req, res) => {
 // Handle logout request
 app.post('/logout', (req, res) => {
   // Clear the session
-  console.log('Logout request received');
   req.session.destroy((err) => {
     if (err) {
       console.error('Error clearing session:', err);
@@ -127,10 +126,12 @@ app.post('/logout', (req, res) => {
     } else {
       // Update the isLoggedIn status to false
       isLoggedIn = false;
+      console.log('Session cleared successfully'); // Add this line
       res.sendStatus(200);
     }
   });
 });
+
 
 // Start the server
 app.listen(port, () => {
