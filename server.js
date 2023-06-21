@@ -2,13 +2,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
+const session = require('express-session');
+const crypto = require('crypto');
+const secret = crypto.randomBytes(64).toString('hex');
+
+
 
 const app = express();
 const port = 3000;
 
 // Connect to MongoDB
 mongoose
-  .connect('mongodb://127.0.0.1:27017/Customer', { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect('mongodb://127.0.0.1:27017/Users', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
   })
@@ -18,12 +23,25 @@ mongoose
 
 // Define a schema for the "register" collection
 const registerSchema = new mongoose.Schema({
-  username: String,
-  password: String
+  name: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  }
 });
 
 // Create a model for the "register" collection
-const Register = mongoose.model('register', registerSchema);
+const Register = mongoose.model('users', registerSchema);
+
+// Set up session middleware
+app.use(session({
+  secret: secret,
+  resave: false,
+  saveUninitialized: true
+}));
 
 // Parse URL-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,8 +59,10 @@ app.get('/', (req, res) => {
 
 // Serve static files from the 'css' directory
 app.use('/css', express.static(path.join(__dirname, 'css')));
+
 // Serve static files from the 'images' directory
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
 // Serve static files from the 'js' directory
 app.use('/js', express.static(path.join(__dirname, 'js')));
 
@@ -53,52 +73,63 @@ app.get('/:page.html', (req, res) => {
 });
 
 // Handle registration form submission
-app.post('/register', (req, res) => {
-  const { username, password } = req.body;
+app.post('/register', async (req, res) => {
+  const { name, password } = req.body;
 
   // Create a new document using the Register model
-  const newUser = new Register({ username, password });
+  const newUser = new Register({ name, password });
 
   // Save the new user document to the "register" collection
-  newUser
-    .save()
-    .then(() => {
-      res.redirect('/index.html?registered=true');
-    })
-    .catch((error) => {
-      console.error('Error registering user:', error);
-      res.status(500).send('Registration failed');
-    });
+  try {
+    await newUser.save();
+    res.redirect('/index.html');
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).send('Registration failed');
+  }
 });
 
-/// Handle login form submission
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
+// Set the initial isLoggedIn status to false
+let isLoggedIn = false;
 
-  // Check if the user exists in the database
-  Register.findOne({ username })
-    .then((user) => {
-      if (user && user.password === password) {
-        res.sendFile(path.join(__dirname, 'index.html'));
-      } else {
-        res.status(200).send('Invalid username or password');
-      }
-    })
-    .catch((error) => {
-      console.error('Error logging in:', error);
-      res.status(500).send('Login failed');
-    });
+// Handle login form submission
+app.post('/login', async (req, res) => {
+  const { name, password } = req.body;
+
+  try {
+    const user = await Register.findOne({ name });
+    if (user && user.password === password) {
+      // Update the isLoggedIn status to true
+      isLoggedIn = true;
+      res.sendFile(path.join(__dirname, 'index.html'));
+    } else {
+      res.sendFile(path.join(__dirname, 'login.html'));
+    }
+  } catch (error) {
+    console.error('Error logging in:', error);
+    res.sendFile(path.join(__dirname, 'register.html'));
+  }
 });
 
-// Serve login.html
-app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'login.html'));
+// API endpoint to fetch login status
+app.get('/api/login-status', (req, res) => {
+  res.json({ isLoggedIn });
 });
 
-// Handle logout
-app.get('/logout', (req, res) => {
-  // Perform any logout logic here
-  res.redirect('/login.html'); // Redirect to the login page
+// Handle logout request
+app.post('/logout', (req, res) => {
+  // Clear the session
+  console.log('Logout request received');
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error clearing session:', err);
+      res.sendStatus(500);
+    } else {
+      // Update the isLoggedIn status to false
+      isLoggedIn = false;
+      res.sendStatus(200);
+    }
+  });
 });
 
 // Start the server

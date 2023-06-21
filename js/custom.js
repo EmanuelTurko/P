@@ -5,7 +5,7 @@
 $(function () {
 	
 	"use strict";
-	
+
 	/* Preloader
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
 	
@@ -167,7 +167,7 @@ $(function () {
 			highlight: function ( element, errorClass, validClass ) {
 				$( element ).parents( ".col-md-4, .col-md-12" ).addClass( "has-error" ).removeClass( "has-success" );
 			},
-			un-highlight: function (element, errorClass, validClass) {
+			un,highlight: function (element, errorClass, validClass) {
 				$( element ).parents( ".col-md-4, .col-md-12" ).addClass( "has-success" ).removeClass( "has-error" );
 			}
 		});
@@ -342,3 +342,4 @@ $(function () {
 	
 	 
      });
+	})
