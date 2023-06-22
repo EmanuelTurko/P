@@ -27,6 +27,10 @@
         </style>
    </head>
    <body onload="pageLoaded()">
+      <!-- HTML code for the toast notification -->
+<div id="toast" class="toast hide">
+   Item added to cart!
+ </div>
     <!--header-->
 <div class="header_section">
    <div class="container-fluid">
@@ -66,7 +70,7 @@
              <li class="nav-item">
                <a class="nav-link" href="cart.html">
                  <i class="fa fa-rocket" style="color:#ad8fb9;font-size: 32px;" aria-hidden="true"></i>
-                 <span class="cart-badge" >0</span>
+                 <span class="cart-badge">0</span>
                </a>
              </li>
            </ul>
@@ -90,20 +94,26 @@
                      <!-- item 1-->
                      <div class="col-md-4">
                         <div class="container_main">
-                           <img src="images/img1.jpg" alt="Avatar" class="image">
-                           <div class="overlay">
-                              <div class="text"><a href="#"><i class="fa fa-cart-plus"aria-hidden="true"></i></a></div>
-                              </div>
-                           </div>
-                           <div class="item-data">
-                                                               <!---Items will be added here -->
+                          <img src="images/img1.jpg" alt="Avatar" class="image" id="item1" data-item-id="item1">
+                          <div class="overlay">
+                            <div class="text">
+                              <a href="#" onclick="addToCart('item1')">
+                                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                              </a>
+                            </div>
+                          </div>
                         </div>
-                     </div>
+                        <div class="item-data">
+                          <!---Items will be added here -->
+                        </div>
+                      </div>
                      <div class="col-md-4">
                         <div class="container_main">
                            <img src="images/img2.jpg" alt="Avatar" class="image">
                            <div class="overlay">
-                              <div class="text"><a href="#"><i class="fa fa-cart-plus"aria-hidden="true"></i></a></div>
+                              <div class="text">
+                                 <a href="#" onclick="addToCart('item1')">
+                                 <i class="fa fa-cart-plus"aria-hidden="true"></i></a></div>
                            </div>
                         </div>
                         <div class="item-data">
@@ -255,6 +265,7 @@
       <script src="js/custom.js"></script>
       <script src="js/navbar.js"></script>
       <script src="js/logout.js"></script>
+      <script src="js/cart.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script>
          // Fetch item data from the server
@@ -297,7 +308,18 @@
            })
            .catch(error => {
              console.error('Error fetching items:', error);
-           });
-       </script>
+           });</script>
+           <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              const itemImage = document.getElementById('item1');
+              itemImage.addEventListener('click', () => {
+                const itemData = {
+                  // Add the relevant properties of the item
+                  // ...
+                };
+                addToCart(itemData);
+              });
+            });
+          </script>
    </body>
 </html>
