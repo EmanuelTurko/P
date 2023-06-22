@@ -1112,31 +1112,3 @@ a.btn-register,
             color: red;
             font-weight: bold;
         }
-
-        .item-name {
-            color: #ad8fb9;
-            font-size: 32px;
-            /* Add more styles as needed */
-          }
-          .item {
-            color: green;
-            /* Add more styles as needed */
-          }
-          .price-label {
-            font-size: 22px;
-            color: #ad8fb9;
-          }
-          
-          .price-value {
-            font-size: 20px;
-            color: green;
-          }
-          .stock-label {
-            font-size: 22px;
-            color: #ad8fb9;
-          }
-          
-          .stock-value {
-            font-size: 20px;
-            color: green;
-          }
