@@ -10,6 +10,14 @@ function updateNavbar() {
   const logoutLink = document.getElementById('logout');
   const usernameLabel = document.getElementById('username');
 
+  // Display the login error message
+  const urlParams = new URLSearchParams(window.location.search);
+  const errorMessage = urlParams.get('errorMessage');
+  if (errorMessage) {
+    const errorMessageElement = document.getElementById('login-message');
+    errorMessageElement.textContent = errorMessage;
+  }
+
   fetch('/api/login-status')
     .then((response) => response.json())
     .then((data) => {
@@ -20,7 +28,7 @@ function updateNavbar() {
         // Retrieve the username from the cookie
         const username = getCookie('username');
         if (username) {
-          usernameLabel.textContent = 'Welcome back, ' + username + '!';
+          usernameLabel.textContent = 'Welcome, ' + username;
         } else {
           usernameLabel.textContent = '';
         }

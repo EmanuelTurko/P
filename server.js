@@ -108,16 +108,15 @@ app.post('/login', async (req, res) => {
       // Set the username as a cookie
       res.cookie('username', user.name);
 
-      res.sendFile(path.join(__dirname, 'index.html'));
+      res.redirect('/index.html');
     } else {
-      res.sendFile(path.join(__dirname, 'login.html'));
+      res.redirect('/login.html?errorMessage=Invalid%20username%20or%20password');
     }
   } catch (error) {
     console.error('Error logging in:', error);
-    res.sendFile(path.join(__dirname, 'register.html'));
+    res.redirect('/register.html?errorMessage=An%20error%20occurred');
   }
 });
-
 // API endpoint to fetch login status
 app.get('/api/login-status', (req, res) => {
   res.json({ isLoggedIn });
