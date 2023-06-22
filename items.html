@@ -256,7 +256,7 @@
       <script src="js/navbar.js"></script>
       <script src="js/logout.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script>
          // Fetch item data from the server
          fetch('/items')
@@ -271,34 +271,34 @@
                if (itemElement) {
 
                   let stock;
+                  let stock_class = '';
                   if (item.stock > 0) {
-            stock = 'In-Stock';
-          } else if (item.stock === 0) {
-            stock = 'Out-Of-Stock';
-          } else {
-            stock = 'Unknown';
-          }
+                   stock = 'In-Stock';
+                   stock_class = 'in-stock';
+              } else if (item.stock === 0) {
+                 stock = 'Out-Of-Stock';
+                 stock_class = 'out-of-Stock';
+                  } else {
+                 stock = 'Unknown';
+                   }
                  // Populate the item data within the item element
                  itemElement.innerHTML = `
                    <h4 class="item-name">${item.name}</h4>
-                   <p class="item">
-                     <span class="price-label">Price: </span>
-                     <span class="price-value">$${item.price}</span>
-                     </p>
-                     <p class="stock">
-                     <span class="stock-label">Stock: </span>
-                     <span class="stock-value">${stock}</span>
-                     </p>
+                   <p class="item-price">
+                   <span class="price-label">Price:</span>
+                   <span class="price-value">$${item.price}</span>
+                  </p>
+                      <p class="item-stock">
+                     <span class="stock_value ${stock_class}">${stock}</span>
+                   </p>
                    <!-- Add more item data here -->
                  `;
-                 
                }
              });
            })
            .catch(error => {
              console.error('Error fetching items:', error);
            });
-       </script>
-
+       </script>
    </body>
 </html>
