@@ -271,21 +271,24 @@
                if (itemElement) {
 
                   let stock;
-                  let stock_class = '';
                   if (item.stock > 0) {
-                   stock = 'In-Stock';
-                   stock_class = 'in-stock';
-              } else if (item.stock === 0) {
-                 stock = 'Out-Of-Stock';
-                 stock_class = 'out-of-Stock';
-                  } else {
-                 stock = 'Unknown';
-                   }
+            stock = 'In-Stock';
+          } else if (item.stock === 0) {
+            stock = 'Out-Of-Stock';
+          } else {
+            stock = 'Unknown';
+          }
                  // Populate the item data within the item element
                  itemElement.innerHTML = `
-                   <h4>${item.name}</h4>
-                   <p>Price: $${item.price}</p>
-                   <p>Stock: ${stock}</p>
+                   <h4 class="item-name">${item.name}</h4>
+                   <p class="item">
+                     <span class="price-label">Price: </span>
+                     <span class="price-value">$${item.price}</span>
+                     </p>
+                     <p class="stock">
+                     <span class="stock-label">Stock: </span>
+                     <span class="stock-value">${stock}</span>
+                     </p>
                    <!-- Add more item data here -->
                  `;
                  
