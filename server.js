@@ -7,16 +7,13 @@ const crypto = require('crypto');
 const secret = crypto.randomBytes(64).toString('hex');
 const cookieParser = require('cookie-parser');
 
-
-
-
 const app = express();
 const port = 3000;
 app.use(cookieParser());
 
 // Connect to MongoDB
 mongoose
-  .connect('mongodb://127.0.0.1:27017/Users', { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect('mongodb://localhost:27017/Databases', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
   })
@@ -24,8 +21,27 @@ mongoose
     console.error('Error connecting to MongoDB:', error);
   });
 
-// Define a schema for the "register" collection
-const registerSchema = new mongoose.Schema({
+// Define a schema for the "items" collection
+const itemSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  stock: {
+    type: Number,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  }
+});
+
+// Create a model for the "items" collection
+const Item = mongoose.model('Item', itemSchema);
+
+// Define a schema for the "users" collection
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -36,8 +52,8 @@ const registerSchema = new mongoose.Schema({
   }
 });
 
-// Create a model for the "register" collection
-const Register = mongoose.model('users', registerSchema);
+// Create a model for the "users" collection
+const User = mongoose.model('User', userSchema);
 
 // Set up session middleware
 app.use(session({
@@ -79,10 +95,10 @@ app.get('/:page.html', (req, res) => {
 app.post('/register', async (req, res) => {
   const { name, password } = req.body;
 
-  // Create a new document using the Register model
-  const newUser = new Register({ name, password });
+  // Create a new document using the User model
+  const newUser = new User({ name, password });
 
-  // Save the new user document to the "register" collection
+  // Save the new user document to the "users" collection
   try {
     await newUser.save();
     res.redirect('/index.html');
@@ -100,7 +116,7 @@ app.post('/login', async (req, res) => {
   const { name, password } = req.body;
 
   try {
-    const user = await Register.findOne({ name });
+    const user = await User.findOne({ name });
     if (user && user.password === password) {
       // Update the isLoggedIn status to true
       isLoggedIn = true;
@@ -117,6 +133,7 @@ app.post('/login', async (req, res) => {
     res.redirect('/register.html?errorMessage=An%20error%20occurred');
   }
 });
+
 // API endpoint to fetch login status
 app.get('/api/login-status', (req, res) => {
   res.json({ isLoggedIn });
@@ -132,12 +149,22 @@ app.post('/logout', (req, res) => {
     } else {
       // Update the isLoggedIn status to false
       isLoggedIn = false;
-      console.log('Session cleared successfully'); // Add this line
+      console.log('Session cleared successfully');
       res.sendStatus(200);
     }
   });
 });
 
+// API endpoint to get items in the storage
+app.get('/api/items', async (req, res) => {
+  try {
+    const items = await Item.find();
+    res.json(items);
+  } catch (error) {
+    console.error('Error fetching items:', error);
+    res.status(500).json({ error: 'Failed to retrieve items' });
+  }
+});
 
 // Start the server
 app.listen(port, () => {
