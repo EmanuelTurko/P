@@ -21,7 +21,11 @@ function addToCart(itemId) {
           // Update the cart badge
           updateCartBadge();
           showToast(); // Show the toast notification
-          // Perform any other necessary operations with the selectedItem
+
+             // Add the selected item to the cart items
+              const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+             cartItems.push(selectedItem);
+             localStorage.setItem('cartItems', JSON.stringify(cartItems));
           console.log('Item added to cart:', selectedItem);
         } else {
           console.log('Item not found.');

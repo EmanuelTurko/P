@@ -76,18 +76,27 @@
    </div>
 </div>
 <!--header-->
-<!-- login -->
+<!-- CartBody -->
 <div class="login_section layout_padding">
-    <div class="container">
-       <div class="row">
-          <div class="col-md-6 offset-md-3">
-            <div class="about_title">cart</div>
-             </div>
-          </div>
-       </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="about_title">Cart</div>
+        <!-- CartBody -->
+        <table>
+          <thead>
+            <tr>
+              <th>   Item Name</th>
+              <th>        Item Price</th>
+              <th>       Total</th>
+            </tr>
+          </thead>
+          <tbody id="cartItemsTableBody"></tbody>
+        </table>
+      </div>
     </div>
- </div>
- <!-- login-->
+  </div>
+</div>
       <!-- footer -->
       <div class="footer_section margin_top90">
         <div class="container">
@@ -141,5 +150,84 @@
       <script src="js/User.js"></script>  
       <script src="js/navbar.js"></script>
       <script src="js/logout.js"></script>
+      <script src="js/cart.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const cartItemsTableBody = document.getElementById('cartItemsTableBody');
+      
+          // Retrieve the cart items from localStorage
+          const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      
+          // Create a map to store the total quantity of each item
+          const itemQuantityMap = new Map();
+      
+          // Iterate over the cart items and update the item quantity map
+          cartItems.forEach(item => {
+            const { itemId } = item;
+            const quantity = itemQuantityMap.get(itemId) || 0;
+            itemQuantityMap.set(itemId, quantity + 1);
+          });
+      
+          // Iterate over the item quantity map and populate the table rows
+          itemQuantityMap.forEach((quantity, itemId) => {
+            const selectedItem = cartItems.find(item => item.itemId === itemId);
+      
+            // Create a table row for the item
+            const row = document.createElement('tr');
+      
+            // Create table cells for the item details
+            const imageCell = document.createElement('td');
+            const image = document.createElement('img');
+      
+            if (itemId === 'item1') {
+              image.src = 'images/img1.jpg'; // Set the image source for item1
+            } else {
+              image.src = 'images/default.jpg'; // Set a default image source for other items
+            }
+      
+            image.alt = selectedItem.name; // Set the alt attribute to the item name
+            image.style.width = '50px'; // Adjust the width as needed
+            imageCell.appendChild(image);
+            row.appendChild(imageCell);
+      
+            const nameCell = document.createElement('td');
+            nameCell.textContent = selectedItem.name;
+      
+            const priceCell = document.createElement('td');
+            priceCell.textContent = selectedItem.price;
+      
+            const totalAmountCell = document.createElement('td');
+            totalAmountCell.textContent = (selectedItem.price * quantity).toFixed(2);
+      
+            // Append the cells to the row
+            row.appendChild(nameCell);
+            row.appendChild(priceCell);
+            row.appendChild(totalAmountCell);
+      
+            // Append the row to the table body
+            cartItemsTableBody.appendChild(row);
+          });
+      
+          // Calculate the total amount
+          let totalAmount = 0;
+          const totalAmountCells = document.querySelectorAll('#cartItemsTableBody td:last-child');
+          totalAmountCells.forEach(cell => {
+            totalAmount += parseFloat(cell.textContent);
+          });
+      
+          // Create a row for the total amount
+          const totalRow = document.createElement('tr');
+          const totalLabelCell = document.createElement('td');
+          totalLabelCell.textContent = 'Total Amount to Pay:';
+          totalLabelCell.colSpan = 3; // Adjust the colspan to accommodate the additional image column
+          const totalAmountCell = document.createElement('td');
+          totalAmountCell.textContent = totalAmount.toFixed(2);
+          totalRow.appendChild(totalLabelCell);
+          totalRow.appendChild(totalAmountCell);
+      
+          // Append the total row to the table body
+          cartItemsTableBody.appendChild(totalRow);
+        });
+      </script>
    </body>
 </html>
