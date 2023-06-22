@@ -256,6 +256,7 @@
       <script src="js/navbar.js"></script>
       <script src="js/logout.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   
       <script>
          // Fetch item data from the server
          fetch('/items')
@@ -279,17 +280,25 @@
           }
                  // Populate the item data within the item element
                  itemElement.innerHTML = `
-                   <h4>${item.name}</h4>
-                   <p>Price: $${item.price}</p>
-                   <p>Stock: ${stock}</p>
+                   <h4 class="item-name">${item.name}</h4>
+                   <p class="item">
+                     <span class="price-label">Price: </span>
+                     <span class="price-value">$${item.price}</span>
+                     </p>
+                     <p class="stock">
+                     <span class="stock-label">Stock: </span>
+                     <span class="stock-value">${stock}</span>
+                     </p>
                    <!-- Add more item data here -->
                  `;
+                 
                }
              });
            })
            .catch(error => {
              console.error('Error fetching items:', error);
            });
-       </script>   
+       </script>
+
    </body>
 </html>
