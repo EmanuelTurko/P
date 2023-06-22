@@ -139,11 +139,9 @@
                      <div class="col-md-4">
                         <div class="container_main">
                            <img src="images/img5.jpg" alt="Avatar" class="image">
-                           <div class="overlay">
                               <div class="overlay">
                                  <div class="text"><a href="#"><i class="fa fa-cart-plus"aria-hidden="true"></i></a></div>
                               </div>
-                           </div>
                            <div class="item-data">
                               <!---Items will be added here -->
                         </div>
@@ -271,7 +269,14 @@
                const itemElement = itemElements[index];
                if (itemElement) {
 
-                  const stock = item.stock > 0 ? 'In-Stock' : item.stock;
+                  let stock;
+                  if (item.stock > 0) {
+            stock = 'In-Stock';
+          } else if (item.stock === 0) {
+            stock = 'Out-Of-Stock';
+          } else {
+            stock = 'Unknown';
+          }
                  // Populate the item data within the item element
                  itemElement.innerHTML = `
                    <h4>${item.name}</h4>
