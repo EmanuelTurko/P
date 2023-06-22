@@ -239,7 +239,7 @@ button {
 }
 
 .navbar-light .navbar-nav .nav-link:focus,
-.navbar-light .navbar-nav .nav-link:hover {
+.navbar-light .navbar-nav .nav-link:hover  {
     color: #ad8fb9;
 }
 
@@ -1124,49 +1124,84 @@ a.btn-register,
             font-size: 22px;
             font-weight: bold;
             text-align: center;
-
-          }
-          
+          }      
           .price-value {
             color: green;
             font-size: 20px;
             font-weight: bold;
             text-align: center;
           }
-
   .stock_value.in-stock {
     text-align: center;
     color: green;
     font-size: 25px;
     font-weight: bold;
-
-
   }
-  
   .stock_value.out-of-Stock {
     text-align: center;
     color: red;
     font-size: 25px;
     font-weight:bold;
-
 }
-.toast {
-    position: fixed;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    border-radius: 5px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-  }
-  
-  .hide {
-    display: none;
-  }
-  
-  .show {
-    opacity: 1;
-  }
+/*about_history*/
+.about_history{
+        width: 100%;
+        float: center;
+        font-size: 30px;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase; 
+}
+.history-link{
+width: 100%;
+float: center;
+font-size: 30px;
+color: white;
+font-weight: bold;
+text-transform: uppercase; 
+}
+
+ /*admin / admin forms */
+ .admin_section {
+    width: 100%;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../images/background.jpg);
+    height: auto;
+    padding-bottom: 100px;
+    background-attachment: fixed;
+}
+.admin_title{
+    width: 100%;
+    float:  left;
+    font-size: 40px;
+    color: #ad8fb9;
+    font-weight: bold;
+    text-transform: uppercase; 
+    
+}
+.admin_form {
+    display:inline;
+    justify-content: center;
+    max-width: 300px; 
+    width: 60%;
+    padding: -20px;
+}
+label[for="Item"],
+label[for="stocks"],
+label[for="price"],
+label[for="itemId"]
+{
+    color: #ad8fb9;
+}
+.form-admin:focus {
+    border-color: #ffffff !important;
+    box-shadow: 0 0 0 .1rem rgba(255, 255, 255, .25);
+}
+.navbar-admin input {
+    border: none !important;
+}
+.history-link:hover{
+    color: #ad8fb9;
+}

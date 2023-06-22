@@ -18,6 +18,7 @@
       <link rel="stylesheet" href="css/owl.carousel.min.css">
       <link rel="stylesheet" href="css/owl.theme.default.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <style>
         body {
           padding-bottom: 50px;
@@ -28,14 +29,13 @@
        </style>
     </head>
     <body onload="pageLoaded()">
-       <!--header-->
+     <!--header-->
 <div class="header_section">
-   <div class="container-fluid">
+    <div class="container-fluid">
       <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light" hidden>
          <div class="logo">
            <a href="index.html">
              <img src="images/logo1.png">
-             <span id="username"></span>
            </a>
          </div>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,23 +73,42 @@
            </ul>
          </div>
        </nav>
-   </div>
-</div>
-<!--header-->
-<!-- login -->
-<div class="login_section layout_padding">
-    <div class="container">
-       <div class="row">
-          <div class="col-md-6 offset-md-3">
-            <div class="about_title">Purchase History</div>
-             </div>
-          </div>
-          <div class="about_history">dont have PURCHASE HISTORY</div>
-          <a class="history-link" href="items.html">click here</a>
-       </div>
     </div>
  </div>
- <!-- login-->
+ <!--header-->
+<!-- login -->
+<div class="admin_section layout_padding">
+      <div class="row">
+          <div class="admin_form">
+            <h2 class="admin_title">admin</h2>
+            <form id="admin_Form" action="/login" method="post">
+              <div class="form-group">
+                <div id="admin-message" style="color:red;font-size: 18px;"></div>
+                <label for="Item">add Item</label>
+                <input type="text" class="form-admin" id="Item" name="Item" placeholder="name Item" required>
+              </div>
+              <div class="form-group">
+                <label for="stocks">stocks</label>
+                <input type="number" class="form-admin" id="stocks" name="stocks" placeholder="number stock" required>
+              </div>
+              <div class="form-group">
+                <label for="price">price</label>
+                <input type="price" class="form-admin" id="price" name="price" placeholder="price" required>
+              </div>
+              <div class="form-group">
+                <label for="itemId">stocks</label>
+                <input type="id" class="form-admin" id="itemId" name="itemId" placeholder="itemId" required>
+              </div>
+              <button type="submit" class="btn btn-primary">add</button>
+              <a href="register.html" class="btn btn-primary">Still Not</a>
+            </form>
+            <div id="admin-message"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  <!-- login -->
       <!-- footer -->
       <div class="footer_section margin_top90">
         <div class="container">
@@ -137,7 +156,8 @@
       <script src="js/bootstrap.bundle.min.js"></script>
       <script src="js/jquery-3.0.0.min.js"></script>
       <script src="js/plugin.js"></script>
-      <!-- sidebar -->
+      <script src="js/login.js"></script>
+            <!-- sidebar -->
       <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
       <script src="js/custom.js"></script>   
       <script src="js/navbar.js"></script>
