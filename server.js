@@ -52,22 +52,23 @@ const itemSchema = new mongoose.Schema({
   }
 });
 
-// Serve the items page
-app.get('/items.html', async (req, res) => {
+
+// Create a model for the "items" collection
+const Item = mongoose.model('Item', itemSchema);
+
+
+app.get('/items', async (req, res) => {
   try {
     // Fetch the items from the database
     const items = await Item.find();
 
-    // Render the items.ejs template and pass the items data
-    res.render('items', { items });
+    // Send the items as JSON response to the client
+    res.json(items);
   } catch (error) {
     console.error('Error fetching items:', error);
     res.status(500).send('Internal Server Error');
   }
 });
-// Create a model for the "items" collection
-const Item = mongoose.model('Item', itemSchema);
-
 // Set up session middleware
 app.use(session({
   secret: secret,
