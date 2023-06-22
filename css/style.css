@@ -1112,3 +1112,40 @@ a.btn-register,
             color: red;
             font-weight: bold;
         }
+        .item-name {
+            text-align: center;
+            color: #ad8fb9;
+            font-size: 42px;
+            font-weight: bold;
+          }
+          .price-label {
+            color: #ad8fb9;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+
+          }
+          
+          .price-value {
+            color: green;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+          }
+
+  .stock_value.in-stock {
+    text-align: center;
+    color: green;
+    font-size: 25px;
+    font-weight: bold;
+
+
+  }
+  
+  .stock_value.out-of-Stock {
+    text-align: center;
+    color: red;
+    font-size: 25px;
+    font-weight: bold;
+
+  }
