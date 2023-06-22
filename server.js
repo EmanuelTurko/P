@@ -13,13 +13,28 @@ app.use(cookieParser());
 
 // Connect to MongoDB
 mongoose
-  .connect('mongodb://localhost:27017/Databases', { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect('mongodb://127.0.0.1:27017/spaceshop', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
   })
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
   });
+
+// Define a schema for the "register" collection
+const registerSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  }
+});
+
+// Create a model for the "register" collection
+const Register = mongoose.model('users', registerSchema);
 
 // Define a schema for the "items" collection
 const itemSchema = new mongoose.Schema({
@@ -37,23 +52,21 @@ const itemSchema = new mongoose.Schema({
   }
 });
 
-// Create a model for the "items" collection
-const Item = mongoose.model('Item', itemSchema);
+// Serve the items page
+app.get('/items.html', async (req, res) => {
+  try {
+    // Fetch the items from the database
+    const items = await Item.find();
 
-// Define a schema for the "users" collection
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
+    // Render the items.ejs template and pass the items data
+    res.render('items', { items });
+  } catch (error) {
+    console.error('Error fetching items:', error);
+    res.status(500).send('Internal Server Error');
   }
 });
-
-// Create a model for the "users" collection
-const User = mongoose.model('User', userSchema);
+// Create a model for the "items" collection
+const Item = mongoose.model('Item', itemSchema);
 
 // Set up session middleware
 app.use(session({
@@ -95,10 +108,10 @@ app.get('/:page.html', (req, res) => {
 app.post('/register', async (req, res) => {
   const { name, password } = req.body;
 
-  // Create a new document using the User model
-  const newUser = new User({ name, password });
+  // Create a new document using the Register model
+  const newUser = new Register({ name, password });
 
-  // Save the new user document to the "users" collection
+  // Save the new user document to the "register" collection
   try {
     await newUser.save();
     res.redirect('/index.html');
@@ -116,7 +129,7 @@ app.post('/login', async (req, res) => {
   const { name, password } = req.body;
 
   try {
-    const user = await User.findOne({ name });
+    const user = await Register.findOne({ name });
     if (user && user.password === password) {
       // Update the isLoggedIn status to true
       isLoggedIn = true;
@@ -153,17 +166,6 @@ app.post('/logout', (req, res) => {
       res.sendStatus(200);
     }
   });
-});
-
-// API endpoint to get items in the storage
-app.get('/api/items', async (req, res) => {
-  try {
-    const items = await Item.find();
-    res.json(items);
-  } catch (error) {
-    console.error('Error fetching items:', error);
-    res.status(500).json({ error: 'Failed to retrieve items' });
-  }
 });
 
 // Start the server
