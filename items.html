@@ -270,11 +270,13 @@
              items.forEach((item, index) => {
                const itemElement = itemElements[index];
                if (itemElement) {
+
+                  const stock = item.stock > 0 ? 'In-Stock' : item.stock;
                  // Populate the item data within the item element
                  itemElement.innerHTML = `
                    <h4>${item.name}</h4>
                    <p>Price: $${item.price}</p>
-                   <p>Stock: ${item.stock}</p>
+                   <p>Stock: ${stock}</p>
                    <!-- Add more item data here -->
                  `;
                }
