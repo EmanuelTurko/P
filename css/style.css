@@ -1274,6 +1274,10 @@ border: none !important;
 .history-link:hover{
 color: #ad8fb9;
 }
+.inline-item {
+    display: inline-block;
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
 /*admin end*/
 
 /*cart*/
