@@ -2,7 +2,7 @@
   function toggleSearchForm() {
     var searchFormContainer = document.getElementById("searchFormContainer");
     searchFormContainer.style.display = (searchFormContainer.style.display === "none") ? "block" : "none";
-  }
+  } 
   
   function performSearch() {
     var searchInput = document.getElementById("searchInput").value;
@@ -58,45 +58,46 @@
   function displaySearchResults(items) {
     var searchResultsContainer = document.getElementById("searchResults");
     searchResultsContainer.innerHTML = "";
-  
+
     if (items.length === 0) {
       searchResultsContainer.innerHTML = "No results found.";
       return;
     }
-  
+
     var itemList = document.createElement("ul");
-  
+    itemList.classList.add("search-results");
+
     items.forEach(item => {
       var listItem = document.createElement("li");
-  
+
       // Create an image element and set its source and size
       var image = document.createElement("img");
       image.src = "images/img" + item.itemId.substring(4) + ".jpg";
       image.alt = item.name;
-      image.style.width = "50px";
-      image.style.height = "50px";
       listItem.appendChild(image);
-  
+
       // Create a span element for the item name
       var itemName = document.createElement("span");
+      itemName.classList.add("item-name");
       itemName.textContent = item.name;
       listItem.appendChild(itemName);
-  
+
       // Create a span element for the item price
       var itemPrice = document.createElement("span");
+      itemPrice.classList.add("item-price");
       itemPrice.textContent = " - Price: $" + item.price;
       listItem.appendChild(itemPrice);
-  
+
       var addToCartButton = document.createElement("button");
+      addToCartButton.classList.add("add-to-cart-button");
       addToCartButton.textContent = "Add to Cart";
       addToCartButton.addEventListener("click", function() {
         addToCart(item.itemId);
       });
-  
+
       listItem.appendChild(addToCartButton);
       itemList.appendChild(listItem);
     });
-  
+
     searchResultsContainer.appendChild(itemList);
   }
-  

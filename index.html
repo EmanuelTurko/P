@@ -66,10 +66,10 @@
                <a class="nav-link" href="#" id="logout-link">Logout</a>
              </li>
              <li class="nav-item" id="login">
-               <a class="nav-link" href="login.html">Login</a>
+               <a class="nav-link" href="login.html">Login</a> 
              </li>
              <li class="nav-item">
-               <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="toggleSearchForm()">Search</button>
+               <button class="btn btn-outline-secondary" style="color:#ffffff;font-size:16px; margin-top:5px;" type="button" onclick="toggleSearchForm()">Search</button>
                
              </li>
              <li class="nav-item">
@@ -81,8 +81,10 @@
            </ul>
          </div>
        </nav>
-       <div id="searchFormContainer" class="container" style="display: none;">
+       <div id="searchFormContainer" class="container search-form-container"style="display: none;">
+      
          <form class="form-inline" id="searchForm">
+            <button class="btn btn-outline-secondary" style="color:#ffffff;font-size:16px;" type="button" onclick="performSearch()">Search</button>
            <div class="form-group">
              <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" id="searchInput">
            </div>
@@ -104,8 +106,7 @@
                In Stock
              </label>
            </div>
-           <button class="btn btn-primary" type="button" onclick="performSearch()">Search</button>
-           <button class="btn btn-secondary" type="button" onclick="toggleSearchForm()">Close</button>
+           <button class="btn btn-outline-secondary" style="color:#ffffff;font-size:16px; margin-right:200px;" type="button" onclick="toggleSearchForm()">Close</button>
          </form>
          <div id="searchResults"></div>
        </div>
