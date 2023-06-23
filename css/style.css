@@ -1228,3 +1228,12 @@ label[for="itemId"]
     opacity: 1;
   }
 >>>>>>> 95e4b27c82126fd152e6a92b64432cb7b4f1083e
+/*  cart */
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+  }
