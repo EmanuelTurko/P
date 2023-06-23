@@ -123,17 +123,21 @@ function initializeCart() {
     }
   });
 
-  // Function to remove an item from the cart
   function removeItem(itemId) {
     const itemIndex = cartItems.findIndex(item => item.itemId === itemId);
     if (itemIndex !== -1) {
       cartItems.splice(itemIndex, 1);
       updateCartDisplay();
-
+      localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update cart items in localStorage
+  
       if (cartItems.length === 0) {
         clearCart();
         updateCartDisplay();
       }
+  
+      // Decrement the cart count by 1
+      const cartCount = parseInt(getCartCount()) - 1;
+      setCartCount(cartCount);
     }
   }
 
@@ -217,10 +221,13 @@ function initializeCart() {
     totalAmountCell.textContent = totalAmount;
   }
 
-  function clearCart() {
-    // Clear the cart items in localStorage
-    localStorage.removeItem('cartItems');
-  }
+// Function to clear the cart
+function clearCart() {
+  // Clear the cart items in localStorage
+  localStorage.removeItem('cartItems');
+  updateCartBadge(); // Update the cart badge
+  setCartCount(0);
+}
 
   function removeAllTableRows(tableBody) {
     while (tableBody.firstChild) {
