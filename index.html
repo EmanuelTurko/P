@@ -32,51 +32,86 @@
 
 <div class="header_section">
    <div class="container-fluid">
-     <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light" hidden>
-       <div class="logo">
-         <a href="index.html">
-           <img src="images/logo1.png">
-           <span id="username"></span>
-         </a>
+      <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light" hidden>
+         <div class="logo">
+           <a href="index.html">
+             <img src="images/logo1.png">
+             <span id="username"></span>
+           </a>
+         </div>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarNav">
+           <ul class="navbar-nav ml-auto">
+             <li class="nav-item active">
+               <a class="nav-link" href="index.html">Home</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="about.html">About Us</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="tours.html">Tours</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="items.html">Browse</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="history.html">My Orders</a>
+             </li>
+             <li class="nav-item" id="logout" style="display: none;">
+               <a class="nav-link" href="#" id="logout-link">Logout</a>
+             </li>
+             <li class="nav-item" id="login">
+               <a class="nav-link" href="login.html">Login</a>
+             </li>
+             <li class="nav-item">
+               <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="toggleSearchForm()">Search</button>
+               
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="cart.html">
+                 <i class="fa fa-rocket" style="color:#ad8fb9;font-size: 32px;" aria-hidden="true"></i>
+                 <span class="cart-badge">0</span>
+               </a>
+             </li>
+           </ul>
+         </div>
+       </nav>
+       <div id="searchFormContainer" class="container" style="display: none;">
+         <form class="form-inline" id="searchForm">
+           <div class="form-group">
+             <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" id="searchInput">
+           </div>
+           <div class="form-check mr-2">
+             <input class="form-check-input" type="checkbox" value="priceUnder25" id="priceUnder25Checkbox">
+             <label class="form-check-label" for="priceUnder25Checkbox">
+               Price Under $25
+             </label>
+           </div>
+           <div class="form-check mr-2">
+             <input class="form-check-input" type="checkbox" value="freeShipping" id="freeShippingCheckbox">
+             <label class="form-check-label" for="freeShippingCheckbox">
+               Free Shipping
+             </label>
+           </div>
+           <div class="form-check mr-2">
+             <input class="form-check-input" type="checkbox" value="inStock" id="inStockCheckbox">
+             <label class="form-check-label" for="inStockCheckbox">
+               In Stock
+             </label>
+           </div>
+           <button class="btn btn-primary" type="button" onclick="performSearch()">Search</button>
+           <button class="btn btn-secondary" type="button" onclick="toggleSearchForm()">Close</button>
+         </form>
+         <div id="searchResults"></div>
        </div>
-       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-       </button>
-       <div class="collapse navbar-collapse" id="navbarNav">
-         <ul class="navbar-nav ml-auto">
-           <li class="nav-item active">
-             <a class="nav-link" href="index.html">Home</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link" href="about.html">About Us</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link" href="tours.html">Tours</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link" href="items.html">Browse</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link" href="history.html">My Orders</a>
-           </li>
-           <li class="nav-item" id="logout" style="display: none;">
-            <a class="nav-link" href="#" id="logout-link">Logout</a>
-          </li>
-           <li class="nav-item" id="login">
-             <a class="nav-link" href="login.html">Login</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link" href="cart.html">
-               <i class="fa fa-rocket" style="color:#ad8fb9;font-size: 32px;" aria-hidden="true"></i>
-               <span class="cart-badge" >0</span>
-             </a>
-           </li>
-         </ul>
-       </div>
-     </nav>
    </div>
+   
  </div>
+
  <!-- header -->
+ 
       <!-- banner-->
       <div class="banner_section layout_padding">
          <div class="container">
@@ -347,5 +382,6 @@
       <script src="js/navbar.js"></script>
       <script src="js/logout.js"></script>
       <script src="js/cart.js"></script>
+      <script src="js/search.js"></script>
    </body>
 </html>
