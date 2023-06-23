@@ -189,9 +189,9 @@ function initializeCart() {
 
       const actionsCell = document.createElement('td');
       const removeButton = document.createElement('button');
-      removeButton.textContent = 'Remove';
+      removeButton.innerHTML = '<i class="fa fa-trash" style="color:#ad8fb9;font-size: 32px;" aria-hidden="true"></i>';
       removeButton.addEventListener('click', () => {
-        removeItem(selectedItem.itemId);
+      removeItem(selectedItem.itemId);
       });
       actionsCell.appendChild(removeButton);
 

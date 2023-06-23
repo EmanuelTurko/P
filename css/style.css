@@ -1285,7 +1285,7 @@ color: #ad8fb9;
     font-weight: bold;
     text-transform: uppercase;
   }
-  #clearCartButton button:hover {
+  #clearCartButton:hover {
     background-color: #ad8fb9;
     color: #fff;
 }
@@ -1330,6 +1330,8 @@ color: #ad8fb9;
   #totalLabelCell {
     text-align: right;
     font-weight: bold;
+    color: white;
+
   }
   
   #clearCartButton {
@@ -1345,4 +1347,13 @@ color: #ad8fb9;
     margin-top: 40px;
     font-style: italic;
     color: #999;
+  }
+  table tr th {
+    color: white;
+  }
+  td {
+    color: white;
+  }
+  .fa.fa-rocket:hover {
+    color: white;
   }
