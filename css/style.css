@@ -1331,6 +1331,7 @@ color: #ad8fb9;
     color: white;
   }
   #clearCartButton {
+    float: right;
     background-color: #333;
     color: #fff;
     padding: 10px 20px;
