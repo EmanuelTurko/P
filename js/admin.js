@@ -87,53 +87,53 @@ function renderItems(items) {
 
 
 
-  // Function to add a new item
-  function addItem(event) {
-    event.preventDefault();
+// Function to add a new item
+function addItem(event) {
+  event.preventDefault();
 
-    // Retrieve the form input values
-    const itemNameInput = document.getElementById('Item');
-    const stockInput = document.getElementById('stock');
-    const priceInput = document.getElementById('price');
-    const shippingInput = document.getElementById('shipping');
-    const itemIdInput = document.getElementById('itemId');
+  // Retrieve the form input values
+  const itemNameInput = document.getElementById('Item');
+  const stockInput = document.getElementById('stock');
+  const priceInput = document.getElementById('price');
+  const shippingInput = document.getElementById('shipping');
+  const itemIdInput = document.getElementById('itemId');
 
-    const newItem = {
-      name: itemNameInput.value,
-      stock: parseInt(stockInput.value),
-      price: parseFloat(priceInput.value),
-      shipping: shippingInput.value,
-      itemId: itemIdInput.value
-    };
+  const newItem = {
+    name: itemNameInput.value,
+    stock: parseInt(stockInput.value),
+    price: parseFloat(priceInput.value),
+    shipping: parseInt(shippingInput.value),
+    itemId: itemIdInput.value
+  };
 
-    // Send an HTTP POST request to the API endpoint
-    fetch('/items', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newItem)
+  // Send an HTTP POST request to the `/items` endpoint
+  fetch('/items', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newItem)
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log('Item added successfully');
+        // Clear the form inputs
+        itemNameInput.value = '';
+        stockInput.value = '';
+        priceInput.value = '';
+        shippingInput.value = '';
+        itemIdInput.value = '';
+
+        // Refresh the item list
+        fetchItems();
+      } else {
+        console.error('Failed to add item:', response.statusText);
+      }
     })
-      .then(response => {
-        if (response.ok) {
-          console.log('Item added successfully');
-          // Clear the form inputs
-          itemNameInput.value = '';
-          stockInput.value = '';
-          priceInput.value = '';
-          shippingInput.value = '';
-          itemIdInput.value = '';
-
-          // Refresh the item list
-          fetchItems();
-        } else {
-          console.error('Failed to add item:', response.statusText);
-        }
-      })
-      .catch(error => {
-        console.error('Error adding item:', error);
-      });
-  }
+    .catch(error => {
+      console.error('Error adding item:', error);
+    });
+}
 
   // Function to remove an item
   function removeItem(itemId) {

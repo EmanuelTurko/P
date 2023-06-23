@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = 3000;
 app.use(cookieParser());
+app.use(express.json());
 
 // Connect to MongoDB
 mongoose
@@ -74,6 +75,24 @@ app.get('/items', async (req, res) => {
     res.json(items);
   } catch (error) {
     console.error('Error fetching items:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+// Route to handle the POST request for adding a new item
+app.post('/items', async (req, res) => {
+  try {
+    const { name, price, stock, shipping, itemId } = req.body;
+
+    // Create a new document using the Item model
+    const newItem = new Item({ name, price, stock, shipping, itemId });
+
+    // Save the new item document to the "items" collection
+    await newItem.save();
+
+    // Send a success response
+    res.status(201).send('Item added successfully');
+  } catch (error) {
+    console.error('Error adding item:', error);
     res.status(500).send('Internal Server Error');
   }
 });
