@@ -20,6 +20,20 @@ function updateNavbar() {
     errorMessageElement.textContent = errorMessage;
   }
 
+// Send an HTTP request to the server to retrieve user details
+fetch('/userDetails')
+  .then(response => response.json())
+  .then(data => {
+    // Handle the response from the server
+    console.log(data); // Assuming the server responds with an object containing user details
+    // Update the HTML elements with the received user details
+    document.getElementById('username').textContent = "Username: " + data.username;
+    document.getElementById('fullName').textContent = "Full Name: " + data.fullName;
+    document.getElementById('city').textContent = "City: " + data.city;
+  });
+
+
+  
   fetch('/api/login-status')
     .then((response) => response.json())
     .then((data) => {
@@ -28,9 +42,6 @@ function updateNavbar() {
         logoutLink.style.display = '';
         myDetailsLink.style.display = ''; // Show the "My Details" link
         usernameLabel.textContent = 'Welcome, ' + data.username;
-        document.getElementById('userDetails').textContent ='Username: ' + data.username + '\n' +
-          'Full Name: ' + data.fullName + '\n' +
-          'City: ' + data.city;
       } else {
         loginLink.style.display = '';
         logoutLink.style.display = 'none';

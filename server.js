@@ -275,3 +275,23 @@ app.post('/update-profile', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+
+
+// Define an endpoint for handling the user details submission
+app.post('/userDetails', (req, res) => {
+  // Retrieve the user details from the request body
+  const { username, password, fullName, city } = req.body;
+
+  // Perform any necessary processing or validation with the user details
+  // For this example, let's assume the server just sends back the received data as a response
+  const userDetails = {
+    username: username,
+    password: password,
+    fullName: fullName,
+    city: city
+  };
+
+  // Send the user details as a response
+  res.json(userDetails);
+});
