@@ -1023,7 +1023,10 @@ a:hover {
     background-attachment: scroll;
 }
 label[for="username"],
-label[for="password"] {
+label[for="password"],
+label[for="fullName"],
+label[for="city"]{
+    font-size: 20px;
     color: #ad8fb9;
 }
 
@@ -1051,6 +1054,7 @@ a.btn-register,
 .fa-envelope {
     color: yellow;
 }
+/*form end*/
 /* Cart */
 
 .cart-badge {
@@ -1365,6 +1369,7 @@ color: #ad8fb9;
     color: white;
   }
   /*on hover end*/
+ /*search*/
   .form-check-input {
     width: 20px;
     height: 20px;
@@ -1461,3 +1466,10 @@ color: #ad8fb9;
     position: relative;
     right: -2px;
   }
+   /*search end */
+   /*PURCHASE*/
+   #userDetails {
+    color: #ad8fb9;
+    font-size: 20px;
+  }
+  /*PURCHASE end*/
