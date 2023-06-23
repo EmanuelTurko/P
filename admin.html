@@ -76,7 +76,7 @@
     </div>
  </div>
  <!--header-->
-<!-- login -->
+<!-- admin -->
 <div class="admin_section layout_padding">
   <div class="container">
     <div class="row">
@@ -85,46 +85,51 @@
           <h2 class="admin_title">admin</h2>
         </div>
       </div>
+      <div id="itemsTableContainer">
         <table class="table">
           <tr>
             <td>
-              <div class="form-group">
-                <div id="admin-message" style="color:red;font-size: 18px;"></div>
-                <label for="Item">add Item</label>
-                <input type="text" class="form-admin" id="Item" name="Item" placeholder="name Item" required>
+              <form id="addItemForm">
+                <div class="form-group">
+                  <div id="admin-message" style="color: red; font-size: 18px;"></div>
+                  <label for="Item">Name</label>
+                  <input type="text" class="form-admin" id="Item" name="Item" placeholder="Name of the item" required>
+                </div>
+                <div class="form-group">
+                  <label for="stock">Stock</label>
+                  <input type="number" class="form-admin" id="stock" name="stock" placeholder="Number of stock" required>
+                </div>
+                <div class="form-group">
+                  <label for="price">Price</label>
+                  <input type="number" class="form-admin" id="price" name="price" placeholder="Price" required>
+                </div>
+                <div class="form-group">
+                  <label for="shipping">Shipping Cost</label>
+                  <input type="text" class="form-admin" id="shipping" name="shipping" placeholder="Shipping cost" required>
+                </div>
+                <div class="form-group">
+                  <label for="itemId">Item ID</label>
+                  <input type="text" class="form-admin" id="itemId" name="itemId" placeholder="Item ID" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+              </form>
+              <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search items...">
+                <button type="button" id="searchButton">Search</button>
               </div>
-            </td>
-            <td>
-              <div class="form-group">
-                <label for="stocks">stocks</label>
-                <input type="number" class="form-admin" id="stock" name="stocks" placeholder="number stock" required>
-              </div>
-            </td>
-            <td>
-              <div class="form-group">
-                <label for="price">price</label>
-                <input type="price" class="form-admin" id="price" name="price" placeholder="price" required>
-              </div>
-            </td>
-            <td>
-              <div class="form-group">
-                <label for="itemId">item Id</label>
-                <input type="id" class="form-admin" id="itemId" name="itemId" placeholder="for example item1 item2" required>
-              </div>
-            </td>
-            <td>
-              <button type="submit" class="btn btn-primary">add</button>
-              <a href="register.html" class="btn btn-primary">Still Not</a>
             </td>
           </tr>
         </table>
-        <div id="login-message"></div>
       </div>
+      </div>
+      <div id="login-message"></div>
+      <div id="toggleItemsButtonContainer" class="text-center mt-3">
+        <button id="toggleItemsButton" class="btn btn-primary">Show Table</button>
       <div id="itemsContainer"></div>
-
     </div>
+  </div>
 </div>
-  <!-- login -->
+<!-- admin -->
       <!-- footer -->
       <div class="footer_section margin_top90">
         <div class="container">

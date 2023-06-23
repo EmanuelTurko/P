@@ -1399,13 +1399,13 @@ color: #ad8fb9;
 
   .search-results .item-name {
     font-weight: bold;
-    font-size: 14px; /* Adjust the font size as needed */
+    font-size: 14px; 
   }
 
   .search-results .item-price {
     color: green;
     margin-left: 10px;
-    font-size: 12px; /* Adjust the font size as needed */
+    font-size: 12px; 
   }
 
   .search-results .add-to-cart-button {
@@ -1460,4 +1460,31 @@ color: #ad8fb9;
     visibility: visible;
     position: relative;
     right: -2px;
+  }
+  .item-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .item-table th,
+  .item-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .item-table th {
+    font-weight: bold;
+  }
+  
+  .item-table td:last-child {
+    text-align: center;
+  }
+  
+  .item-table button {
+    background: none;
+    border: none;
+    color: lightcoral;
+    cursor: pointer;
+    text-decoration: underline;
   }
