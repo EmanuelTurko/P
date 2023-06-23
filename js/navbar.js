@@ -26,18 +26,17 @@ function updateNavbar() {
       if (data.isLoggedIn) {
         loginLink.style.display = 'none';
         logoutLink.style.display = '';
+        myDetailsLink.style.display = ''; // Show the "My Details" link
         usernameLabel.textContent = 'Welcome, ' + data.username;
-        document.getElementById('userDetails').textContent =
-          'Username: ' + data.username + '\n' +
+        document.getElementById('userDetails').textContent ='Username: ' + data.username + '\n' +
           'Full Name: ' + data.fullName + '\n' +
           'City: ' + data.city;
-        myDetailsLink.style.display = ''; // Show the "My Details" link
       } else {
         loginLink.style.display = '';
         logoutLink.style.display = 'none';
+        myDetailsLink.style.display = 'none'; // Hide the "My Details" link
         usernameLabel.textContent = '';
         document.getElementById('userDetails').textContent = '';
-        myDetailsLink.style.display = 'none'; // Hide the "My Details" link
       }
     })
     .catch((error) => {
