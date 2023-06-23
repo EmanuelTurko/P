@@ -189,7 +189,22 @@ function initializeCart() {
 
       const actionsCell = document.createElement('td');
       const removeButton = document.createElement('button');
-      removeButton.innerHTML = '<i class="fa fa-trash" style="color:#ad8fb9;font-size: 32px;" aria-hidden="true"></i>';
+      removeButton.style.backgroundColor = 'black';
+      removeButton.innerHTML = '<i class="fas fa-trash" style="color:white; font-size: 32px;" aria-hidden="true"></i>';
+      removeButton.addEventListener('mouseover', function() {
+        var icon = removeButton.querySelector('i');
+        if (icon) {
+          icon.style.color = '#ad8fb9';
+        }
+      });
+      
+      removeButton.addEventListener('mouseout', function() {
+        var icon = removeButton.querySelector('i');
+        if (icon) {
+          icon.style.color = 'white';
+        }
+      });
+
       removeButton.addEventListener('click', () => {
       removeItem(selectedItem.itemId);
       });
