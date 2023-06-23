@@ -239,7 +239,11 @@ button {
 }
 
 .navbar-light .navbar-nav .nav-link:focus,
+<<<<<<< Updated upstream
 .navbar-light .navbar-nav .nav-link:hover  {
+=======
+.navbar-light .navbar-nav .nav-link:hover .history-link:hover {
+>>>>>>> Stashed changes
     color: #ad8fb9;
 }
 
@@ -1162,12 +1166,45 @@ font-weight: bold;
 text-transform: uppercase; 
 }
 
+<<<<<<< Updated upstream
+=======
+}
+
+
+/*about_history*/
+
+.about_history{
+        width: 100%;
+        float: center;
+        font-size: 30px;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase; 
+}
+
+.history-link{
+width: 100%;
+float: center;
+font-size: 30px;
+color: white;
+font-weight: bold;
+text-transform: uppercase; 
+}
+
+
+
+>>>>>>> Stashed changes
  /*admin / admin forms */
  .admin_section {
     width: 100%;
     display: inline-block;
+<<<<<<< Updated upstream
     justify-content: center;
     align-items: center;
+=======
+    justify-content: left;
+    align-items: left;
+>>>>>>> Stashed changes
     background-image: url(../images/background.jpg);
     height: auto;
     padding-bottom: 100px;
@@ -1175,30 +1212,44 @@ text-transform: uppercase;
 }
 .admin_title{
     width: 100%;
+<<<<<<< Updated upstream
     float:  left;
+=======
+    float: left;
+>>>>>>> Stashed changes
     font-size: 40px;
     color: #ad8fb9;
     font-weight: bold;
     text-transform: uppercase; 
+<<<<<<< Updated upstream
     
 }
 .admin_form {
     display:inline;
     justify-content: center;
+=======
+}
+.admin_form {
+>>>>>>> Stashed changes
     max-width: 300px; 
     width: 60%;
     padding: -20px;
 }
 label[for="Item"],
+<<<<<<< Updated upstream
 label[for="stocks"],
 label[for="price"],
 label[for="itemId"]
 {
+=======
+label[for="stocks"] {
+>>>>>>> Stashed changes
     color: #ad8fb9;
 }
 .form-admin:focus {
     border-color: #ffffff !important;
     box-shadow: 0 0 0 .1rem rgba(255, 255, 255, .25);
+<<<<<<< Updated upstream
 }
 .navbar-admin input {
     border: none !important;
@@ -1237,3 +1288,6 @@ th {
     padding: 10px;
     font-weight: bold;
   }
+=======
+}
+>>>>>>> Stashed changes
