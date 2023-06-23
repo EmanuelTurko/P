@@ -239,11 +239,7 @@ button {
 }
 
 .navbar-light .navbar-nav .nav-link:focus,
-<<<<<<< Updated upstream
 .navbar-light .navbar-nav .nav-link:hover  {
-=======
-.navbar-light .navbar-nav .nav-link:hover .history-link:hover {
->>>>>>> Stashed changes
     color: #ad8fb9;
 }
 
@@ -432,7 +428,7 @@ button {
 
 .read_bt a:hover {
     color: #ffffff;
-    background-color: #f76d37;
+    background-color: #ad8fb9;
 }
 
 /* about section end */
@@ -1033,8 +1029,13 @@ label[for="password"] {
 
 .btn.btn-primary,
 .login_form .btn.btn-primary {
-    background-color: #ad8fb9;
-    border-color: #ad8fb9;
+    background-color: #333;
+    border-color: #333;
+}
+.btn.btn-primary:hover,
+.login_form .btn.btn-primary:hover {
+    background-color:  #ad8fb9;
+    border-color:  #ad8fb9;
 }
 
 a.btn-register,
@@ -1147,117 +1148,6 @@ a.btn-register,
     font-size: 25px;
     font-weight:bold;
 }
-<<<<<<< HEAD
-/*about_history*/
-.about_history{
-        width: 100%;
-        float: center;
-        font-size: 30px;
-        color: white;
-        font-weight: bold;
-        text-transform: uppercase; 
-}
-.history-link{
-width: 100%;
-float: center;
-font-size: 30px;
-color: white;
-font-weight: bold;
-text-transform: uppercase; 
-}
-
-<<<<<<< Updated upstream
-=======
-}
-
-
-/*about_history*/
-
-.about_history{
-        width: 100%;
-        float: center;
-        font-size: 30px;
-        color: white;
-        font-weight: bold;
-        text-transform: uppercase; 
-}
-
-.history-link{
-width: 100%;
-float: center;
-font-size: 30px;
-color: white;
-font-weight: bold;
-text-transform: uppercase; 
-}
-
-
-
->>>>>>> Stashed changes
- /*admin / admin forms */
- .admin_section {
-    width: 100%;
-    display: inline-block;
-<<<<<<< Updated upstream
-    justify-content: center;
-    align-items: center;
-=======
-    justify-content: left;
-    align-items: left;
->>>>>>> Stashed changes
-    background-image: url(../images/background.jpg);
-    height: auto;
-    padding-bottom: 100px;
-    background-attachment: fixed;
-}
-.admin_title{
-    width: 100%;
-<<<<<<< Updated upstream
-    float:  left;
-=======
-    float: left;
->>>>>>> Stashed changes
-    font-size: 40px;
-    color: #ad8fb9;
-    font-weight: bold;
-    text-transform: uppercase; 
-<<<<<<< Updated upstream
-    
-}
-.admin_form {
-    display:inline;
-    justify-content: center;
-=======
-}
-.admin_form {
->>>>>>> Stashed changes
-    max-width: 300px; 
-    width: 60%;
-    padding: -20px;
-}
-label[for="Item"],
-<<<<<<< Updated upstream
-label[for="stocks"],
-label[for="price"],
-label[for="itemId"]
-{
-=======
-label[for="stocks"] {
->>>>>>> Stashed changes
-    color: #ad8fb9;
-}
-.form-admin:focus {
-    border-color: #ffffff !important;
-    box-shadow: 0 0 0 .1rem rgba(255, 255, 255, .25);
-<<<<<<< Updated upstream
-}
-.navbar-admin input {
-    border: none !important;
-}
-.history-link:hover{
-    color: #ad8fb9;
-}
-=======
 .toast {
     position: fixed;
     top: 40px;
@@ -1278,16 +1168,136 @@ label[for="stocks"] {
   .show {
     opacity: 1;
   }
->>>>>>> 95e4b27c82126fd152e6a92b64432cb7b4f1083e
-/*  cart */
+/*about_history*/
+.about_history{
+    width: 100%;
+    float: center;
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase; 
+}
+.history-link{
+width: 100%;
+float: center;
+font-size: 30px;
+color: white;
+font-weight: bold;
+text-transform: uppercase; 
+}
 
-th {
-    background-color: #f2f2f2;
-    color: #333;
-    text-align: center;
+/*admin / admin forms */
+.admin_section {
+width: 100%;
+display: inline-block;
+justify-content: center;
+align-items: center;
+background-image: url(../images/background.jpg);
+height: auto;
+padding-bottom: 100px;
+background-attachment: fixed;
+}
+.admin_title{
+width: 100%;
+float:  left;
+font-size: 40px;
+color: #ad8fb9;
+font-weight: bold;
+text-transform: uppercase; 
+
+}
+.admin_form {
+display:inline;
+justify-content: center;
+max-width: 300px; 
+width: 60%;
+padding: -20px;
+}
+label[for="Item"],
+label[for="stocks"],
+label[for="price"],
+label[for="itemId"]
+{
+color: #ad8fb9;
+}
+.form-admin:focus {
+border-color: #ffffff !important;
+box-shadow: 0 0 0 .1rem rgba(255, 255, 255, .25);
+}
+.navbar-admin input {
+border: none !important;
+}
+.history-link:hover{
+color: #ad8fb9;
+}
+
+/*cart*/
+.about_title_cart {
+    width: 100%;
+    float: left;
+    font-size: 40px;
+    color: #ad8fb9;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  #clearCartButton button:hover {
+    background-color: #ad8fb9;
+    color: #fff;
+}
+#cartContainer {
+    margin-top: 20px;
+  }
+  
+  #cartItemsTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #cartItemsTable th,
+  #cartItemsTable td {
     padding: 10px;
+    border-bottom: 2px solid #ad8fb9;
+    ;
+  }
+  
+  #cartItemsTable th {
     font-weight: bold;
   }
-=======
-}
->>>>>>> Stashed changes
+  
+  #cartItemsTable td:nth-child(1) {
+    width: 100px;
+  }
+  
+  #cartItemsTable td:nth-child(2) {
+    width: 200px;
+  }
+  
+  #cartItemsTable td:nth-child(3),
+  #cartItemsTable td:nth-child(4) {
+    width: 100px;
+    text-align: center;
+  }
+  
+  #cartItemsTable td:nth-child(5) {
+    width: 150px;
+  }
+  
+  #totalLabelCell {
+    text-align: right;
+    font-weight: bold;
+  }
+  
+  #clearCartButton {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #emptyCartMessage {
+    text-align: left;
+    margin-top: 40px;
+    font-style: italic;
+    color: #999;
+  }
