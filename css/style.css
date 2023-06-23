@@ -1279,7 +1279,7 @@ color: #ad8fb9;
 /*cart*/
 .about_title_cart {
     width: 100%;
-    float: left;
+    float: center;
     font-size: 40px;
     color: #ad8fb9;
     font-weight: bold;
@@ -1300,7 +1300,7 @@ color: #ad8fb9;
   
   #cartItemsTable th,
   #cartItemsTable td {
-    padding: 10px;
+    padding: 20px;
     border-bottom: 2px solid #ad8fb9;
     ;
   }
@@ -1354,6 +1354,4 @@ color: #ad8fb9;
   td {
     color: white;
   }
-  .fa.fa-rocket:hover {
-    color: white;
-  }
+
