@@ -1,7 +1,14 @@
 // Function to update the cart badge count in the UI
 function updateCartBadge() {
   const cartBadge = document.querySelector('.cart-badge');
-  cartBadge.textContent = getCartCount();
+  const cartCount = getCartCount();
+  
+  if (cartCount <= '0') {
+    cartBadge.style.display = 'none'; // Hide the cart badge
+  } else {
+    cartBadge.style.display = ''; // Show the cart badge
+    cartBadge.textContent = cartCount;
+  }
 }
 
 // Function to get the cart count from localStorage
@@ -23,8 +30,14 @@ function addToCart(itemId) {
       const selectedItem = items.find(item => item.itemId === itemId);
 
       if (selectedItem) {
+        // Get the current cart count
+        let cartCount = parseInt(getCartCount());
+        if (isNaN(cartCount) || cartCount < 0) {
+          cartCount = 0; // Reset the cart count to 0 if it's not a valid number
+        }
+
         // Increase cart count by 1
-        const cartCount = parseInt(getCartCount()) + 1;
+        cartCount += 1;
         setCartCount(cartCount.toString());
 
         // Update the cart badge
