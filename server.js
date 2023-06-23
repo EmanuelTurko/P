@@ -295,3 +295,34 @@ app.post('/userDetails', (req, res) => {
   // Send the user details as a response
   res.json(userDetails);
 });
+
+
+  app.get('/user/:username', (req, res) => {
+    const username = req.params.username;
+  
+    MongoClient.connect(url, (err, client) => {
+      if (err) {
+        console.error('Failed to connect to MongoDB:', err);
+        res.status(500).send('Failed to connect to MongoDB');
+        return;
+      }
+  
+      const db = client.db('spaceshop'); // Replace with your database name
+      const collection = db.collection('users'); // Replace with your collection name
+  
+      collection.findOne({ username }, (err, user) => {
+        if (err) {
+          console.error('Failed to retrieve user:', err);
+          res.status(500).send('Failed to retrieve user');
+          return;
+        }
+  
+        if (!user) {
+          res.status(404).send('User not found');
+          return;
+        }
+  
+        res.json(user);
+      });
+    });
+  });
