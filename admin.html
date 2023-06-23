@@ -89,30 +89,64 @@
         <table class="table">
           <tr>
             <td>
-              <form id="addItemForm">
-                <div class="form-group">
-                  <div id="admin-message" style="color: red; font-size: 18px;"></div>
-                  <label for="Item">Name</label>
-                  <input type="text" class="form-admin" id="Item" name="Item" placeholder="Name of the item" required>
-                </div>
-                <div class="form-group">
-                  <label for="stock">Stock</label>
-                  <input type="number" class="form-admin" id="stock" name="stock" placeholder="Number of stock" required>
-                </div>
-                <div class="form-group">
-                  <label for="price">Price</label>
-                  <input type="number" class="form-admin" id="price" name="price" placeholder="Price" required>
-                </div>
-                <div class="form-group">
-                  <label for="shipping">Shipping Cost</label>
-                  <input type="text" class="form-admin" id="shipping" name="shipping" placeholder="Shipping cost" required>
-                </div>
-                <div class="form-group">
-                  <label for="itemId">Item ID</label>
-                  <input type="text" class="form-admin" id="itemId" name="itemId" placeholder="Item ID" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Add</button>
-              </form>
+              <div class="forms-container">
+                <form id="addItemForm">
+                    <div class="form-group">
+                      <div id="admin-message" style="color: red; font-size: 18px;"></div>
+                      <label for="Item">Name</label>
+                      <input type="text" class="form-admin" id="Item" name="Item" placeholder="Name of the item" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="stock">Stock</label>
+                      <input type="number" class="form-admin" id="stock" name="stock" placeholder="Number of stock" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="price">Price</label>
+                      <input type="number" class="form-admin" id="price" name="price" placeholder="Price" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="shipping">Shipping Cost</label>
+                      <input type="text" class="form-admin" id="shipping" name="shipping" placeholder="Shipping cost" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="itemId">Item ID</label>
+                      <input type="text" class="form-admin" id="itemId" name="itemId" placeholder="Item ID" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="Image">Img</label>
+                      <input type="text" class="form-admin"id="imageURL" placeholder="Image URL">
+                    </div>
+                    <button type="submit" id="addItemButton" class="btn btn-primary"onclick="addItem()">Add</button>
+                  </form>
+                <form id="updateItemForm">
+                  <div class="form-group">
+                    <div id="admin-update-message" style="color: red; font-size: 18px;"></div>
+                    <div class="form-group">
+                      <label for="updateItemId">Item ID</label>
+                      <select class="form-admin" id="updateItemId" name="updateItemId" required></select>
+                    </div>
+                    <label for="updateItem">Name</label>
+                    <input type="text" class="form-admin" id="updateItem" name="updateItem" placeholder="Name of the item" required>
+                 </div>
+                 <div class="form-group">
+                    <label for="updateStock">Stock</label>
+                    <input type="number" class="form-admin" id="updateStock" name="updateStock" placeholder="Number of stock" required>
+                 </div>
+                 <div class="form-group">
+                    <label for="updatePrice">Price</label>
+                    <input type="text" class="form-admin" id="updatePrice" name="updatePrice" placeholder="Price" required>
+                 </div>
+                 <div class="form-group">
+                    <label for="updateShipping">Shipping Cost</label>
+                    <input type="text" class="form-admin" id="updateShipping" name="updateShipping" placeholder="Shipping cost" required>
+                 </div>
+                 <div class="form-group">
+                    <label for="updateImage">Img</label>
+                    <input type="text" class="form-admin" id="updateImageURL" placeholder="Image URL">
+                 </div>
+                 <button type="button" id="updateItemButton" class="btn btn-primary" onclick="UpdateNewInfo()">Update</button>
+                </form>
+              </div>
               <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search items...">
                 <button type="button" id="searchButton">Search</button>
@@ -121,12 +155,25 @@
           </tr>
         </table>
       </div>
-      </div>
-      <div id="login-message"></div>
-      <div id="toggleItemsButtonContainer" class="text-center mt-3">
-        <button id="toggleItemsButton" class="btn btn-primary">Show Table</button>
-        <div id="updateContainer"></div>
+    </div>
+    <div id="login-message"></div>
+    <div id="toggleItemsButtonContainer" class="text-center mt-3">
+      <button id="toggleItemsButton" class="btn btn-primary">Show Table</button>
+      <div id="updateContainer"></div>
       <div id="itemsContainer"></div>
+    </div>
+    <select id="searchGroup" onchange="handleSearchGroupChange()">
+      <option value="name">Name</option>
+      <option value="city">City</option>
+      <option value="orders">Orders Made</option>
+    </select>
+    <div id="searchFormContainer"></div>
+    <div id="toggleUsersButtonContainer" class="text-center mt-3">
+      <button id="toggleUsersButton" class="btn btn-primary">Show Users</button>
+    </div>
+    <div id="usersTableContainer">
+      <h3>Registered Users</h3>
+      <table id="usersTable" class="table"></table>
     </div>
   </div>
 </div>
@@ -184,6 +231,7 @@
       <script src="js/custom.js"></script>   
       <script src="js/navbar.js"></script>
       <script src="js/logout.js"></script>
-      <script src="js/admin.js"></script>   
+      <script src="js/admin.js"></script>
+      <script src="js/newitem.js"></script>
     </body>
 </html>

@@ -76,47 +76,40 @@
    </div>
 </div>
 <!--header-->
-<!-- CartBody -->
+<!-- cart-->
 <div class="login_section layout_padding">
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="about_title_cart">Cart</div>
         <p id="emptyCartMessage">Your Cart Is Empty!</p>
-
       </div>
-        <div id="cartContainer">
-          <table id="cartItemsTable">
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Total Amount</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="cartItemsTableBody"></tbody>
-            <tfoot>
-              <tr>
-                <td colspan="4" id="totalLabelCell">Total Amount to Pay:</td>
-                <td id="totalAmountCell"></td>
-              </tr>
-            </tfoot>
-          </table>
-      
-          <button id="clearCartButton">Clear Cart</button>
-        </div>
-      
-      
-        <script src="cart.js"></script>
-        <script>
-          // Initialize the cart
-          initializeCart();
-        </script>
+      <div id="cartContainer">
+        <table id="cartItemsTable">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Shipping Fee</th>
+              <th>Total Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="cartItemsTableBody"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" id="totalLabelCell">Total:</td>
+              <td id="totalAmountCell"></td>
+            </tr>
+          </tfoot>
+        </table>
+        <button id="clearCartButton">Clear Cart</button>
       </div>
     </div>
   </div>
+</div>
+<!-- cart-->
       <!-- footer -->
       <div class="footer_section margin_top90">
         <div class="container">

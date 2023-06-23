@@ -6,6 +6,7 @@ const session = require('express-session');
 const crypto = require('crypto');
 const secret = crypto.randomBytes(64).toString('hex');
 const cookieParser = require('cookie-parser');
+const { ObjectId } = require('mongoose').Types;
 
 const app = express();
 const port = 3000;
@@ -58,10 +59,42 @@ const itemSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true
+  },
+  shipping: {
+    type: String, // can be Free or an integer
+    required: true
+  },
+  itemId: {
+    type: String,
+    required: true
   }
 });
+// Route handler for fetching users
+app.get('/users', (req, res) => {
+  // Fetch users from the "register" collection
+  Register.find()
+    .then(users => {
+      // Send the users as JSON in the response
+      res.json(users);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+      res.status(500).json({ error: 'Error fetching users' });
+    });
+});
+// GET users by city
+app.get('/users/:city', (req, res) => {
+  const city = req.params.city;
 
-
+  Register.find({ city })
+    .then(users => {
+      res.json(users);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+});
 // Create a model for the "items" collection
 const Item = mongoose.model('Item', itemSchema);
 
@@ -71,17 +104,88 @@ app.get('/items', async (req, res) => {
     // Fetch the items from the database
     const items = await Item.find();
 
-    // Send the items as JSON response to the client
-    res.json(items);
+    // Check if the request accepts JSON response
+    if (req.accepts('json')) {
+      // Send the items as JSON response
+      res.json(items);
+    } else {
+      // Render the items.html template and pass the item data
+      res.render('items.html', { items });
+    }
   } catch (error) {
     console.error('Error fetching items:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+// Route for UpdateItem
+app.get('/items/:itemId', async (req, res) => {
+  try {
+    const itemId = req.params.itemId;
+    console.log('Received item ID:', itemId);
+
+    // Retrieve the item details from the database based on the custom itemId field
+    console.log('Fetching item details for itemId:', itemId);
+    const item = await Item.findOne({ itemId });
+    console.log('Retrieved item:', item);
+
+    // Check if the item exists
+    if (!item) {
+      console.error('Item not found:', itemId);
+      res.status(404).send('Item Not Found');
+      return;
+    }
+
+    // Add the image URL to the item data
+    item.imageURL = `images/img${itemId}.jpg`;
+
+    // Check if the request accepts JSON response
+    if (req.accepts('json')) {
+      // Send the item details as JSON response
+      res.json(item);
+    } else {
+      // Render the item details as HTML response
+      res.render('item-details.html', { item });
+    }
+  } catch (error) {
+    console.error('Error fetching item details:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Update item details
+app.put('/items/:itemId', async (req, res) => {
+  try {
+    const itemId = req.params.itemId;
+    const updatedItem = req.body;
+
+    const result = await Item.updateOne({ itemId: itemId }, updatedItem);
+
+    if (result.nModified === 0) {
+      console.error('Item not found or no modifications made:', itemId);
+      return res.status(404).send('Item Not Found');
+    }
+
+    console.log('Item details updated:', itemId);
+    console.log('Updated item:', updatedItem);
+
+    return res.sendStatus(200);
+  } catch (error) {
+    console.error('Error updating item details:', error);
+    return res.status(500).send('Internal Server Error');
+  }
+});
+
 // Route to handle the POST request for adding a new item
 app.post('/items', async (req, res) => {
   try {
     const { name, price, stock, shipping, itemId } = req.body;
+
+    console.log('Received item details:');
+    console.log('Name:', name);
+    console.log('Price:', price);
+    console.log('Stock:', stock);
+    console.log('Shipping:', shipping); 
+    console.log('ItemId:', itemId);
 
     // Create a new document using the Item model
     const newItem = new Item({ name, price, stock, shipping, itemId });

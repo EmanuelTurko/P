@@ -28,9 +28,9 @@
    </head>
    <body onload="pageLoaded()">
       <!-- HTML code for the toast notification -->
-<div id="toast" class="toast hide">
-   Item added to cart!
- </div>
+      <div id="toast" class="toast hide">
+         <span id="toastMessage"></span>
+       </div>
     <!--header-->
 <div class="header_section">
    <div class="container-fluid">
@@ -79,145 +79,174 @@
    </div>
 </div>
 <!--header-->
-      <!-- gallery-->
-      <div class="gallery_section layout_padding">
-         <div class="container">
+     <!-- gallery -->
+<div class="gallery_section layout_padding">
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-12">
+            <h1 class="gallery_title">Our Items!</h1>
+            <p class="gallery_text">Take a look at the best souvenirs that SpaceShop has to offer!</p>
+         </div>
+      </div>
+         <div class="gallery_section_2">
             <div class="row">
-               <div class="col-sm-12">
-                  <h1 class="gallery_title">Our Items!</h1>
-                  <p class="gallery_text">Take a look at the best souvenirs that SpaceShop has to offer!</p>
-               </div>
-            </div>
-            <div class="">
-               <div class="gallery_section_2">
-                  <div class="row">
-                     <!-- item 1-->
-                     <div class="col-md-4">
-                        <div class="container_main">
-                          <img src="images/img1.jpg" alt="Avatar" class="image" id="item1" data-item-id="item1">
-                          <div class="overlay">
-                            <div class="text">
-                              <a href="#" onclick="addToCart('item1')">
-                                <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="item-data">
-                        </div>
-                      </div>
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/img2.jpg" alt="Avatar" class="image">
-                           <div class="overlay">
-                              <div class="text">
-                                 <a href="#" onclick="addToCart('item2')">
-                                 <i class="fa fa-cart-plus"aria-hidden="true"></i></a></div>
-                           </div>
-                        </div>
-                        <div class="item-data">
-                           <!---Items will be added here -->
-                        </div>   
-                     </div>
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/img3.jpg" alt="Avatar" class="image">
-                           <div class="overlay">
-                              <div class="text">    <a href="#" onclick="addToCart('item3')">
-                                 <i class="fa fa-cart-plus"aria-hidden="true"></i></a></div>
-                           </div>
-                        </div>
-                        <div class="item-data">
-                           <!---Items will be added here -->
-                     </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="gallery_section_2">
-                  <div class="row">
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/img4.jpg" alt="Avatar" class="image">
-                           <div class="overlay">
-                              <div class="text">    <a href="#" onclick="addToCart('item4')">
-                                 <i class="fa fa-cart-plus"aria-hidden="true"></i></a></div>
-                           </div>
-                        </div>
-                        <div class="item-data">
-                           <!---Items will be added here -->
-                     </div>
-                     </div>
-                     
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/img5.jpg" alt="Avatar" class="image">
-                              <div class="overlay">
-                                 <div class="text">    <a href="#" onclick="addToCart('item5')">
-                                    <i class="fa fa-cart-plus"aria-hidden="true"></i></a></div>
-                              </div>
-                              </div>
-                           <div class="item-data">
-                              <!---Items will be added here -->
-                        </div>
-                        </div>
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/img6.jpg" alt="Avatar" class="image">
-                           <div class="overlay">
-                                 <div class="text">    <a href="#" onclick="addToCart('item6')">
-                                    <i class="fa fa-cart-plus"aria-hidden="true"></i></a></div>
-                           </div>
-                        </div>
-                           <div class="item-data">
-                              <!---Items will be added here -->
+               <!-- Item 1 -->
+               <div class="col-md-4">
+                  <div class="container_main">
+                     <img src="images/img1.jpg" alt="Avatar" class="image" id="item1" data-item-id="item1">
+                     <div class="overlay">
+                        <div class="text">
+                           <a href="#" onclick="addToCart('item1')">
+                              <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                           </a>
                         </div>
                      </div>
                   </div>
+                  <div class="item-data">
+                     <!-- Item 1 data -->
+                  </div>
                </div>
-               <div class="gallery_section_2">
-                  <div class="row">
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/img7.jpg" alt="Avatar" class="image">
-                           <div class="overlay">
-                              <div class="text"> <a href="#" onclick="addToCart('item7')">
-                                 <i class="fa fa-cart-plus" aria-hidden="true"></i></a></div>
-                           </div>
+               <!-- Item 2 -->
+               <div class="col-md-4">
+                  <div class="container_main">
+                     <img src="images/img2.jpg" alt="Avatar" class="image" id="item2" data-item-id="item2">
+                     <div class="overlay">
+                        <div class="text">
+                           <a href="#" onclick="addToCart('item2')">
+                              <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                           </a>
                         </div>
-                        <div class="item-data">
-                           <!---Items will be added here -->
                      </div>
-                     </div>
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/img8.jpg" alt="Avatar" class="image">
-                           <div class="overlay">
-                              <div class="text">  <a href="#" onclick="addToCart('item8')">
-                                 <i class="fa fa-cart-plus"aria-hidden="true"></i></a></div>
-                           </div>
+                  </div>
+                  <div class="item-data">
+                     <!-- Item 2 data -->
+                  </div>
+               </div>
+               <!-- Item 3 -->
+               <div class="col-md-4">
+                  <div class="container_main">
+                     <img src="images/img3.jpg" alt="Avatar" class="image" id="item3" data-item-id="item3">
+                     <div class="overlay">
+                        <div class="text">
+                           <a href="#" onclick="addToCart('item3')">
+                              <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                           </a>
                         </div>
-                        <div class="item-data">
-                           <!---Items will be added here -->
                      </div>
-                     </div>
-                     <div class="col-md-4">
-                        <div class="container_main">
-                           <img src="images/img9.jpg" alt="Avatar" class="image">
-                           <div class="overlay">
-                              <div class="text">    <a href="#" onclick="addToCart('item9')">
-                                 <i class="fa fa-cart-plus" aria-hidden="true"></i></a></div>
-                           </div>
-                        </div>
-                        <div class="item-data">
-                           <!---Items will be added here -->
-                     </div>
-                     </div>
+                  </div>
+                  <div class="item-data">
+                     <!-- Item 3 data -->
                   </div>
                </div>
             </div>
          </div>
-      </div>
-      <!-- gallery-->
+         <div class="gallery_section_2">
+            <div class="row">
+               <!-- Item 4 -->
+               <div class="col-md-4">
+                  <div class="container_main">
+                     <img src="images/img4.jpg" alt="Avatar" class="image" id="item4" data-item-id="item4">
+                     <div class="overlay">
+                        <div class="text">
+                           <a href="#" onclick="addToCart('item4')">
+                              <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="item-data">
+                     <!-- Item 4 data -->
+                  </div>
+               </div>
+               <!-- Item 5 -->
+               <div class="col-md-4">
+                  <div class="container_main">
+                     <img src="images/img5.jpg" alt="Avatar" class="image" id="item5" data-item-id="item5">
+                     <div class="overlay">
+                        <div class="text">
+                           <a href="#" onclick="addToCart('item5')">
+                              <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="item-data">
+                     <!-- Item 5 data -->
+                  </div>
+               </div>
+               <!-- Item 6 -->
+               <div class="col-md-4">
+                  <div class="container_main">
+                     <img src="images/img6.jpg" alt="Avatar" class="image" id="item6" data-item-id="item6">
+                     <div class="overlay">
+                        <div class="text">
+                           <a href="#" onclick="addToCart('item6')">
+                              <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="item-data">
+                     <!-- Item 6 data -->
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="gallery_section_2">
+            <div class="row">
+               <!-- Item 7 -->
+               <div class="col-md-4">
+                  <div class="container_main">
+                     <img src="images/img7.jpg" alt="Avatar" class="image" id="item7" data-item-id="item7">
+                     <div class="overlay">
+                        <div class="text">
+                           <a href="#" onclick="addToCart('item7')">
+                              <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="item-data">
+                     <!-- Item 7 data -->
+                  </div>
+               </div>
+               <!-- Item 8 -->
+               <div class="col-md-4">
+                  <div class="container_main">
+                     <img src="images/img8.jpg" alt="Avatar" class="image" id="item8" data-item-id="item8">
+                     <div class="overlay">
+                        <div class="text">
+                           <a href="#" onclick="addToCart('item8')">
+                              <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="item-data">
+                     <!-- Item 8 data -->
+                  </div>
+               </div>
+               <!-- Item 9 -->
+               <div class="col-md-4">
+                  <div class="container_main">
+                     <img src="images/img9.jpg" alt="Avatar" class="image" id="item9" data-item-id="item9">
+                     <div class="overlay">
+                        <div class="text">
+                           <a href="#" onclick="addToCart('item9')">
+                              <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="item-data">
+                     <!-- Item 9 data -->
+                  </div>
+               </div>
+            </div>
+         </div>
+   </div>
+</div>
+<!-- gallery -->
   <!-- footer-->
   <div class="footer_section margin_top90">
    <div class="container">
@@ -272,59 +301,63 @@
       <script src="js/logout.js"></script>
       <script src="js/cart.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="js/items.js"></script>
       <script>
-         // Fetch item data from the server
-         fetch('/items')
-           .then(response => response.json())
-           .then(items => {
-             // Get the item elements
-             const itemElements = document.querySelectorAll('.item-data');
-       
-             // Loop through each item element and populate it with the corresponding data
-             items.forEach((item, index) => {
-               const itemElement = itemElements[index];
-               if (itemElement) {
+      // Fetch item data from the server
+// Wrap the code within a DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+  // Fetch item data from the server
+  fetch('/items')
+    .then(response => response.json())
+    .then(items => {
+      // Get the item elements
+      const itemElements = document.querySelectorAll('.item-data');
 
-                  let stock;
-                  let stock_class = '';
-                  if (item.stock > 0) {
-                   stock = 'In-Stock';
-                   stock_class = 'in-stock';
-              } else if (item.stock === 0) {
-                 stock = 'Out-Of-Stock';
-                 stock_class = 'out-of-Stock';
-                  } else {
-                 stock = 'Unknown';
-                   }
-                 // Populate the item data within the item element
-                 itemElement.innerHTML = `
-                   <h4 class="item-name">${item.name}</h4>
-                   <p class="item-price">
-                   <span class="price-label">Price:</span>
-                   <span class="price-value">$${item.price}</span>
-                  </p>
-                      <p class="item-stock">
-                     <span class="stock_value ${stock_class}">${stock}</span>
-                   </p>
-                   <!-- Add more item data here -->
-                 `;
-               }
-             });
-           })
-           .catch(error => {
-             console.error('Error fetching items:', error);
-           });</script>
-           <script>
-            document.addEventListener('DOMContentLoaded', () => {
-              const itemImage = document.getElementById('item1');
-              itemImage.addEventListener('click', () => {
-                const itemData = {
-                  // Add the relevant properties of the item
-                  // ...
-                };
-                addToCart(itemData);
-              });
-            });
+      // Loop through each item element and populate it with the corresponding data
+      items.forEach((item, index) => {
+        const itemElement = itemElements[index];
+        if (itemElement) {
+          let stock;
+          let stockClass = '';
+          if (item.stock > 0) {
+            stock = 'In-Stock';
+            stockClass = 'in-stock';
+          } else if (item.stock === 0) {
+            stock = 'Out-Of-Stock';
+            stockClass = 'out-of-stock';
+          } else {
+            stock = 'Unknown';
+          }
+
+          // Determine the shipping fee display
+          let shippingDisplay = item.shipping === 'free' ? 'FREE' : item.shipping;
+
+          // Apply CSS class for free shipping
+          let shippingClass = item.shipping === 'free' ? 'free-shipping' : '';
+
+          // Populate the item data within the item element
+          itemElement.innerHTML = `
+            <h4 class="item-name">${item.name}</h4>
+            <p class="item-price">
+              <span class="price-label">Price:</span>
+              <span class="price-value">$${item.price}</span>
+            </p>
+            <p class="item-shipping ${shippingClass}">
+              <span class="shipping-label">Shipping: </span>
+              <span class="shipping-value">$${shippingDisplay}</span>
+            </p>
+            <p class="item-stock">
+              <span class="stock-value ${stockClass}">${stock}</span>
+            </p>
+            <!-- Add more item data here -->
+          `;
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching items:', error);
+    });
+});
           </script>
    </body>
 </html>

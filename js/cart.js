@@ -30,6 +30,15 @@ function addToCart(itemId) {
       const selectedItem = items.find(item => item.itemId === itemId);
 
       if (selectedItem) {
+        if (selectedItem.stock === 0) {
+          // Store the current scroll position
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+          showToast('The item is currently out of stock.');
+         // After the toast is dismissed, restore the scroll position
+        window.scrollTo(0, scrollPosition);
+          return; // Don't add the item to the cart
+        }
+
         // Get the current cart count
         let cartCount = parseInt(getCartCount());
         if (isNaN(cartCount) || cartCount < 0) {
@@ -43,12 +52,18 @@ function addToCart(itemId) {
         // Update the cart badge
         updateCartBadge();
 
-        showToast(); // Show the toast notification
-
         // Add the selected item to the cart items
         const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         cartItems.push(selectedItem);
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+        // Store the current scroll position
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+        showToast('Item added to your cart.'); // Show the toast notification
+
+        // After the toast is dismissed, restore the scroll position
+        window.scrollTo(0, scrollPosition);
 
         console.log('Item added to cart:', selectedItem);
       } else {
@@ -60,6 +75,8 @@ function addToCart(itemId) {
     });
 }
 
+
+
 // Call updateCartBadge initially when the page loads
 document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge();
@@ -67,16 +84,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // Function to show the toast notification
-  function showToast() {
-    const toast = document.getElementById('toast');
-    toast.classList.remove('hide');
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-      toast.classList.add('hide');
-    }, 2000); // Hide the toast after 2 seconds
-  }
+// Function to show the toast notification
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  const toastMessage = document.getElementById('toastMessage');
+
+  toastMessage.textContent = message; // Set the toast message
+
+  toast.classList.remove('hide');
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+    toast.classList.add('hide');
+  }, 2000); // Hide the toast after 2 seconds
+}
+
 // Call updateCartBadge initially when the page loads
 document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge();
@@ -197,8 +219,14 @@ function initializeCart() {
       const priceCell = document.createElement('td');
       priceCell.textContent = selectedItem.price;
 
+      const shippingCell = document.createElement('td');
+      shippingCell.textContent = selectedItem.shipping === 'free' ? 'FREE' : selectedItem.shipping;
+
       const totalAmountCell = document.createElement('td');
-      totalAmountCell.textContent = (selectedItem.price * quantity).toFixed(2);
+    const shippingFee = selectedItem.shipping === 'free' ? 0 : parseFloat(selectedItem.shipping);
+    const totalAmount = (selectedItem.price * quantity + shippingFee).toFixed(2);
+    totalAmountCell.textContent = totalAmount;
+
 
       const actionsCell = document.createElement('td');
       const removeButton = document.createElement('button');
@@ -226,6 +254,7 @@ function initializeCart() {
       // Append the cells to the row
       row.appendChild(nameCell);
       row.appendChild(priceCell);
+      row.appendChild(shippingCell);
       row.appendChild(totalAmountCell);
       row.appendChild(actionsCell);
 
@@ -236,12 +265,14 @@ function initializeCart() {
 
   function calculateTotalAmount(cartItems) {
     let totalAmount = 0;
-
+  
     cartItems.forEach(item => {
-      const { price } = item;
+      const { price, shipping } = item;
+      const shippingFee = shipping === 'free' ? 0 : parseFloat(shipping);
       totalAmount += price;
+      totalAmount += shippingFee;
     });
-
+  
     return totalAmount.toFixed(2);
   }
 

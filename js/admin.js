@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', initializeAdmin);
 function initializeAdmin() {
   const addItemForm = document.getElementById('addItemForm');
   const itemsContainer = document.getElementById('itemsContainer');
+  const toggleUsersButton = document.getElementById('toggleUsersButton');
+  toggleUsersButton.addEventListener('click', toggleUsersTable);
 
   // Add event listener to the "Add" button in the form
   addItemForm.addEventListener('submit', addItem);
@@ -102,8 +104,8 @@ function addItem(event) {
     name: itemNameInput.value,
     stock: parseInt(stockInput.value),
     price: parseFloat(priceInput.value),
-    shipping: parseInt(shippingInput.value),
-    itemId: itemIdInput.value
+    shipping: shippingInput.value === 'free' ? 'free' : parseFloat(shippingInput.value),
+    itemId: 'item' + itemIdInput.value
   };
 
   // Send an HTTP POST request to the `/items` endpoint
@@ -155,14 +157,10 @@ function addItem(event) {
       });
   }
 
-  // Function to update an item
-  function updateItem(itemId) {
-    // Implement the update functionality as per your requirement
-    console.log(`Updating item with ID: ${itemId}`);
-  }
-
   // Call fetchItems initially when the page loads
   fetchItems();
+ // Call fetchUsers initially when the page loads
+  fetchUsers();
 }
 
 // Function to toggle the visibility of the items container
@@ -337,3 +335,282 @@ removeButton.addEventListener('click', () => {
   const itemId = /* retrieve the itemId */
   performItemRemoval(itemId);
 });
+
+/// Update Button
+
+// Function to populate the updateItemId select element with itemIds
+function populateItemIdSelect() {
+  fetch('/items')
+    .then(response => response.json())
+    .then(data => {
+      const updateItemIdSelect = document.getElementById('updateItemId');
+      updateItemIdSelect.innerHTML = ''; // Clear previous options
+
+      // Create and append option elements for each itemId
+      data.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.itemId;
+        option.textContent = item.itemId;
+        updateItemIdSelect.appendChild(option);
+      });
+
+      // Add onchange event listener to the select element
+      updateItemIdSelect.onchange = fetchItemDetails;
+    })
+    .catch(error => {
+      console.error('Error fetching itemIds:', error);
+    });
+}
+
+// Function to fetch and display item details based on selected itemId
+function fetchItemDetails() {
+  const updateItemIdSelect = document.getElementById('updateItemId');
+  const selectedItemId = updateItemIdSelect.value;
+
+  // Make a GET request to fetch item details based on itemId
+  fetch(`/items/${selectedItemId}`)
+    .then(response => response.json())
+    .then(item => {
+      // Fill out the form fields with item details
+      console.log(selectedItemId);
+      document.getElementById('updateItem').value = item.name;
+      document.getElementById('updateStock').value = item.stock;
+      document.getElementById('updatePrice').value = item.price;
+      document.getElementById('updateShipping').value = item.shipping;
+      // Construct the image URL dynamically based on the item ID
+      const imageId = selectedItemId.replace('item', ''); // Remove 'item' from the ID
+      const imageURL = `images/img${imageId}.jpg`;
+
+      // Check if the image URL exists
+      fetch(imageURL)
+        .then(response => {
+          if (response.ok) {
+            document.getElementById('updateImageURL').value = imageURL;
+          } else {
+            document.getElementById('updateImageURL').value = 'No Image Implemented';
+          }
+        })
+        .catch(error => {
+          console.error('Error checking image URL:', error);
+          document.getElementById('updateImageURL').value = null;
+        });
+    })
+    .catch(error => {
+      console.error('Error fetching item details:', error);
+    });
+}
+
+// Call the function to populate the select element on page load
+populateItemIdSelect();
+
+function UpdateNewInfo() {
+  const itemId = document.getElementById('updateItemId').value;
+  const updatedItem = {
+    name: document.getElementById('updateItem').value,
+    stock: document.getElementById('updateStock').value,
+    price: parseFloat(document.getElementById('updatePrice').value),
+    shipping: document.getElementById('updateShipping').value,
+    imageURL: document.getElementById('updateImageURL').value,
+  };
+
+  console.log('Updated item details:', updatedItem);
+
+  fetch(`/items/${itemId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedItem),
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log('Item details updated successfully');
+        // Handle success
+      } else {
+        console.error('Error updating item details:', response.statusText);
+        // Handle error
+      }
+    })
+    .catch(error => {
+      console.error('Error updating item details:', error);
+      // Handle error
+    });
+}
+function fetchUsers() {
+  fetch('/users')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch users');
+      }
+      return response.json();
+    })
+    .then(users => {
+      console.log('Fetched users:', users);
+      renderUsers(users);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+      // Display an error message on the page
+      const errorContainer = document.getElementById('errorContainer');
+      errorContainer.textContent = 'Failed to fetch users. Please try again later.';
+    });
+}
+
+// Function to render the users' data in the table
+function renderUsers(users) {
+  const usersTable = document.getElementById('usersTable');
+
+  // Clear the table body
+  usersTable.innerHTML = '';
+
+  // Create table rows for each user
+  users.forEach(user => {
+    const tableRow = document.createElement('tr');
+
+    // Create table cells for each user property
+    const usernameCell = document.createElement('td');
+    usernameCell.textContent = user.name;
+    tableRow.appendChild(usernameCell);
+
+    const fullNameCell = document.createElement('td');
+    fullNameCell.textContent = user.fullName;
+    tableRow.appendChild(fullNameCell);
+
+    const cityCell = document.createElement('td');
+    cityCell.textContent = user.city;
+    tableRow.appendChild(cityCell);
+
+    const ordersCell = document.createElement('td');
+    ordersCell.textContent = user.orders || 0; // If 'orders' is undefined, set it to 0
+    tableRow.appendChild(ordersCell);
+
+    const roleCell = document.createElement('td');
+    roleCell.textContent = user.role || 'User'; // If 'role' is undefined, set it to 'User'
+    tableRow.appendChild(roleCell);
+
+    // Add the row to the table
+    usersTable.appendChild(tableRow);
+  });
+}
+
+// Function to toggle the visibility of the users table
+function toggleUsersTable() {
+  const usersTableContainer = document.getElementById('usersTableContainer');
+  const toggleUsersButton = document.getElementById('toggleUsersButton');
+
+  if (usersTableContainer.style.display === 'none') {
+    // Fetch and render the users' data
+    fetchUsers();
+
+    usersTableContainer.style.display = '';
+    toggleUsersButton.textContent = 'Hide Users';
+  } else {
+    usersTableContainer.style.display = 'none';
+    toggleUsersButton.textContent = 'Show Users';
+  }
+}
+// Function to handle the SelectBox Change
+function handleSearchGroupChange() {
+  const searchGroup = document.getElementById('searchGroup').value;
+  const searchFormContainer = document.getElementById('searchFormContainer');
+  searchFormContainer.innerHTML = '';
+
+  if (searchGroup === 'name') {
+    createNameSearchForm();
+  } else if (searchGroup === 'city') {
+    createCitySearchForm();
+  } else if (searchGroup === 'orders') {
+    createOrdersSearchForm();
+  }
+}
+function createNameSearchForm() {
+  const searchFormContainer = document.getElementById('searchFormContainer');
+  searchFormContainer.innerHTML = '';
+
+  const nameSearchForm = document.createElement('form');
+  nameSearchForm.innerHTML = `
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" />
+    <button type="submit">Search</button>
+  `;
+  nameSearchForm.addEventListener('submit', handleNameSearch);
+
+  searchFormContainer.appendChild(nameSearchForm);
+}
+
+function handleNameSearch(event) {
+  event.preventDefault();
+
+  const fullName = document.getElementById('fullName').value.trim();
+
+  // Perform the search and update the user table
+  // Fetch the users from the server based on the full name and update the table accordingly
+  // ...
+}
+function createCitySearchForm() {
+  const searchFormContainer = document.getElementById('searchFormContainer');
+  searchFormContainer.innerHTML = '';
+
+  const citySearchForm = document.createElement('form');
+  citySearchForm.innerHTML = `
+    <label for="city">City:</label>
+    <select id="city">
+      <option value="Ashdod">Ashdod</option>
+      <option value="Jerusalem">Jerusalem</option>
+      <option value="Tel Aviv-Yafo">Tel Aviv-Yafo</option>
+      <option value="Haifa">Haifa</option>
+      <option value="Netanya">Netanya</option>
+      <option value="Lod">Lod</option>
+      <option value="Holon">Holon</option>
+    </select>
+    <button type="submit">Search</button>
+  `;
+  citySearchForm.addEventListener('submit', handleCitySearch);
+
+  searchFormContainer.appendChild(citySearchForm);
+}
+
+function handleCitySearch(event) {
+  event.preventDefault();
+
+  const city = document.getElementById('city').value;
+
+  // Perform the search and update the user table
+  fetch(`/users/${city}`)
+    .then(response => response.json())
+    .then(users => {
+      // Render the users' data on the page
+      renderUsers(users);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+    });
+}
+function createOrdersSearchForm() {
+  const searchFormContainer = document.getElementById('searchFormContainer');
+  searchFormContainer.innerHTML = '';
+
+  const ordersSearchForm = document.createElement('form');
+  ordersSearchForm.innerHTML = `
+    <label for="orderStatus">Order Status:</label>
+    <select id="orderStatus">
+      <option value="all">All</option>
+      <option value="made">Orders Made</option>
+      <option value="not-made">Orders Not Made</option>
+    </select>
+    <button type="submit">Search</button>
+  `;
+  ordersSearchForm.addEventListener('submit', handleOrdersSearch);
+
+  searchFormContainer.appendChild(ordersSearchForm);
+}
+
+function handleOrdersSearch(event) {
+  event.preventDefault();
+
+  const orderStatus = document.getElementById('orderStatus').value;
+
+  // Perform the search and update the user table
+  // Fetch the users from the server based on the order status and update the table accordingly
+  // ...
+}
