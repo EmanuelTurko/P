@@ -1180,10 +1180,10 @@ a.btn-register,
     padding: -20px;
 }
 label[for="Item"],
-label[for="stocks"],
+label[for="stock"],
 label[for="price"],
-label[for="itemId"]
-label[for="stocks"] {
+label[for="itemId"],
+label[for="shipping"] {
     color: #ad8fb9;
 }
 .form-admin:focus {
@@ -1350,7 +1350,7 @@ color: #ad8fb9;
   #emptyCartMessage {
     justify-content: center;
     text-align: left;
-    margin-top: 40px;
+    margin-top: 50px;
     font-style: italic;
     color: #999;
   }
