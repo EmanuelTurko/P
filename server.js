@@ -156,11 +156,33 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// API endpoint to fetch login status
-app.get('/api/login-status', (req, res) => {
-  res.json({ isLoggedIn });
-});
+// API endpoint to fetch login status and user data
+app.get('/api/login-status', async (req, res) => {
+  try {
+    if (isLoggedIn) {
+      // Retrieve the user data from the database based on the logged-in user's information
+      const user = await Register.findOne({ name: req.cookies.username });
 
+      if (user) {
+        // Return the login status and user details
+        res.json({
+          isLoggedIn: true,
+          username: user.name,
+          password: user.password,
+          fullName: user.fullName,
+          city: user.city
+        });
+      } else {
+        res.json({ isLoggedIn: false });
+      }
+    } else {
+      res.json({ isLoggedIn: false });
+    }
+  } catch (error) {
+    console.error('Error fetching login status:', error);
+    res.json({ isLoggedIn: false });
+  }
+});
 // Handle logout request
 app.post('/logout', (req, res) => {
   // Clear the session
@@ -177,6 +199,40 @@ app.post('/logout', (req, res) => {
   });
 });
 
+// Handle update profile form submission
+app.post('/update-profile', async (req, res) => {
+  const { username, password, fullName, city } = req.body;
+
+  try {
+    // Find the user by username
+    const user = await Register.findOne({ name: username });
+
+    if (!user) {
+      // User not found
+      return res.status(404).send('User not found');
+    }
+
+    // Update the user's profile information
+    if (password) {
+      user.password = password;
+    }
+    if (fullName) {
+      user.fullName = fullName;
+    }
+    if (city) {
+      user.city = city;
+    }
+
+    // Save the updated user document
+    await user.save();
+
+    // Redirect the user to a success page or any other desired action
+    res.redirect('/index.html');
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    res.status(500).send('Profile update failed');
+  }
+});
 // Start the server
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

@@ -76,20 +76,54 @@
    </div>
 </div>
 <!--header-->
-<!-- login -->
+<!-- update -->
 <div class="login_section layout_padding">
-    <div class="container">
-       <div class="row">
-          <div class="col-md-6 offset-md-3">
-            <div class="about_title">Purchase History</div>
-             </div>
-          </div>
-          <div class="about_history">dont have PURCHASE HISTORY</div>
-          <a class="history-link" href="items.html">click here</a>
-       </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="about_title">Purchase History</div>
+      </div>
     </div>
- </div>
- <!-- login-->
+
+    <!-- Display user details -->
+    <div id="userDetails">
+      <h4>User Details:</h4>
+      <div>
+        <strong>Username:</strong> <span id="userUsername"></span>
+      </div>
+      <div>
+        <strong>Password:</strong> <span id="userPassword"></span>
+      </div>
+      <div>
+        <strong>Full Name:</strong> <span id="userFullName"></span>
+      </div>
+      <div>
+        <strong>City:</strong> <span id="userCity"></span>
+      </div>
+    </div>
+
+    <form id="updateProfileForm" action="/update-profile" method="post">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>  
+      <div>
+        <label for="password">New Password:</label>
+        <input type="password" id="password" name="password">
+      </div>
+      <div>
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName">
+      </div>
+      <div>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city">
+      </div>
+      <button type="submit">Update Profile</button>
+    </form>
+  </div>
+</div>
+<!-- update -->
       <!-- footer -->
       <div class="footer_section margin_top90">
         <div class="container">

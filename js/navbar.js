@@ -5,10 +5,12 @@ function pageLoaded() {
   updateNavbar();
 }
 
+
 function updateNavbar() {
   const loginLink = document.getElementById('login');
   const logoutLink = document.getElementById('logout');
   const usernameLabel = document.getElementById('username');
+  const myDetailsLink = document.getElementById('my-details');
 
   // Display the login error message
   const urlParams = new URLSearchParams(window.location.search);
@@ -24,18 +26,18 @@ function updateNavbar() {
       if (data.isLoggedIn) {
         loginLink.style.display = 'none';
         logoutLink.style.display = '';
-
-        // Retrieve the username from the cookie
-        const username = getCookie('username');
-        if (username) {
-          usernameLabel.textContent = 'Welcome, ' + username;
-        } else {
-          usernameLabel.textContent = '';
-        }
+        usernameLabel.textContent = 'Welcome, ' + data.username;
+        document.getElementById('userDetails').textContent =
+          'Username: ' + data.username + '\n' +
+          'Full Name: ' + data.fullName + '\n' +
+          'City: ' + data.city;
+        myDetailsLink.style.display = ''; // Show the "My Details" link
       } else {
         loginLink.style.display = '';
         logoutLink.style.display = 'none';
         usernameLabel.textContent = '';
+        document.getElementById('userDetails').textContent = '';
+        myDetailsLink.style.display = 'none'; // Hide the "My Details" link
       }
     })
     .catch((error) => {
