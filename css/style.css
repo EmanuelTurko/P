@@ -490,20 +490,21 @@ img.image {
 
 .overlay {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     opacity: 0;
     transition: .5s ease;
-    background-color: rgb(254, 230, 220, 0.6);
-    margin: 0 auto;
-}
+    background-color: rgba(254, 230, 220, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+ }
 
 .container_main:hover .overlay {
-    opacity: 1;
+    opacity: 0.7;
 }
 
 .text {
@@ -1148,26 +1149,30 @@ a.btn-register,
     font-size: 25px;
     font-weight:bold;
 }
-.toast {
-    position: fixed;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    border-radius: 5px;
-    opacity: 0;
-    transition: opacity 0.7s ease-in-out;
-  }
-  
-  .hide {
-    display: none;
-  }
-  
-  .show {
-    opacity: 1;
-  }
+<<<<<<< HEAD
+/*about_history*/
+.about_history{
+        width: 100%;
+        float: center;
+        font-size: 30px;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase; 
+}
+.history-link{
+width: 100%;
+float: center;
+font-size: 30px;
+color: white;
+font-weight: bold;
+text-transform: uppercase; 
+}
+
+<<<<<<< Updated upstream
+=======
+}
+
+
 /*about_history*/
 .about_history{
     width: 100%;
@@ -1259,45 +1264,16 @@ color: #ad8fb9;
     border-bottom: 2px solid #ad8fb9;
     ;
   }
-  
-  #cartItemsTable th {
-    font-weight: bold;
-  }
-  
-  #cartItemsTable td:nth-child(1) {
-    width: 100px;
-  }
-  
-  #cartItemsTable td:nth-child(2) {
-    width: 200px;
-  }
-  
-  #cartItemsTable td:nth-child(3),
-  #cartItemsTable td:nth-child(4) {
-    width: 100px;
+>>>>>>> 95e4b27c82126fd152e6a92b64432cb7b4f1083e
+/*  cart */
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
     text-align: center;
-  }
-  
-  #cartItemsTable td:nth-child(5) {
-    width: 150px;
-  }
-  
-  #totalLabelCell {
-    text-align: right;
+    padding: 10px;
     font-weight: bold;
   }
-  
-  #clearCartButton {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  #emptyCartMessage {
-    text-align: left;
-    margin-top: 40px;
-    font-style: italic;
-    color: #999;
-  }
+=======
+}
+>>>>>>> Stashed changes
