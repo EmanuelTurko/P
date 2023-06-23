@@ -30,6 +30,14 @@ const registerSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  fullName: {
+    type: String,
+    required: true
+  },
+  city: {
+    type: String,
+    required: true
   }
 });
 
@@ -107,10 +115,10 @@ app.get('/:page.html', (req, res) => {
 
 // Handle registration form submission
 app.post('/register', async (req, res) => {
-  const { name, password } = req.body;
+  const { name, password, fullName, city } = req.body;
 
   // Create a new document using the Register model
-  const newUser = new Register({ name, password });
+  const newUser = new Register({ name, password, fullName, city });
 
   // Save the new user document to the "register" collection
   try {
