@@ -78,39 +78,47 @@
  <!--header-->
 <!-- login -->
 <div class="admin_section layout_padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 offset-md-3">
-          <div class="admin_form">
-            <h2 class="admin_title">admin</h2>
-            <form id="adminForm" action="/login" method="post">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="admin_form">
+          <h2 class="admin_title">admin</h2>
+        </div>
+      </div>
+        <table class="table">
+          <tr>
+            <td>
               <div class="form-group">
                 <div id="admin-message" style="color:red;font-size: 18px;"></div>
                 <label for="Item">add Item</label>
                 <input type="text" class="form-admin" id="Item" name="Item" placeholder="name Item" required>
               </div>
+            </td>
+            <td>
               <div class="form-group">
                 <label for="stocks">stocks</label>
-                <input type="number" class="form-admin" id="stocks" name="stocks" placeholder="number stock" required>
+                <input type="number" class="form-admin" id="stock" name="stocks" placeholder="number stock" required>
               </div>
+            </td>
+            <td>
               <div class="form-group">
                 <label for="price">price</label>
                 <input type="price" class="form-admin" id="price" name="price" placeholder="price" required>
               </div>
+            </td>
+            <td>
               <div class="form-group">
-                <label for="itemId">stocks</label>
-                <input type="id" class="form-admin" id="itemId" name="itemId" placeholder="itemId" required>
+                <label for="itemId">item Id</label>
+                <input type="id" class="form-admin" id="itemId" name="itemId" placeholder="for example item1 item2" required>
               </div>
+            </td>
+            <td>
               <button type="submit" class="btn btn-primary">add</button>
               <a href="register.html" class="btn btn-primary">Still Not</a>
-            </form>
-            <div id="admin-message"></div>
-              <button type="submit" class="btn btn-primary">admin</button>
-              <a href="register.html" class="btn btn-primary">Still Not</a>
-            </form>
-            <div id="login-message"></div>
-          </div>
-        </div>
+            </td>
+          </tr>
+        </table>
+        <div id="login-message"></div>
       </div>
     </div>
 </div>

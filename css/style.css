@@ -1338,6 +1338,7 @@ color: #ad8fb9;
     cursor: pointer;
   }
   #emptyCartMessage {
+    justify-content: center;
     text-align: left;
     margin-top: 40px;
     font-style: italic;
