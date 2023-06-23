@@ -77,6 +77,25 @@ app.get('/items', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+app.delete('/items/:itemId', async (req, res) => {
+  try {
+    const itemId = req.params.itemId;
+
+    // Find the item by its itemId and delete it
+    const deletedItem = await Item.findOneAndDelete({ itemId });
+
+    if (deletedItem) {
+      console.log('Item removed successfully');
+      res.status(200).send('Item removed successfully');
+    } else {
+      console.log('Item not found');
+      res.status(404).send('Item not found');
+    }
+  } catch (error) {
+    console.error('Error removing item:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 // Set up session middleware
 app.use(session({
   secret: secret,

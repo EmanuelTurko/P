@@ -7,6 +7,7 @@ function initializeAdmin() {
   // Add event listener to the "Add" button in the form
   addItemForm.addEventListener('submit', addItem);
 
+
   // Function to fetch all items from the server
   function fetchItems() {
     fetch('/items')
@@ -39,13 +40,14 @@ function renderItems(items) {
 
   // Create the table headers
   const tableHeaderRow = document.createElement('tr');
-  const headers = ['Name', 'Price', 'Stock','ShippingFee', 'Action ','Requested'];
+  const headers = ['Name', 'Price', 'Stock','ShippingFee', 'Action'];
   headers.forEach(headerText => {
     const header = document.createElement('th');
     header.textContent = headerText;
     tableHeaderRow.appendChild(header);
   });
   table.appendChild(tableHeaderRow);
+  
 
   // Iterate over the items and create table rows for each item
   items.forEach(item => {
@@ -76,18 +78,7 @@ function renderItems(items) {
     });
     removeCell.appendChild(removeButton);
     tableRow.appendChild(removeCell);
-
-    const updateCell = document.createElement('td');
-    const updateButton = document.createElement('button');
-    updateButton.textContent = 'Update';
-    updateButton.addEventListener('click', () => {
-      updateItem(item.itemId);
-    });
-    updateCell.appendChild(updateButton);
-    tableRow.appendChild(updateCell);
-
-    // Append the table row to the table
-    table.appendChild(tableRow);
+  table.appendChild(tableRow);
   });
 
   // Append the table to the container
@@ -248,40 +239,101 @@ function searchItems() {
       filteredItems.forEach(item => {
         const tableRow = document.createElement('tr');
 
-        // Create the table cells for each item property
-        const nameCell = document.createElement('td');
-        nameCell.textContent = item.name;
-        tableRow.appendChild(nameCell);
+      // Create the table cells for each item property
+    const nameCell = document.createElement('td');
+    nameCell.textContent = item.name;
+    tableRow.appendChild(nameCell);
 
-        const priceCell = document.createElement('td');
-        priceCell.textContent = `$${item.price}`;
-        tableRow.appendChild(priceCell);
+    const priceCell = document.createElement('td');
+    priceCell.textContent = `$${item.price}`;
+    tableRow.appendChild(priceCell);
 
-        const stockCell = document.createElement('td');
-        stockCell.textContent = item.stock;
-        tableRow.appendChild(stockCell);
+    const stockCell = document.createElement('td');
+    stockCell.textContent = item.stock;
+    tableRow.appendChild(stockCell);
 
-        const actionCell = document.createElement('td');
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        removeButton.addEventListener('click', () => {
-          removeItem(item.itemId);
-        });
-        actionCell.appendChild(removeButton);
-        tableRow.appendChild(actionCell);
+    const shippingCell = document.createElement('td');
+    shippingCell.textContent = `${item.shipping}`;
+    tableRow.appendChild(shippingCell);
 
-        // Append the table row to the table
-        table.appendChild(tableRow);
-      });
+    const removeCell = document.createElement('td');
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remove';
+    removeButton.addEventListener('click', () => {
+      removeItem(item.itemId);
+    });
+    removeCell.appendChild(removeButton);
+    tableRow.appendChild(removeCell);
 
-      // Append the table to the container
-      itemsContainer.appendChild(table);
-    })
+    const updateCell = document.createElement('td');
+    const updateButton = document.createElement('button');
+    updateButton.textContent = 'Update';
+    updateButton.addEventListener('click', () => {
+      updateItem(item.itemId);
+        // Add event listener to the update button
+  updateButton.addEventListener('click', () => {
+    updateItem(item.itemId);
+  });
+    });
+    updateCell.appendChild(updateButton);
+    tableRow.appendChild(updateCell);
+    table.appendChild(tableRow);
+  });
+
+  // Append the table to the container
+  itemsContainer.appendChild(table);
+})
     .catch(error => {
       console.error('Error fetching items:', error);
     });
 }
 
+
 // Attach an event listener to the search button
 const searchButton = document.getElementById('searchButton');
 searchButton.addEventListener('click', searchItems);
+
+// ...
+// Function to perform the item removal operation
+// Function to remove an item
+function removeItem(itemId) {
+  // Perform the removal operation
+  const url = `http://localhost:3000/items/${itemId}`;
+
+  fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      // Include any necessary headers for authentication or other purposes
+    },
+  })
+    .then(response => {
+      if (response.ok) {
+        // Item successfully removed
+        console.log('Item removed successfully');
+        // You can perform any necessary UI updates or other actions
+      } else {
+        // Handle the error if the removal operation failed
+        console.error('Failed to remove item');
+        // You can display an error message or perform other error handling
+      }
+    })
+    .catch(error => {
+      // Handle any network or other errors
+      console.error('An error occurred:', error);
+    });
+}
+
+// Function to perform the item removal operation
+function performItemRemoval(itemId) {
+  // This function is responsible for calling removeItem
+  removeItem(itemId);
+}
+
+// Code that creates the remove button and sets up the event listener
+const removeButton = document.createElement('button');
+removeButton.textContent = 'Remove';
+removeButton.addEventListener('click', () => {
+  const itemId = /* retrieve the itemId */
+  performItemRemoval(itemId);
+});
