@@ -39,6 +39,14 @@ const registerSchema = new mongoose.Schema({
   city: {
     type: String,
     required: true
+  },
+  NumOfOrders: {
+    type: Number,
+    default: 0
+  },
+  Role: {
+    type: String,
+    default: 'User'
   }
 });
 
@@ -311,7 +319,8 @@ app.get('/api/login-status', async (req, res) => {
           username: user.name,
           password: user.password,
           fullName: user.fullName,
-          city: user.city
+          city: user.city,
+          role: user.Role
         });
       } else {
         res.json({ isLoggedIn: false });
@@ -339,7 +348,6 @@ app.post('/logout', (req, res) => {
     }
   });
 });
-
 // Handle update profile form submission
 app.post('/update-profile', async (req, res) => {
   const { username, password, fullName, city } = req.body;

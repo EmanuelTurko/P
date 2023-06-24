@@ -5,12 +5,12 @@ function pageLoaded() {
   updateNavbar();
 }
 
-
 function updateNavbar() {
   const loginLink = document.getElementById('login');
   const logoutLink = document.getElementById('logout');
   const usernameLabel = document.getElementById('username');
   const myDetailsLink = document.getElementById('my-details');
+  const adminLink = document.getElementById('adminLink');
 
   // Display the login error message
   const urlParams = new URLSearchParams(window.location.search);
@@ -31,29 +31,34 @@ fetch('/userDetails')
     document.getElementById('fullName').textContent = "Full Name: " + data.fullName;
     document.getElementById('city').textContent = "City: " + data.city;
   });
-
-
-  
   fetch('/api/login-status')
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.isLoggedIn) {
-        usernameLabel.textContent = 'Welcome, ' + data.username;
-        loginLink.style.display = 'none';
-        logoutLink.style.display = '';
-        myDetailsLink.style.display = ''; // Show the "My Details" link
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.isLoggedIn) {
+      usernameLabel.textContent = 'Welcome, ' + data.username;
+      loginLink.style.display = 'none';
+      logoutLink.style.display = '';
+      myDetailsLink.style.display = ''; // Show the "My Details" link
 
+      // Check if the user has admin privileges
+      console.log('User role:', data.role); // Access the property as "role"
+      if (data.role === 'Admin') {
+        adminLink.style.display = ''; // Show the "Admin" link
       } else {
-        loginLink.style.display = '';
-        logoutLink.style.display = 'none';
-        myDetailsLink.style.display = 'none'; // Hide the "My Details" link
-        usernameLabel.textContent = '';
-        document.getElementById('userDetails').textContent = '';
+        adminLink.style.display = 'none'; // Hide the "Admin" link
       }
-    })
-    .catch((error) => {
-      console.error('Error fetching login status:', error);
-    });
+    } else {
+      loginLink.style.display = '';
+      logoutLink.style.display = 'none';
+      myDetailsLink.style.display = 'none'; // Hide the "My Details" link
+      adminLink.style.display = 'none'; // Hide the "Admin" link
+      usernameLabel.textContent = '';
+      document.getElementById('userDetails').textContent = '';
+    }
+  })
+  .catch((error) => {
+    console.error('Error fetching login status:', error);
+  });
 }
 
 function getCookie(name) {

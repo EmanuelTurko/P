@@ -435,6 +435,10 @@ function fetchUsers() {
     })
     .then(users => {
       console.log('Fetched users:', users);
+      // Print the values received
+      users.forEach(user => {
+        console.log('User:', user);
+      });
       renderUsers(users);
     })
     .catch(error => {
@@ -484,7 +488,7 @@ function renderUsers(users) {
     tableRow.appendChild(ordersCell);
 
     const roleCell = document.createElement('td');
-    roleCell.textContent = user.role || 'User'; // If 'role' is undefined, set it to 'User'
+    roleCell.textContent = user.Role ? user.Role : 'User';
     tableRow.appendChild(roleCell);
 
     // Add the row to the table
