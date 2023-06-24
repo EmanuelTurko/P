@@ -6,7 +6,6 @@ const session = require('express-session');
 const crypto = require('crypto');
 const secret = crypto.randomBytes(64).toString('hex');
 const cookieParser = require('cookie-parser');
-const { ObjectId } = require('mongoose').Types;
 
 const app = express();
 const port = 3000;
@@ -411,8 +410,8 @@ app.post('/userDetails', (req, res) => {
         return;
       }
   
-      const db = client.db('spaceshop'); // Replace with your database name
-      const collection = db.collection('users'); // Replace with your collection name
+      const db = client.db('spaceshop'); 
+      const collection = db.collection('users'); 
   
       collection.findOne({ username }, (err, user) => {
         if (err) {
