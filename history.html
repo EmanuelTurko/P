@@ -85,47 +85,37 @@
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="about_title">Purchase History</div>
-      </div>
-    </div>
-
     <!-- Display user details -->
     <div id="userDetails">
       <h4>User Details</h4>
-      <div>
-        <label >Username:</label> <span id="userUsername"></span>
-      </div>
-      <div>
-        <label>Password:</label> <span id="userPassword"></span>
-      </div>
-      <div>
-        <label>Full Name:</label> <span id="userFullName"></span>
-      </div>
-      <div>
-        <label>City:</label> <span id="userCity"></span>
-      </div>
-    </div>
-
-    <form id="updateProfileForm" action="/update-profile" method="post">
-      <div>
+      <form id="updateProfileForm">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-      </div>  
-      <div>
-        <label for="password">New Password:</label>
-        <input type="password" id="password" name="password">
-      </div>
-      <div>
+        <input type="text" class="form-control" id="username" name="username" readonly>
+    
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" id="password" name="password">
+    
         <label for="fullName">Full Name:</label>
-        <input type="text" id="fullName" name="fullName">
+        <input type="text" class="form-control" id="fullName" name="fullName">
+    
+        <label for="city">City</label>
+        <select list="browsers" class="form-control" id="city" name="city" placeholder="Choose your city" required>
+        <datalist id="browsers">
+         <option value="Ashdod">Ashdod</option>
+         <option value="Jerusalem">Jerusalem</option>
+         <option value="Tel Aviv-Yafo">Tel Aviv-Yafo</option>
+         <option value="Haifa">Haifa</option>
+         <option value="Netanya">Netanya</option>
+         <option value="Lod">Lod</option>
+         <option value="Holon">Holon</option>
+         </datalist>
+         </select>
       </div>
-      <div>
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city">
-      </div>
-      <button type="submit" class="btn btn-primary">Update Profile</button>
-    </form>
+        <input type="submit" class="btn btn-primary" value="Update Profile">
+      </form>
+    </div>
   </div>
-</div>
+</div>  
 <!-- update -->
       <!-- footer -->
       <div class="footer_section margin_top90">

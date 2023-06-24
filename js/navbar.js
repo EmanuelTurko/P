@@ -62,3 +62,63 @@ function getCookie(name) {
 }
 
 window.addEventListener('DOMContentLoaded', updateNavbar);
+
+
+
+// client.js
+
+// Function to fetch user details and populate the input fields
+async function populateProfile() {
+  try {
+    const response = await fetch('/api/login-status');
+    const data = await response.json();
+
+    if (response.ok && data.isLoggedIn) {
+      document.getElementById('username').value = data.username;
+      document.getElementById('fullName').value = data.fullName;
+      document.getElementById('city').value = data.city;
+    } else {
+      console.error('Error fetching user details:', data.message);
+    }
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+  }
+}
+
+// Function to handle form submission
+async function updateProfile(event) {
+  event.preventDefault(); // Prevent the default form submission behavior
+
+  // Get the form input values
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const fullName = document.getElementById('fullName').value;
+  const city = document.getElementById('city').value;
+
+  // Send a POST request to the server with the updated profile data
+  try {
+    const response = await fetch('/update-profile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password, fullName, city })
+    });
+
+    if (response.ok) {
+      // Profile update successful
+      window.location.href = '/index.html'; // Redirect to the desired page
+    } else {
+      const errorMessage = await response.text();
+      console.error('Profile update failed:', errorMessage);
+    }
+  } catch (error) {
+    console.error('Profile update failed:', error);
+  }
+}
+
+// Add an event listener to the form submit button
+document.getElementById('updateProfileForm').addEventListener('submit', updateProfile);
+
+// Populate the profile fields on page load
+populateProfile();
