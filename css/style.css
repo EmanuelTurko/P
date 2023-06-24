@@ -1143,6 +1143,30 @@ a.btn-register,
             font-weight: bold;
             text-align: center;
           }
+          .item-stock {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+          }
+          
+          .item-stock.in-stock {
+            color: green;
+          }
+          .stock_value.stock_value.out-of-Stock{
+            color: red;
+          }
+          .shipping-label {
+            color: #ad8fb9;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+          }  
+          .shipping-value {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+          }  
   .stock_value.in-stock {
     text-align: center;
     color: green;
@@ -1342,7 +1366,7 @@ text-transform: uppercase;
     font-weight: bold;
     color: white;
   }
-  #clearCartButton {
+  #clearCartButton { 
     float: right;
     background-color: #333;
     color: #fff;
@@ -1488,7 +1512,7 @@ text-transform: uppercase;
   .item-table td {
     padding: 8px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ad8fb9;
   }
   
   .item-table th {
