@@ -225,7 +225,7 @@ function searchItems() {
 
       // Create the table headers
       const tableHeaderRow = document.createElement('tr');
-      const headers = ['Name', 'Price', 'Stock', 'Action'];
+      const headers = ['Name', 'Price', 'Stock', 'Shipping', 'Action'];
       headers.forEach(headerText => {
         const header = document.createElement('th');
         header.textContent = headerText;
@@ -237,54 +237,43 @@ function searchItems() {
       filteredItems.forEach(item => {
         const tableRow = document.createElement('tr');
 
-      // Create the table cells for each item property
-    const nameCell = document.createElement('td');
-    nameCell.textContent = item.name;
-    tableRow.appendChild(nameCell);
+        // Create the table cells for each item property
+        const nameCell = document.createElement('td');
+        nameCell.textContent = item.name;
+        tableRow.appendChild(nameCell);
 
-    const priceCell = document.createElement('td');
-    priceCell.textContent = `$${item.price}`;
-    tableRow.appendChild(priceCell);
+        const priceCell = document.createElement('td');
+        priceCell.textContent = `$${item.price}`;
+        tableRow.appendChild(priceCell);
 
-    const stockCell = document.createElement('td');
-    stockCell.textContent = item.stock;
-    tableRow.appendChild(stockCell);
+        const stockCell = document.createElement('td');
+        stockCell.textContent = item.stock;
+        tableRow.appendChild(stockCell);
 
-    const shippingCell = document.createElement('td');
-    shippingCell.textContent = `${item.shipping}`;
-    tableRow.appendChild(shippingCell);
+        const shippingCell = document.createElement('td');
+        shippingCell.textContent = `${item.shipping}`;
+        tableRow.appendChild(shippingCell);
 
-    const removeCell = document.createElement('td');
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remove';
-    removeButton.addEventListener('click', () => {
-      removeItem(item.itemId);
-    });
-    removeCell.appendChild(removeButton);
-    tableRow.appendChild(removeCell);
+        const removeCell = document.createElement('td');
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.addEventListener('click', () => {
+          removeItem(item.itemId);
+        });
+        removeCell.appendChild(removeButton);
+        tableRow.appendChild(removeCell);
 
-    const updateCell = document.createElement('td');
-    const updateButton = document.createElement('button');
-    updateButton.textContent = 'Update';
-    updateButton.addEventListener('click', () => {
-      updateItem(item.itemId);
-        // Add event listener to the update button
-  updateButton.addEventListener('click', () => {
-    updateItem(item.itemId);
-  });
-    });
-    updateCell.appendChild(updateButton);
-    tableRow.appendChild(updateCell);
-    table.appendChild(tableRow);
-  });
+        table.appendChild(tableRow);
+      });
 
-  // Append the table to the container
-  itemsContainer.appendChild(table);
-})
+      // Append the table to the container
+      itemsContainer.appendChild(table);
+    })
     .catch(error => {
       console.error('Error fetching items:', error);
     });
 }
+
 
 
 // Attach an event listener to the search button
@@ -460,8 +449,18 @@ function fetchUsers() {
 function renderUsers(users) {
   const usersTable = document.getElementById('usersTable');
 
-  // Clear the table body
+  // Clear the table body and headers
   usersTable.innerHTML = '';
+
+  // Create table headers
+  const tableHeaderRow = document.createElement('tr');
+  const headers = ['User', 'Full-Name', 'City', 'Number Of Orders', 'Role'];
+  headers.forEach(headerText => {
+    const header = document.createElement('th');
+    header.textContent = headerText;
+    tableHeaderRow.appendChild(header);
+  });
+  usersTable.appendChild(tableHeaderRow);
 
   // Create table rows for each user
   users.forEach(user => {
@@ -492,7 +491,6 @@ function renderUsers(users) {
     usersTable.appendChild(tableRow);
   });
 }
-
 // Function to toggle the visibility of the users table
 function toggleUsersTable() {
   const usersTableContainer = document.getElementById('usersTableContainer');
@@ -523,6 +521,9 @@ function handleSearchGroupChange() {
     createOrdersSearchForm();
   }
 }
+
+document.getElementById('searchGroup').addEventListener('change', handleSearchGroupChange);
+
 function createNameSearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';
@@ -541,12 +542,33 @@ function createNameSearchForm() {
 function handleNameSearch(event) {
   event.preventDefault();
 
-  const fullName = document.getElementById('fullName').value.trim();
+  const searchKeyword = document.getElementById('fullName').value.trim();
+  
+  console.log('Search keyword:', searchKeyword); // Debugging statement
 
   // Perform the search and update the user table
-  // Fetch the users from the server based on the full name and update the table accordingly
-  // ...
+  fetch(`/users?search=${encodeURIComponent(searchKeyword)}`)
+    .then(response => response.json())
+    .then(users => {
+      console.log('Fetched users:', users); // Debugging statement
+      
+      // Filter the users based on the search keyword
+      const filteredUsers = users.filter(user => {
+        const fullName = user.fullName ? user.fullName : '';
+        const username = user.username ? user.username : '';
+        const keyword = searchKeyword.toLowerCase();
+        
+        return fullName.toLowerCase().includes(keyword) || username.toLowerCase().includes(keyword);
+      });
+
+      // Render the filtered users' data on the page
+      renderUsers(filteredUsers);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+    });
 }
+
 function createCitySearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';
@@ -586,6 +608,7 @@ function handleCitySearch(event) {
       console.error('Error fetching users:', error);
     });
 }
+
 function createOrdersSearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';

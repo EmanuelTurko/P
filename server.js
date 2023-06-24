@@ -429,3 +429,19 @@ app.post('/userDetails', (req, res) => {
       });
     });
   });
+// Serve the update profile form
+app.get('/profile.html', async (req, res) => {
+  try {
+    // Retrieve the user data from the database based on the logged-in user's information
+    const user = await Register.findOne({ name: req.cookies.username });
+
+    if (user) {
+      res.render('profile', { user }); // Pass the user data to the template
+    } else {
+      res.redirect('/login.html'); // Redirect if user not found
+    }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.redirect('/login.html');
+  }
+});
