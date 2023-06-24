@@ -38,10 +38,11 @@ fetch('/userDetails')
     .then((response) => response.json())
     .then((data) => {
       if (data.isLoggedIn) {
+        usernameLabel.textContent = 'Welcome, ' + data.username;
         loginLink.style.display = 'none';
         logoutLink.style.display = '';
         myDetailsLink.style.display = ''; // Show the "My Details" link
-        usernameLabel.textContent = 'Welcome, ' + data.username;
+
       } else {
         loginLink.style.display = '';
         logoutLink.style.display = 'none';

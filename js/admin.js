@@ -523,6 +523,14 @@ function handleSearchGroupChange() {
     createOrdersSearchForm();
   }
 }
+document.getElementById('searchGroup').addEventListener('focus', function() {
+  this.classList.add('focused');
+});
+
+document.getElementById('searchGroup').addEventListener('blur', function() {
+  this.classList.remove('focused');
+});
+
 function createNameSearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';
