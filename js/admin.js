@@ -530,9 +530,9 @@ function createNameSearchForm() {
 
   const nameSearchForm = document.createElement('form');
   nameSearchForm.innerHTML = `
-    <label for="fullName">Full Name:</label>
+    <label for="fullName">Enter the requested name:</label>
     <input type="text" id="fullName" />
-    <button type="submit">Search</button>
+    <button type="submit" class="btn btn-primary">Search</button>
   `;
   nameSearchForm.addEventListener('submit', handleNameSearch);
 
@@ -576,7 +576,7 @@ function createCitySearchForm() {
   const citySearchForm = document.createElement('form');
   citySearchForm.innerHTML = `
     <label for="city">City:</label>
-    <select id="city">
+    <select id="city" class="form-control">
       <option value="Ashdod">Ashdod</option>
       <option value="Jerusalem">Jerusalem</option>
       <option value="Tel Aviv-Yafo">Tel Aviv-Yafo</option>
@@ -585,7 +585,7 @@ function createCitySearchForm() {
       <option value="Lod">Lod</option>
       <option value="Holon">Holon</option>
     </select>
-    <button type="submit">Search</button>
+    <button type="submit"class="btn btn-primary">Search</button>
   `;
   citySearchForm.addEventListener('submit', handleCitySearch);
 
@@ -615,13 +615,13 @@ function createOrdersSearchForm() {
 
   const ordersSearchForm = document.createElement('form');
   ordersSearchForm.innerHTML = `
-    <label for="orderStatus">Order Status:</label>
-    <select id="orderStatus">
+    <label for="orderStatus">Order By:</label>
+    <select id="orderStatus" class="form-control">
       <option value="all">All</option>
       <option value="made">Orders Made</option>
       <option value="not-made">Orders Not Made</option>
     </select>
-    <button type="submit">Search</button>
+    <button type="submit"class="btn btn-primary">Search</button>
   `;
   ordersSearchForm.addEventListener('submit', handleOrdersSearch);
 
