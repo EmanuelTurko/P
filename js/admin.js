@@ -86,23 +86,21 @@ function renderItems(items) {
   // Append the table to the container
   itemsContainer.appendChild(table);
 }
-
-
-
-// Function to add a new item
 function addItem(event) {
   event.preventDefault();
 
   // Retrieve the form input values
   const itemNameInput = document.getElementById('Item');
-  const stockInput = document.getElementById('stock');
+  const supplierSelect = document.getElementById('supplierSelect');
+  const stockQuantityInput = document.getElementById('stockQuantity');
   const priceInput = document.getElementById('price');
   const shippingInput = document.getElementById('shipping');
   const itemIdInput = document.getElementById('itemId');
 
   const newItem = {
     name: itemNameInput.value,
-    stock: parseInt(stockInput.value),
+    supplierName: supplierSelect.value,
+    stock: parseInt(stockQuantityInput.value),
     price: parseFloat(priceInput.value),
     shipping: shippingInput.value === 'free' ? 'free' : parseFloat(shippingInput.value),
     itemId: 'item' + itemIdInput.value
@@ -121,19 +119,46 @@ function addItem(event) {
         console.log('Item added successfully');
         // Clear the form inputs
         itemNameInput.value = '';
-        stockInput.value = '';
+        supplierSelect.value = '';
+        stockQuantityInput.value = '';
         priceInput.value = '';
         shippingInput.value = '';
         itemIdInput.value = '';
 
         // Refresh the item list
         fetchItems();
+
+        // Update supplier's stock
+        updateSupplierStock(newItem.supplierName, newItem.itemId, newItem.stock);
       } else {
         console.error('Failed to add item:', response.statusText);
       }
     })
     .catch(error => {
       console.error('Error adding item:', error);
+    });
+}
+
+function updateSupplierStock(supplierName, itemId, stockQuantity) {
+  console.log('Updating supplier stock:', supplierName, itemId, stockQuantity);
+
+  // Send an HTTP POST request to the `/suppliers/:name/stock` endpoint
+  fetch(`/suppliers/${encodeURIComponent(supplierName)}/stock`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ itemId, stockQuantity })
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log('Supplier stock updated successfully');
+      } else {
+        console.error('Failed to update supplier stock:', response.statusText);
+      }
+    })
+    .catch(error => {
+      console.error('Error updating supplier stock:', error);
     });
 }
 
@@ -641,3 +666,35 @@ function handleOrdersSearch(event) {
   // Fetch the users from the server based on the order status and update the table accordingly
   // ...
 }
+function fetchSuppliers() {
+  fetch('/suppliers')
+    .then(response => response.json())
+    .then(suppliers => {
+      const supplierSelect = document.getElementById('supplierSelect');
+      const stockQuantityContainer = document.getElementById('stockQuantityContainer');
+      
+      // Add event listener
+      supplierSelect.addEventListener('change', () => {
+        const selectedSupplier = supplierSelect.value;
+        stockQuantityContainer.style.display = selectedSupplier ? 'block' : 'none';
+      });
+
+      // Clear previous options
+      supplierSelect.innerHTML = '<option value="">Select Supplier</option>';
+
+      // Generate options dynamically based on available suppliers
+      suppliers.forEach(supplier => {
+        const option = document.createElement('option');
+        option.value = supplier.name;
+        option.textContent = supplier.name;
+        supplierSelect.appendChild(option);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching suppliers:', error);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchSuppliers();
+});

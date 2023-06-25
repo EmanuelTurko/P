@@ -104,8 +104,15 @@
                       <input type="text" class="form-control" id="Item" name="Item" placeholder="Name of the item" required>
                     </div>
                     <div class="form-group">
-                      <label for="stock">Stock</label>
-                      <input type="number" class="form-control" id="stock" name="stock" placeholder="Number of stock" required>
+                      <label for="stock">Supplier</label>
+                      <select class="form-control" id="supplierSelect" required>
+                        <option value="">Select Supplier</option>
+                        <!-- Options will be dynamically generated -->
+                      </select>
+                    </div>
+                    <div class="form-group" id="stockQuantityContainer" style="display: none;">
+                      <label for="stockQuantity">Stock Quantity</label>
+                      <input type="number" class="form-control" id="stockQuantity" name="stockQuantity" placeholder="Quantity" required>
                     </div>
                     <div class="form-group">
                       <label for="price">Price</label>

@@ -6,6 +6,7 @@ const session = require('express-session');
 const crypto = require('crypto');
 const secret = crypto.randomBytes(64).toString('hex');
 const cookieParser = require('cookie-parser');
+const { name } = require('ejs');
 
 const app = express();
 const port = 3000;
@@ -47,7 +48,7 @@ mongoose
   }
 });
  // model for supplier
- const supplier = mongoose.model('supplier',suppSchema);
+ const Supplier = mongoose.model('supplier',suppSchema);
 // Adding a new supplier to the system
 async function insertNewSupplier(name, location, stock) {
   try {
@@ -57,7 +58,7 @@ async function insertNewSupplier(name, location, stock) {
       stockMap.set(key, stockValue);
     });
 
-    const newSupplier = new supplier({
+    const newSupplier = new Supplier({
       name: name,
       location: location,
       stock: stockMap
@@ -147,7 +148,7 @@ async function updateItemStocksFromSuppliers() {
       const itemID = item.itemId;
       let totalStock = 0;
 
-      const suppliers = await supplier.find(); // Retrieve all suppliers from the suppliers collection
+      const suppliers = await Supplier.find(); // Retrieve all suppliers from the suppliers collection
 
       for (const supplier of suppliers) {
         const stock = supplier.stock;
@@ -171,7 +172,43 @@ async function updateItemStocksFromSuppliers() {
 // Call the function to update item stocks from suppliers upon server bootup
 updateItemStocksFromSuppliers();
 
+// route to get Suppliers
+app.get('/suppliers', async (req, res) => {
+  try {
+    // Fetch the suppliers from the database
+    const suppliers = await Supplier.find({}, 'name');
+    res.json(suppliers);
+  } catch (err) {
+    console.error('Error fetching suppliers:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Update supplier's stock
+app.post('/suppliers/:name/stock', (req, res) => {
+  const supplierName = req.params.name;
+  const { itemId, stockQuantity } = req.body;
 
+  // Find the supplier by name
+  Supplier.findOne({ name: supplierName })
+    .then((supplier) => {
+      if (!supplier) {
+        res.status(404).json({ error: 'Supplier not found' });
+      } else {
+        // Update the supplier's stock for the specified item
+        supplier.stock.set(`itemId:${itemId}`, stockQuantity);
+        // Save the updated supplier
+        return supplier.save()
+          .then(() => {
+            console.log(`Updated stock of supplier '${supplier.name}':`, supplier.stock); // Print the stock map
+            res.sendStatus(200);
+          });
+      }
+    })
+    .catch((err) => {
+      console.error('Error updating supplier stock:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+});
 // Route handler for fetching users
 app.get('/users', (req, res) => {
   // Fetch users from the "register" collection
