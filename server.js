@@ -21,7 +21,66 @@ mongoose
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
   });
+ // Define a schema for the 'supplier' collection
+ // Define a schema for the 'supplier' collection
+ const suppSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true
+  },
+  stock: {
+    type: Map,
+    of: { type: Number },
+    required: true,
+    transform: (value) => {
+      const stockMap = new Map();
+      for (const key in value) {
+        const itemId = key.split(':')[1];
+        stockMap.set(itemId, value[key]);
+      }
+      return stockMap;
+    }
+  }
+});
+ // model for supplier
+ const supplier = mongoose.model('supplier',suppSchema);
+// Adding a new supplier to the system
+async function insertNewSupplier(name, location, stock) {
+  try {
+    const stockMap = new Map();
+    Object.entries(stock).forEach(([itemId, stockValue]) => {
+      const key = `itemId:${itemId}`;
+      stockMap.set(key, stockValue);
+    });
 
+    const newSupplier = new supplier({
+      name: name,
+      location: location,
+      stock: stockMap
+    });
+
+    await newSupplier.save();
+    console.log('New supplier inserted successfully:', newSupplier);
+  } catch (error) {
+    console.error('Error inserting new supplier:', error);
+  }
+}
+// Insert a new supplier when needed
+/*insertNewSupplier('Supplier Name', 'Supplier Location', {
+  'item1': 10,
+  'item2': 20,
+  'item3': 15,
+  'item4': 15,
+  'item5': 15,
+  'item6': 15,
+  'item7': 15,
+  'item8': 15,
+  'item9': 15
+});*/
 // Define a schema for the "register" collection
 const registerSchema = new mongoose.Schema({
   name: {
@@ -76,6 +135,43 @@ const itemSchema = new mongoose.Schema({
     required: true
   }
 });
+// Create a model for the "items" collection
+const Item = mongoose.model('Item', itemSchema);
+// async function to update the item's stock value based on supplier's stock
+// Update item stock values based on suppliers
+async function updateItemStocksFromSuppliers() {
+  try {
+    const items = await Item.find(); // Retrieve all items from the items collection
+
+    for (const item of items) {
+      const itemID = item.itemId;
+      let totalStock = 0;
+
+      const suppliers = await supplier.find(); // Retrieve all suppliers from the suppliers collection
+
+      for (const supplier of suppliers) {
+        const stock = supplier.stock;
+        const stockValue = stock.get(`itemId:${itemID}`);
+        if (stockValue !== undefined) {
+          totalStock += stockValue;
+        }
+      }
+
+      item.stock = totalStock;
+      await item.save();
+      console.log(`Stock updated for item '${itemID}': Total Stock = ${totalStock}`);
+    }
+
+    console.log('All item stocks updated successfully');
+  } catch (error) {
+    console.error('Error updating item stocks:', error);
+  }
+}
+
+// Call the function to update item stocks from suppliers upon server bootup
+updateItemStocksFromSuppliers();
+
+
 // Route handler for fetching users
 app.get('/users', (req, res) => {
   // Fetch users from the "register" collection
@@ -102,8 +198,6 @@ app.get('/users/:city', (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     });
 });
-// Create a model for the "items" collection
-const Item = mongoose.model('Item', itemSchema);
 
 
 app.get('/items', async (req, res) => {
