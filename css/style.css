@@ -227,7 +227,9 @@ label[for="updateStock"],
 label[for="updatePrice"],
 label[for="updateShipping"],
 label[for="updateImage"],
-label[for="orderStatus"]
+label[for="orderStatus"],
+label[for="stockQuantity"],
+label[for="updateSupplier"]
 {
     font-size: 20px;
     color: #ad8fb9;
