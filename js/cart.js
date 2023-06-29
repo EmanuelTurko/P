@@ -21,59 +21,6 @@
     localStorage.setItem('cartCount', count);
   }
 
-  function addToCart(itemId) {
-    // Fetch item data from the server
-    fetch('/items')
-      .then(response => response.json())
-      .then(items => {
-        // Find the item with the given itemId
-        const selectedItem = items.find(item => item.itemId === itemId);
-
-        if (selectedItem) {
-          if (selectedItem.stock === 0) {
-            // Store the current scroll position
-          const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-            showToast('The item is currently out of stock.');
-          // After the toast is dismissed, restore the scroll position
-          window.scrollTo(0, scrollPosition);
-            return; // Don't add the item to the cart
-          }
-
-          // Get the current cart count
-          let cartCount = parseInt(getCartCount());
-          if (isNaN(cartCount) || cartCount < 0) {
-            cartCount = 0; // Reset the cart count to 0 if it's not a valid number
-          }
-
-          // Increase cart count by 1
-          cartCount += 1;
-          setCartCount(cartCount.toString());
-
-          // Update the cart badge
-          updateCartBadge();
-
-          // Add the selected item to the cart items
-          const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-          cartItems.push(selectedItem);
-          localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
-          // Store the current scroll position
-          const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-
-          showToast('Item added to your cart.'); // Show the toast notification
-
-          // After the toast is dismissed, restore the scroll position
-          window.scrollTo(0, scrollPosition);
-
-          console.log('Item added to cart:', selectedItem);
-        } else {
-          console.log('Item not found.');
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching items:', error);
-      });
-  }
 
 
 
@@ -264,26 +211,26 @@
       });
     }
 
-function calculateTotalAmount(cartItems) {
-  let totalAmount = 0;
-  let shippingFees = {}; // Store the shipping fees for each item
-  
-  cartItems.forEach(item => {
-    const { price, shipping } = item;
-    const shippingFee = shipping === 'free' ? 0 : parseFloat(shipping);
-
-    // Check if the item's shipping fee has already been added
-    if (!shippingFees[item]) {
-      totalAmount += shippingFee;
-      shippingFees[item] = shippingFee; // Store the shipping fee for the item
+    function calculateTotalAmount(cartItems) {
+      let totalAmount = 0;
+      let shippingFees = {}; // Store the shipping fees for each item
+    
+      cartItems.forEach(item => {
+        const { itemId, price, shipping } = item;
+        const shippingFee = shipping === 'free' ? 0 : parseFloat(shipping);
+    
+        // Check if the item's shipping fee has already been added
+        if (!shippingFees[itemId]) {
+          totalAmount += shippingFee;
+          shippingFees[itemId] = shippingFee; // Store the shipping fee for the item
+        }
+    
+        totalAmount += price;
+      });
+    
+      return totalAmount.toFixed(2);
     }
     
-    totalAmount += price;
-  });
-
-  return totalAmount.toFixed(2);
-}
-
     function displayTotalAmount(totalAmount, totalAmountCell) {
       totalAmountCell.textContent = totalAmount;
     }
@@ -346,9 +293,11 @@ deliveryOption.addEventListener('change', () => {
   } else if (selectedOption === 'delivery') {
     pickupOptions.style.display = 'none';
     deliveryOptions.style.display = 'block';
+    calculateAndDisplayTotalAmount(); // Add this line to recalculate the total amount
   } else {
     pickupOptions.style.display = 'none';
     deliveryOptions.style.display = 'none';
+    calculateAndDisplayTotalAmount(); // Add this line to recalculate the total amount
   }
 });
 
@@ -362,24 +311,25 @@ function removeShippingFee() {
   totalAmountCell.textContent = newTotalAmount.toFixed(2);
 }
 
+
 function calculateShippingFee() {
-  let totalAmount = 0;
-  let shippingFees = {}; // Store the shipping fees for each item
-  
+  let totalShippingFee = 0;
+  let uniqueItems = {}; // Store the unique items and their shipping fees
+
+  const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
   cartItems.forEach(item => {
-    const { price, shipping } = item;
+    const { itemId, shipping } = item;
     const shippingFee = shipping === 'free' ? 0 : parseFloat(shipping);
 
-    // Check if the item's shipping fee has already been added
-    if (!shippingFees[item]) {
-      totalAmount += shippingFee;
-      shippingFees[item] = shippingFee; // Store the shipping fee for the item
+    // Check if the item is already added to uniqueItems
+    if (!uniqueItems[itemId]) {
+      uniqueItems[itemId] = shippingFee; // Store the shipping fee for the item
+      totalShippingFee += shippingFee; // Add the shipping fee to the total
     }
-    
-    totalAmount += price;
   });
 
-  return totalAmount.toFixed(2);
+  return totalShippingFee;
 }
 
 
@@ -395,3 +345,94 @@ const confirmDeliveryButton = document.getElementById('confirmDelivery');
 confirmDeliveryButton.addEventListener('click', () => {
   // Add your logic for confirming the delivery
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const supplierSelect = document.getElementById('supplier');
+  const selectedItems = []; // Array to store selected item IDs
+
+  // Function to fetch suppliers and update the options
+  function fetchSuppliers() {
+    fetch('/suppliers')
+      .then(response => response.json())
+      .then(data => {
+        // Clear existing options
+        supplierSelect.innerHTML = '<option value="">Select a supplier facility</option>';
+
+        // Add options for each supplier
+        data.forEach(supplier => {
+          const option = document.createElement('option');
+          option.value = supplier._id; // Assuming supplier has an _id property
+          option.textContent = supplier.name;
+          supplierSelect.appendChild(option);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching suppliers:', error);
+      });
+  }
+
+  // Fetch suppliers when the page loads
+  fetchSuppliers();
+
+  // Event listener for the select box to fetch suppliers when opened
+  supplierSelect.addEventListener('mousedown', fetchSuppliers);
+});
+
+app.get('/suppliers/:name/stock/:itemId', (req, res) => {
+  const supplierName = req.params.name;
+  const itemId = req.params.itemId;
+
+  // Find the supplier by name
+  Supplier.findOne({ name: supplierName })
+    .then((supplier) => {
+      if (!supplier) {
+        res.status(404).json({ error: 'Supplier not found' });
+      } else {
+        // Check if the supplier has the specified item in stock
+        if (supplier.stock.has(itemId)) {
+          const stockQuantity = supplier.stock.get(itemId);
+          res.json({ itemId, stockQuantity });
+        } else {
+          res.status(404).json({ error: 'Item not found in stock' });
+        }
+      }
+    })
+    .catch((err) => {
+      console.error('Error fetching stock:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+});
+
+// Function to check supplier's stock for selected items
+function checkSupplierStock(supplierName, selectedItems) {
+  const promises = selectedItems.map(itemId => {
+    return fetch(`/suppliers/${supplierName}/stock/${itemId}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.stockQuantity > 0) {
+          console.log(`Supplier '${supplierName}' has item '${data.itemId}' in stock`);
+          // Continue processing or perform further actions
+        } else {
+          console.log(`Supplier '${supplierName}' does not have item '${data.itemId}' in stock`);
+          // Handle out of stock scenario
+        }
+      })
+      .catch(error => {
+        console.error('Error checking supplier stock:', error);
+      });
+  });
+
+  // Wait for all promises to resolve
+  Promise.all(promises)
+    .then(() => {
+      // All stock checks completed
+      console.log('Stock checks completed');
+    })
+    .catch(error => {
+      console.error('Error checking supplier stock:', error);
+    });
+}
+// Event listener for the select box to fetch suppliers when opened
+supplierSelect.addEventListener('click', fetchSuppliers);
+supplierSelect.addEventListener('focus', fetchSuppliers);
+

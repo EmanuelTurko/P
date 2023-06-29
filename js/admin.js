@@ -617,7 +617,7 @@ function fetchUsers() {
     });
 }
 
-/*// Function to render the users' data in the table
+// Function to render the users' data in the table
 function renderUsers(users) {
   const usersTable = document.getElementById('usersTable');
 
@@ -669,8 +669,8 @@ function toggleUsersTable() {
     usersTableContainer.style.display = 'none';
     toggleUsersButton.textContent = 'Show Users';
   }
-}*/
-/*
+}
+
 // Function to handle the SelectBox Change
 function handleSearchGroupChange() {
   const searchGroup = document.getElementById('searchGroup').value;
@@ -685,6 +685,9 @@ function handleSearchGroupChange() {
     createOrdersSearchForm();
   }
 }
+document.getElementById('searchGroup').addEventListener('change', handleSearchGroupChange);
+
+
 function createNameSearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';
@@ -775,4 +778,4 @@ function handleOrdersSearch(event) {
   // Perform the search and update the user table
   // Fetch the users from the server based on the order status and update the table accordingly
   // ...
-}*/
+}
