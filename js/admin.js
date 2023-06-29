@@ -686,17 +686,16 @@ function handleSearchGroupChange() {
   }
 }
 document.getElementById('searchGroup').addEventListener('change', handleSearchGroupChange);
-
-
+ 
 function createNameSearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';
 
   const nameSearchForm = document.createElement('form');
   nameSearchForm.innerHTML = `
-    <label for="fullName">Full Name:</label>
+    <label for="fullName">Enter the requested name:</label>
     <input type="text" id="fullName" />
-    <button type="submit">Search</button>
+    <button type="submit" class="btn btn-primary">Search</button>
   `;
   nameSearchForm.addEventListener('submit', handleNameSearch);
 
@@ -706,12 +705,33 @@ function createNameSearchForm() {
 function handleNameSearch(event) {
   event.preventDefault();
 
-  const fullName = document.getElementById('fullName').value.trim();
+  const searchKeyword = document.getElementById('fullName').value.trim();
+  
+  console.log('Search keyword:', searchKeyword); // Debugging statement
 
   // Perform the search and update the user table
-  // Fetch the users from the server based on the full name and update the table accordingly
-  // ...
+  fetch(`/users?search=${encodeURIComponent(searchKeyword)}`)
+    .then(response => response.json())
+    .then(users => {
+      console.log('Fetched users:', users); // Debugging statement
+      
+      // Filter the users based on the search keyword
+      const filteredUsers = users.filter(user => {
+        const fullName = user.fullName ? user.fullName : '';
+        const username = user.username ? user.username : '';
+        const keyword = searchKeyword.toLowerCase();
+        
+        return fullName.toLowerCase().includes(keyword) || username.toLowerCase().includes(keyword);
+      });
+
+      // Render the filtered users' data on the page
+      renderUsers(filteredUsers);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+    });
 }
+
 function createCitySearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';
@@ -719,7 +739,7 @@ function createCitySearchForm() {
   const citySearchForm = document.createElement('form');
   citySearchForm.innerHTML = `
     <label for="city">City:</label>
-    <select id="city">
+    <select id="city" class="form-control">
       <option value="Ashdod">Ashdod</option>
       <option value="Jerusalem">Jerusalem</option>
       <option value="Tel Aviv-Yafo">Tel Aviv-Yafo</option>
@@ -728,7 +748,7 @@ function createCitySearchForm() {
       <option value="Lod">Lod</option>
       <option value="Holon">Holon</option>
     </select>
-    <button type="submit">Search</button>
+    <button type="submit"class="btn btn-primary">Search</button>
   `;
   citySearchForm.addEventListener('submit', handleCitySearch);
 
@@ -751,19 +771,20 @@ function handleCitySearch(event) {
       console.error('Error fetching users:', error);
     });
 }
+
 function createOrdersSearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';
 
   const ordersSearchForm = document.createElement('form');
   ordersSearchForm.innerHTML = `
-    <label for="orderStatus">Order Status:</label>
-    <select id="orderStatus">
+    <label for="orderStatus">Order By:</label>
+    <select id="orderStatus" class="form-control">
       <option value="all">All</option>
       <option value="made">Orders Made</option>
       <option value="not-made">Orders Not Made</option>
     </select>
-    <button type="submit">Search</button>
+    <button type="submit"class="btn btn-primary">Search</button>
   `;
   ordersSearchForm.addEventListener('submit', handleOrdersSearch);
 
