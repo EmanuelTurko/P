@@ -142,17 +142,17 @@
         <button id="clearCartButton">Clear Cart</button>
         <button id="buyNowButton" class="btn btn-primary">Buy Now!</button>
         <div id="buyNowOptions" style="display: none;">
-          <select id="deliveryOption">
+          <select id="deliveryOption" class="form-control">
             <option value="">Delivery Or PickUp?</option>
             <option value="pickup">Pickup - FREE</option>
             <option value="delivery">Delivery </option>
           </select>
           <div id="pickupOptions">
-            <select id="supplier">
+            <select id="supplier" class="form-control">
               <option value="">Select a supplier facility</option>
               <!-- Add supplier options here -->
             </select>
-            <button id="confirmPickup">Purchase</button>
+            <button id="confirmPickup" class="btn btn-primary">Purchase</button>
           </div>
           <div id="deliveryOptions">
             <form id="deliveryForm">
@@ -173,10 +173,10 @@
                 <input type="text" id="pin" placeholder="Enter your PIN" required>
               </div>
               <div class="form-group">
-                <label for="phoneNumber">Phone Number</label>
+                <label for="phoneNumber" class="form-group">Phone Number</label>
                 <input type="text" id="phoneNumber" placeholder="Enter your phone number" required>
               </div>
-              <button id="confirmDelivery">Purchase</button>
+              <button id="confirmDelivery" class="btn btn-primary">Purchase</button>
             </form>
           </div>
         </div>

@@ -127,3 +127,5 @@ document.getElementById('updateProfileForm').addEventListener('submit', updatePr
 
 // Populate the profile fields on page load
 populateProfile();
+
+

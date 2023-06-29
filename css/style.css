@@ -229,7 +229,12 @@ label[for="updateShipping"],
 label[for="updateImage"],
 label[for="orderStatus"],
 label[for="stockQuantity"],
-label[for="updateSupplier"]
+label[for="updateSupplier"],
+label[for="address"],
+label[for="postcode"],
+label[for="creditCard"],
+label[for="pin"],
+label[for="phoneNumber"]
 {
     font-size: 20px;
     color: #ad8fb9;

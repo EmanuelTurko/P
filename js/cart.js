@@ -332,7 +332,15 @@ function calculateShippingFee() {
   return totalShippingFee;
 }
 
+function calculateAndDisplayTotalAmount() {
+  const totalAmountCell = document.getElementById('totalAmountCell');
+  const totalAmount = parseFloat(totalAmountCell.textContent);
+  const shippingFee = calculateShippingFee(); // Calculate the shipping fee
 
+  // Subtract the shipping fee from the total amount
+  const newTotalAmount = totalAmount + shippingFee;
+  totalAmountCell.textContent = newTotalAmount.toFixed(2);
+}
 
 // Event listener for Confirm Pickup button
 const confirmPickupButton = document.getElementById('confirmPickup');
