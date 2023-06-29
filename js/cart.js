@@ -21,7 +21,67 @@
     localStorage.setItem('cartCount', count);
   }
 
+  let selectedItems = []; // Array to store selected item IDs
 
+  // Event listener for adding items to cart
+function addToCart(itemId) {
+  // Fetch item data from the server
+  fetch('/items')
+    .then(response => response.json())
+    .then(items => {
+      // Find the item with the given itemId
+      const selectedItem = items.find(item => item.itemId === itemId);
+
+      if (selectedItem) {
+        if (selectedItem.stock === 0) {
+          // Store the current scroll position
+          const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+          showToast('The item is currently out of stock.');
+          // After the toast is dismissed, restore the scroll position
+          window.scrollTo(0, scrollPosition);
+          return; // Don't add the item to the cart
+        }
+
+        // Get the current cart count
+        let cartCount = parseInt(getCartCount());
+        if (isNaN(cartCount) || cartCount < 0) {
+          cartCount = 0; // Reset the cart count to 0 if it's not a valid number
+        }
+
+        // Increase cart count by 1
+        cartCount += 1;
+        setCartCount(cartCount.toString());
+
+        // Update the cart badge
+        updateCartBadge();
+
+        // Add the selected item to the cart items
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        cartItems.push(selectedItem);
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+        // Store the current scroll position
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+        showToast('Item added to your cart.'); // Show the toast notification
+
+        // After the toast is dismissed, restore the scroll position
+        window.scrollTo(0, scrollPosition);
+
+        console.log('Item added to cart:', selectedItem);
+
+
+        // Call checkSupplierStock function with supplier name and selectedItems array
+        selectedItems.push(selectedItem.itemId);
+        console.log('Selected Items:', selectedItems); // Print the selectedItems array
+      } else {
+        console.log('Item not found.');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching items:', error);
+    });
+}
 
 
   // Call updateCartBadge initially when the page loads
@@ -346,9 +406,9 @@ confirmDeliveryButton.addEventListener('click', () => {
   // Add your logic for confirming the delivery
 });
 
+
 document.addEventListener('DOMContentLoaded', () => {
   const supplierSelect = document.getElementById('supplier');
-  const selectedItems = []; // Array to store selected item IDs
 
   // Function to fetch suppliers and update the options
   function fetchSuppliers() {
@@ -374,47 +434,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fetch suppliers when the page loads
   fetchSuppliers();
 
-  // Event listener for the select box to fetch suppliers when opened
-  supplierSelect.addEventListener('mousedown', fetchSuppliers);
-});
+  // Event listener for the select box to trigger stock check for the selected supplier
+  supplierSelect.addEventListener('change', () => {
+    const selectedSupplier = supplierSelect.value;
+    console.log('Selected supplier:', selectedSupplier);
 
-app.get('/suppliers/:name/stock/:itemId', (req, res) => {
-  const supplierName = req.params.name;
-  const itemId = req.params.itemId;
-
-  // Find the supplier by name
-  Supplier.findOne({ name: supplierName })
-    .then((supplier) => {
-      if (!supplier) {
-        res.status(404).json({ error: 'Supplier not found' });
-      } else {
-        // Check if the supplier has the specified item in stock
-        if (supplier.stock.has(itemId)) {
-          const stockQuantity = supplier.stock.get(itemId);
-          res.json({ itemId, stockQuantity });
-        } else {
-          res.status(404).json({ error: 'Item not found in stock' });
-        }
-      }
-    })
-    .catch((err) => {
-      console.error('Error fetching stock:', err);
-      res.status(500).json({ error: 'Internal server error' });
-    });
-});
-
+    // Perform stock check for the selected supplier
+    checkSupplierStock(selectedSupplier, selectedItems);
+  });
 // Function to check supplier's stock for selected items
 function checkSupplierStock(supplierName, selectedItems) {
+  console.log('Selected items:', selectedItems); // Print the selected items
+
   const promises = selectedItems.map(itemId => {
     return fetch(`/suppliers/${supplierName}/stock/${itemId}`)
       .then(response => response.json())
       .then(data => {
-        if (data.stockQuantity > 0) {
-          console.log(`Supplier '${supplierName}' has item '${data.itemId}' in stock`);
-          // Continue processing or perform further actions
+        if (data.hasOwnProperty('stockQuantity')) {
+          console.log(`Supplier '${supplierName}' has item '${itemId}' in stock. Stock Quantity: ${data.stockQuantity}`);
         } else {
-          console.log(`Supplier '${supplierName}' does not have item '${data.itemId}' in stock`);
-          // Handle out of stock scenario
+          console.log(`Supplier '${supplierName}' does not have item '${itemId}' in stock.`);
         }
       })
       .catch(error => {
@@ -432,7 +471,4 @@ function checkSupplierStock(supplierName, selectedItems) {
       console.error('Error checking supplier stock:', error);
     });
 }
-// Event listener for the select box to fetch suppliers when opened
-supplierSelect.addEventListener('click', fetchSuppliers);
-supplierSelect.addEventListener('focus', fetchSuppliers);
-
+});
