@@ -264,18 +264,25 @@
       });
     }
 
-    function calculateTotalAmount(cartItems) {
-      let totalAmount = 0;
-    
-      cartItems.forEach(item => {
-        const { price, shipping } = item;
-        const shippingFee = shipping === 'free' ? 0 : parseFloat(shipping);
-        totalAmount += price;
-        totalAmount += shippingFee;
-      });
-    
-      return totalAmount.toFixed(2);
+function calculateTotalAmount(cartItems) {
+  let totalAmount = 0;
+  let shippingFees = {}; // Store the shipping fees for each item
+  
+  cartItems.forEach(item => {
+    const { price, shipping } = item;
+    const shippingFee = shipping === 'free' ? 0 : parseFloat(shipping);
+
+    // Check if the item's shipping fee has already been added
+    if (!shippingFees[item]) {
+      totalAmount += shippingFee;
+      shippingFees[item] = shippingFee; // Store the shipping fee for the item
     }
+    
+    totalAmount += price;
+  });
+
+  return totalAmount.toFixed(2);
+}
 
     function displayTotalAmount(totalAmount, totalAmountCell) {
       totalAmountCell.textContent = totalAmount;
@@ -335,6 +342,7 @@ deliveryOption.addEventListener('change', () => {
   if (selectedOption === 'pickup') {
     pickupOptions.style.display = 'block';
     deliveryOptions.style.display = 'none';
+    removeShippingFee(); // Add this line to remove the shipping fee
   } else if (selectedOption === 'delivery') {
     pickupOptions.style.display = 'none';
     deliveryOptions.style.display = 'block';
@@ -343,6 +351,38 @@ deliveryOption.addEventListener('change', () => {
     deliveryOptions.style.display = 'none';
   }
 });
+
+function removeShippingFee() {
+  const totalAmountCell = document.getElementById('totalAmountCell');
+  const totalAmount = parseFloat(totalAmountCell.textContent);
+  const shippingFee = calculateShippingFee(); // Calculate the shipping fee
+
+  // Subtract the shipping fee from the total amount
+  const newTotalAmount = totalAmount - shippingFee;
+  totalAmountCell.textContent = newTotalAmount.toFixed(2);
+}
+
+function calculateShippingFee() {
+  let totalAmount = 0;
+  let shippingFees = {}; // Store the shipping fees for each item
+  
+  cartItems.forEach(item => {
+    const { price, shipping } = item;
+    const shippingFee = shipping === 'free' ? 0 : parseFloat(shipping);
+
+    // Check if the item's shipping fee has already been added
+    if (!shippingFees[item]) {
+      totalAmount += shippingFee;
+      shippingFees[item] = shippingFee; // Store the shipping fee for the item
+    }
+    
+    totalAmount += price;
+  });
+
+  return totalAmount.toFixed(2);
+}
+
+
 
 // Event listener for Confirm Pickup button
 const confirmPickupButton = document.getElementById('confirmPickup');
