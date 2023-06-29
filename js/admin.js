@@ -388,7 +388,6 @@ function fetchItemDetails() {
       // Fill out the form fields with item details
       console.log(selectedItemId);
       document.getElementById('updateItem').value = item.name;
-      document.getElementById('updateStock').value = item.stock;
       document.getElementById('updatePrice').value = item.price;
       document.getElementById('updateShipping').value = item.shipping;
       // Construct the image URL dynamically based on the item ID
@@ -421,7 +420,6 @@ function UpdateNewInfo() {
   const itemId = document.getElementById('updateItemId').value;
   const updatedItem = {
     name: document.getElementById('updateItem').value,
-    stock: document.getElementById('updateStock').value,
     price: parseFloat(document.getElementById('updatePrice').value),
     shipping: document.getElementById('updateShipping').value,
     imageURL: document.getElementById('updateImageURL').value,

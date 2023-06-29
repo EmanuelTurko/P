@@ -147,10 +147,6 @@
                     <input type="text" class="form-control" id="updateItem" name="updateItem" placeholder="Name of the item" required>
                   </div>
                   <div class="form-group">
-                    <label for="updateStock">Stock</label>
-                    <input type="number" class="form-control" id="updateStock" name="updateStock" placeholder="Number of stock" required>
-                  </div>
-                  <div class="form-group">
                     <label for="updatePrice">Price</label>
                     <input type="text" class="form-control" id="updatePrice" name="updatePrice" placeholder="Price" required>
                   </div>
@@ -159,10 +155,16 @@
                     <input type="text" class="form-control" id="updateShipping" name="updateShipping" placeholder="Shipping cost" required>
                   </div>
                   <div class="form-group">
+                    <label for="updateSupplier">Supplier</label>
+                    <select class="form-control" id="updateSupplier" name="updateSupplier" required>
+                      <option value="">Select Supplier</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
                     <label for="updateImage">Img</label>
                     <input type="text" class="form-control" id="updateImageURL" placeholder="Image URL">
                   </div>
-                  <button type="button" id="updateItemButton" class="btn btn-primary" onclick="UpdateNewInfo()">Update</button>
+                  <button type="button" id="updateItemButton" class="btn btn-primary">Update</button>
                 </form>
               </div>
             </div>
