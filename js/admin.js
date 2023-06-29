@@ -350,13 +350,15 @@ removeButton.addEventListener('click', () => {
   performItemRemoval(itemId);
 });
 
-/// Update Button
+/// Update Button~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Function to populate the updateItemId select element with itemIds
 function populateItemIdSelect() {
   fetch('/items')
     .then(response => response.json())
     .then(data => {
+      console.log('Received item data:', data); // Check the received item data
+      
       const updateItemIdSelect = document.getElementById('updateItemId');
       updateItemIdSelect.innerHTML = ''; // Clear previous options
 
@@ -385,6 +387,8 @@ function fetchItemDetails() {
   fetch(`/items/${selectedItemId}`)
     .then(response => response.json())
     .then(item => {
+      console.log('Received item details:', item); // Check the received item details
+      
       // Fill out the form fields with item details
       console.log(selectedItemId);
       document.getElementById('updateItem').value = item.name;
@@ -393,7 +397,9 @@ function fetchItemDetails() {
       // Construct the image URL dynamically based on the item ID
       const imageId = selectedItemId.replace('item', ''); // Remove 'item' from the ID
       const imageURL = `images/img${imageId}.jpg`;
-
+      // Fetch and populate the suppliers' select element
+      populateSuppliersSelect();
+      console.log('hello');
       // Check if the image URL exists
       fetch(imageURL)
         .then(response => {
@@ -407,12 +413,66 @@ function fetchItemDetails() {
           console.error('Error checking image URL:', error);
           document.getElementById('updateImageURL').value = null;
         });
+      
     })
     .catch(error => {
       console.error('Error fetching item details:', error);
     });
 }
 
+// Function to populate the updateSupplier select element with suppliers
+function populateSuppliersSelect() {
+  fetch('/suppliers')
+    .then(response => response.json())
+    .then(suppliers => {
+      console.log('Suppliers:', suppliers); // Check the received suppliers data
+
+      const updateSupplierSelect = document.getElementById('updateSupplier');
+      const stockQuantityContainer = document.getElementById('newStockQuantityContainer');
+      
+      // Add event listener
+      updateSupplierSelect.addEventListener('change', () => {
+        const selectedSupplier = updateSupplierSelect.value;
+        stockQuantityContainer.style.display = selectedSupplier ? 'block' : 'none';
+
+        // Fetch and display the stock for the selected item
+        const itemId = document.getElementById('updateItemId').value;
+        fetchItemStock(selectedSupplier, itemId);
+      });
+
+      // Clear previous options
+      updateSupplierSelect.innerHTML = '<option value="">Select Supplier</option>';
+
+      // Generate options dynamically based on available suppliers
+      suppliers.forEach(supplier => {
+        const option = document.createElement('option');
+        option.value = supplier.name;
+        option.textContent = supplier.name;
+        updateSupplierSelect.appendChild(option);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching suppliers:', error);
+    });
+}
+
+// Function to fetch and display the stock for the selected item
+function fetchItemStock(supplierName, itemId) {
+  const stockKey = `itemId:${itemId}`;
+  const url = `/suppliers/${supplierName}/stock/${stockKey}`;
+  console.log('Fetching stock from:', url); // Log the URL path
+  fetch(url)
+    .then(response => response.json())
+    .then(stock => {
+      console.log('Stock:', stock); // Check the received stock data
+
+      const stockInput = document.getElementById('updateStock');
+      stockInput.value = stock ? stock.stockQuantity.toString() : '';
+    })
+    .catch(error => {
+      console.error('Error fetching item stock:', error);
+    });
+}
 // Call the function to populate the select element on page load
 populateItemIdSelect();
 
@@ -423,6 +483,8 @@ function UpdateNewInfo() {
     price: parseFloat(document.getElementById('updatePrice').value),
     shipping: document.getElementById('updateShipping').value,
     imageURL: document.getElementById('updateImageURL').value,
+    supplier: document.getElementById('updateSupplier').value,
+    stock: parseInt(document.getElementById('updateStock').value),
   };
 
   console.log('Updated item details:', updatedItem);
@@ -437,7 +499,8 @@ function UpdateNewInfo() {
     .then(response => {
       if (response.ok) {
         console.log('Item details updated successfully');
-        // Handle success
+        // Update the supplier's stock
+        updateSupplierStock(updatedItem.supplier, itemId, updatedItem.stock);
       } else {
         console.error('Error updating item details:', response.statusText);
         // Handle error
@@ -448,6 +511,35 @@ function UpdateNewInfo() {
       // Handle error
     });
 }
+
+function updateSupplierStock(supplierName, itemId, stockQuantity) {
+  fetch(`/suppliers/${supplierName}/stock`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ itemId, stockQuantity }),
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log('Supplier stock updated successfully');
+        // Handle success
+      } else {
+        console.error('Error updating supplier stock:', response.statusText);
+        // Handle error
+      }
+    })
+    .catch(error => {
+      console.error('Error updating supplier stock:', error);
+      // Handle error
+    });
+}
+
+// Attach event listener to the "Update" button
+const updateButton = document.getElementById('updateItemButton');
+updateButton.addEventListener('click', UpdateNewInfo);
+
+    // End of Update button
 function fetchUsers() {
   fetch('/users')
     .then(response => {
@@ -471,6 +563,39 @@ function fetchUsers() {
       errorContainer.textContent = 'Failed to fetch users. Please try again later.';
     });
 }
+function fetchSuppliers() {
+  fetch('/suppliers')
+    .then(response => response.json())
+    .then(suppliers => {
+      const supplierSelect = document.getElementById('supplierSelect');
+      const stockQuantityContainer = document.getElementById('stockQuantityContainer');
+      
+      // Add event listener
+      supplierSelect.addEventListener('change', () => {
+        const selectedSupplier = supplierSelect.value;
+        stockQuantityContainer.style.display = selectedSupplier ? 'block' : 'none';
+      });
+
+      // Clear previous options
+      supplierSelect.innerHTML = '<option value="">Select Supplier</option>';
+
+      // Generate options dynamically based on available suppliers
+      suppliers.forEach(supplier => {
+        const option = document.createElement('option');
+        option.value = supplier.name;
+        option.textContent = supplier.name;
+        supplierSelect.appendChild(option);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching suppliers:', error);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchSuppliers();
+});
+
 
 // Function to render the users' data in the table
 function renderUsers(users) {
@@ -664,35 +789,3 @@ function handleOrdersSearch(event) {
   // Fetch the users from the server based on the order status and update the table accordingly
   // ...
 }
-function fetchSuppliers() {
-  fetch('/suppliers')
-    .then(response => response.json())
-    .then(suppliers => {
-      const supplierSelect = document.getElementById('supplierSelect');
-      const stockQuantityContainer = document.getElementById('stockQuantityContainer');
-      
-      // Add event listener
-      supplierSelect.addEventListener('change', () => {
-        const selectedSupplier = supplierSelect.value;
-        stockQuantityContainer.style.display = selectedSupplier ? 'block' : 'none';
-      });
-
-      // Clear previous options
-      supplierSelect.innerHTML = '<option value="">Select Supplier</option>';
-
-      // Generate options dynamically based on available suppliers
-      suppliers.forEach(supplier => {
-        const option = document.createElement('option');
-        option.value = supplier.name;
-        option.textContent = supplier.name;
-        supplierSelect.appendChild(option);
-      });
-    })
-    .catch(error => {
-      console.error('Error fetching suppliers:', error);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  fetchSuppliers();
-});

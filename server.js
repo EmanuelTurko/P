@@ -183,6 +183,32 @@ app.get('/suppliers', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+// Fetch the supplier's stock
+
+app.get('/suppliers/:name/stock/:itemId', (req, res) => {
+  const supplierName = req.params.name;
+  const itemId = req.params.itemId;
+
+  // Find the supplier by name
+  Supplier.findOne({ name: supplierName })
+    .then((supplier) => {
+      if (!supplier) {
+        res.status(404).json({ error: 'Supplier not found' });
+      } else {
+        // Check if the supplier has the specified item in stock
+        if (supplier.stock.has(itemId)) {
+          const stockQuantity = supplier.stock.get(itemId);
+          res.json({ itemId, stockQuantity });
+        } else {
+          res.status(404).json({ error: 'Item not found in stock' });
+        }
+      }
+    })
+    .catch((err) => {
+      console.error('Error fetching stock:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+});
 // Update supplier's stock
 app.post('/suppliers/:name/stock', (req, res) => {
   const supplierName = req.params.name;
