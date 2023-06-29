@@ -248,6 +248,7 @@
 
         removeButton.addEventListener('click', () => {
         removeItem(selectedItem.itemId);
+        updateCartBadge();                               // refresh the cart after delete 
         });
         actionsCell.appendChild(removeButton);
 
