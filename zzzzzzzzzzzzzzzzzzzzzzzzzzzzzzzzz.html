@@ -209,6 +209,7 @@
         </tr>
       </table>
     </div>
+  </div>
     <div class="row justify-content-center">
       <div class="col-md-4">
         <h4>Search Items:</h4>
@@ -224,29 +225,27 @@
     </div>
     <div id="login-message"></div>
     <div id="toggleItemsButtonContainer" class="text-center mt-3">
-      <button id="toggleItemsButton" class="btn btn-primary">Show Items</button>
+      <button id="toggleItemsButton" class="btn btn-primary">Show Table</button>
       <div id="updateContainer"></div>
       <div id="itemsContainer"></div>
     </div>
-    <div class="row justify-content-center">
-      <h4>Search Users By Name,City Or Number Of Orders Made:</h4>
-      <div class="col-md-4">
-        <div class="form-group">
-          <select id="searchGroup" class="form-control">
-            <option value="">Choose Type Of Search</option>
-            <option value="name">Name</option>
-            <option value="city">City</option>
-            <option value="orders">Orders Made</option>
-          </select>
-          <div id="searchFormContainer"></div>
-        </div>
-      </div>
+    <div>
+      <label for="selectOption">Select Option:</label>
+      <select id="selectOption" onchange="showForm()">
+        <option value="">-- Select --</option>
+        <option value="name">Name</option>
+        <option value="city">City</option>
+        <option value="orders">Orders</option>
+      </select>
+    </div>
+    <div id="searchForm">
+      <!-- Form elements will be dynamically added here based on the selected option -->
     </div>
     <div id="toggleUsersButtonContainer" class="text-center mt-3">
       <button id="toggleUsersButton" class="btn btn-primary">Show Users</button>
     </div>
     <div id="usersTableContainer">
-      <h4>Registered Users</h4>
+      <h3>Registered Users</h3>
       <table id="usersTable" class="table"></table>
     </div>
   </div>
@@ -310,5 +309,6 @@
       <script src="js/admin.js"></script>
       <script src="js/newitem.js"></script>
       <script src="js/search.js"></script>
+      <script src="js/selectbox.js"></script>
     </body>
 </html>

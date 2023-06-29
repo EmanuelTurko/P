@@ -597,22 +597,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Function to render the users' data in the table
+function fetchUsers() {
+  fetch('/users')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch users');
+      }
+      return response.json();
+    })
+    .then(users => {
+      console.log('Fetched users:', users);
+      renderUsers(users);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+      // Display an error message on the page
+      const errorContainer = document.getElementById('errorContainer');
+      errorContainer.textContent = 'Failed to fetch users. Please try again later.';
+    });
+}
+
+/*// Function to render the users' data in the table
 function renderUsers(users) {
   const usersTable = document.getElementById('usersTable');
 
-  // Clear the table body and headers
+  // Clear the table body
   usersTable.innerHTML = '';
-
-  // Create table headers
-  const tableHeaderRow = document.createElement('tr');
-  const headers = ['User', 'Full-Name', 'City', 'Number Of Orders', 'Role'];
-  headers.forEach(headerText => {
-    const header = document.createElement('th');
-    header.textContent = headerText;
-    tableHeaderRow.appendChild(header);
-  });
-  usersTable.appendChild(tableHeaderRow);
 
   // Create table rows for each user
   users.forEach(user => {
@@ -636,13 +646,14 @@ function renderUsers(users) {
     tableRow.appendChild(ordersCell);
 
     const roleCell = document.createElement('td');
-    roleCell.textContent = user.Role ? user.Role : 'User';
+    roleCell.textContent = user.role || 'User'; // If 'role' is undefined, set it to 'User'
     tableRow.appendChild(roleCell);
 
     // Add the row to the table
     usersTable.appendChild(tableRow);
   });
 }
+
 // Function to toggle the visibility of the users table
 function toggleUsersTable() {
   const usersTableContainer = document.getElementById('usersTableContainer');
@@ -658,7 +669,8 @@ function toggleUsersTable() {
     usersTableContainer.style.display = 'none';
     toggleUsersButton.textContent = 'Show Users';
   }
-}
+}*/
+/*
 // Function to handle the SelectBox Change
 function handleSearchGroupChange() {
   const searchGroup = document.getElementById('searchGroup').value;
@@ -673,18 +685,15 @@ function handleSearchGroupChange() {
     createOrdersSearchForm();
   }
 }
-
-document.getElementById('searchGroup').addEventListener('change', handleSearchGroupChange);
-
 function createNameSearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';
 
   const nameSearchForm = document.createElement('form');
   nameSearchForm.innerHTML = `
-    <label for="fullName">Enter the requested name:</label>
+    <label for="fullName">Full Name:</label>
     <input type="text" id="fullName" />
-    <button type="submit" class="btn btn-primary">Search</button>
+    <button type="submit">Search</button>
   `;
   nameSearchForm.addEventListener('submit', handleNameSearch);
 
@@ -694,33 +703,12 @@ function createNameSearchForm() {
 function handleNameSearch(event) {
   event.preventDefault();
 
-  const searchKeyword = document.getElementById('fullName').value.trim();
-  
-  console.log('Search keyword:', searchKeyword); // Debugging statement
+  const fullName = document.getElementById('fullName').value.trim();
 
   // Perform the search and update the user table
-  fetch(`/users?search=${encodeURIComponent(searchKeyword)}`)
-    .then(response => response.json())
-    .then(users => {
-      console.log('Fetched users:', users); // Debugging statement
-      
-      // Filter the users based on the search keyword
-      const filteredUsers = users.filter(user => {
-        const fullName = user.fullName ? user.fullName : '';
-        const username = user.username ? user.username : '';
-        const keyword = searchKeyword.toLowerCase();
-        
-        return fullName.toLowerCase().includes(keyword) || username.toLowerCase().includes(keyword);
-      });
-
-      // Render the filtered users' data on the page
-      renderUsers(filteredUsers);
-    })
-    .catch(error => {
-      console.error('Error fetching users:', error);
-    });
+  // Fetch the users from the server based on the full name and update the table accordingly
+  // ...
 }
-
 function createCitySearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';
@@ -728,7 +716,7 @@ function createCitySearchForm() {
   const citySearchForm = document.createElement('form');
   citySearchForm.innerHTML = `
     <label for="city">City:</label>
-    <select id="city" class="form-control">
+    <select id="city">
       <option value="Ashdod">Ashdod</option>
       <option value="Jerusalem">Jerusalem</option>
       <option value="Tel Aviv-Yafo">Tel Aviv-Yafo</option>
@@ -737,7 +725,7 @@ function createCitySearchForm() {
       <option value="Lod">Lod</option>
       <option value="Holon">Holon</option>
     </select>
-    <button type="submit"class="btn btn-primary">Search</button>
+    <button type="submit">Search</button>
   `;
   citySearchForm.addEventListener('submit', handleCitySearch);
 
@@ -760,20 +748,19 @@ function handleCitySearch(event) {
       console.error('Error fetching users:', error);
     });
 }
-
 function createOrdersSearchForm() {
   const searchFormContainer = document.getElementById('searchFormContainer');
   searchFormContainer.innerHTML = '';
 
   const ordersSearchForm = document.createElement('form');
   ordersSearchForm.innerHTML = `
-    <label for="orderStatus">Order By:</label>
-    <select id="orderStatus" class="form-control">
+    <label for="orderStatus">Order Status:</label>
+    <select id="orderStatus">
       <option value="all">All</option>
       <option value="made">Orders Made</option>
       <option value="not-made">Orders Not Made</option>
     </select>
-    <button type="submit"class="btn btn-primary">Search</button>
+    <button type="submit">Search</button>
   `;
   ordersSearchForm.addEventListener('submit', handleOrdersSearch);
 
@@ -788,4 +775,4 @@ function handleOrdersSearch(event) {
   // Perform the search and update the user table
   // Fetch the users from the server based on the order status and update the table accordingly
   // ...
-}
+}*/
