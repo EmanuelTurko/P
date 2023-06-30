@@ -395,18 +395,59 @@ function addShippingFee() {
   totalAmountCell.textContent = newTotalAmount.toFixed(2);
 }
 
+ // Function to clear the cart
+ function clearCart() {
+  // Clear the cart items in localStorage
+  localStorage.removeItem('cartItems');
+  updateCartBadge(); // Update the cart badge
+  setCartCount(0);
+  
+}
 
 // Event listener for Confirm Pickup button
 const confirmPickupButton = document.getElementById('confirmPickup');
 confirmPickupButton.addEventListener('click', () => {
-  // Add your logic for confirming the pickup
-});
+  // Retrieve the cart items from localStorage
+  const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
+  // Retrieve the existing cart items from localStorage (if any)
+  const existingCartItems = JSON.parse(localStorage.getItem('cartItemsHistory')) || [];
+
+  // Add the purchased items to the existing cart items
+  const updatedCartItems = existingCartItems.concat(cartItems);
+
+  // Store the updated cart items in localStorage
+  localStorage.setItem('cartItemsHistory', JSON.stringify(updatedCartItems));
+
+  // Clear the cart
+  clearCart();
+  location.reload(); 
+
+  // Show confirmation message or perform any other actions for confirming the pickup
+  console.log('Pickup confirmed');
+});
 // Event listener for Confirm Delivery button
 const confirmDeliveryButton = document.getElementById('confirmDelivery');
 confirmDeliveryButton.addEventListener('click', () => {
-  // Add your logic for confirming the delivery
-});
+    // Retrieve the cart items from localStorage
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    // Retrieve the existing cart items from localStorage (if any)
+    const existingCartItems = JSON.parse(localStorage.getItem('cartItemsHistory')) || [];
+  
+    // Add the purchased items to the existing cart items
+    const updatedCartItems = existingCartItems.concat(cartItems);
+  
+    // Store the updated cart items in localStorage
+    localStorage.setItem('cartItemsHistory', JSON.stringify(updatedCartItems));
+  
+    // Clear the cart
+    clearCart();
+    location.reload(); 
+  
+    // Show confirmation message or perform any other actions for confirming the pickup
+    console.log('delivery confirmed');
+  });
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -436,13 +477,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fetch suppliers when the page loads
   fetchSuppliers();
 
+  const suppliersSelect = document.getElementById('supplier');
+  const confirmPickupButton = document.getElementById('confirmPickup');
+  
   // Event listener for the select box to trigger stock check for the selected supplier
   supplierSelect.addEventListener('change', () => {
-    const selectedSupplier = supplierSelect.value;
+    const selectedSupplier = suppliersSelect.value;
     console.log('Selected supplier:', selectedSupplier);
-
+  
     // Perform stock check for the selected supplier
     checkSupplierStock(selectedSupplier, cartItems);
+  
+    if (selectedSupplier) {
+      confirmPickupButton.style.display = 'block';
+    } else {
+      confirmPickupButton.style.display = 'none';
+    }
   });
 
 
