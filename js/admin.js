@@ -798,5 +798,5 @@ function handleOrdersSearch(event) {
 
   // Perform the search and update the user table
   // Fetch the users from the server based on the order status and update the table accordingly
-  // ...
+  // ...
 }

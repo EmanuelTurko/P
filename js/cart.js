@@ -21,9 +21,9 @@
     localStorage.setItem('cartCount', count);
   }
 
-  let selectedItems = []; // Array to store selected item IDs
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-  // Event listener for adding items to cart
+// Event listener for adding items to cart
 function addToCart(itemId) {
   // Fetch item data from the server
   fetch('/items')
@@ -56,7 +56,6 @@ function addToCart(itemId) {
         updateCartBadge();
 
         // Add the selected item to the cart items
-        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         cartItems.push(selectedItem);
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
@@ -69,20 +68,14 @@ function addToCart(itemId) {
         window.scrollTo(0, scrollPosition);
 
         console.log('Item added to cart:', selectedItem);
-
-
-        // Call checkSupplierStock function with supplier name and selectedItems array
-        selectedItems.push(selectedItem.itemId);
-        console.log('Selected Items:', selectedItems); // Print the selectedItems array
       } else {
         console.log('Item not found.');
       }
     })
     .catch(error => {
       console.error('Error fetching items:', error);
-    });
+    });
 }
-
 
   // Call updateCartBadge initially when the page loads
   document.addEventListener('DOMContentLoaded', () => {
@@ -103,7 +96,7 @@ function addToCart(itemId) {
     setTimeout(() => {
       toast.classList.remove('show');
       toast.classList.add('hide');
-    }, 2000); // Hide the toast after 2 seconds
+    }, 20000); // Hide the toast after 2 seconds
   }
 
   // Call updateCartBadge initially when the page loads
@@ -392,15 +385,7 @@ function calculateShippingFee() {
   return totalShippingFee;
 }
 
-function calculateAndDisplayTotalAmount() {
-  const totalAmountCell = document.getElementById('totalAmountCell');
-  const totalAmount = parseFloat(totalAmountCell.textContent);
-  const shippingFee = calculateShippingFee(); // Calculate the shipping fee
 
-  // Subtract the shipping fee from the total amount
-  const newTotalAmount = totalAmount + shippingFee;
-  totalAmountCell.textContent = newTotalAmount.toFixed(2);
-}
 
 // Event listener for Confirm Pickup button
 const confirmPickupButton = document.getElementById('confirmPickup');
@@ -429,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add options for each supplier
         data.forEach(supplier => {
           const option = document.createElement('option');
-          option.value = supplier._id; // Assuming supplier has an _id property
+          option.value = supplier.name;
           option.textContent = supplier.name;
           supplierSelect.appendChild(option);
         });
@@ -448,27 +433,63 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Selected supplier:', selectedSupplier);
 
     // Perform stock check for the selected supplier
-    checkSupplierStock(selectedSupplier, selectedItems);
+    checkSupplierStock(selectedSupplier, cartItems);
   });
+
+
+
 // Function to check supplier's stock for selected items
-function checkSupplierStock(supplierName, selectedItems) {
-  console.log('Selected items:', selectedItems); // Print the selected items
+function checkSupplierStock(supplierName, cartItems) {
+  console.log('Selected items:', cartItems); // Print the selected items
 
-  const promises = selectedItems.map(itemId => {
-    return fetch(`/suppliers/${supplierName}/stock/${itemId}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.hasOwnProperty('stockQuantity')) {
-          console.log(`Supplier '${supplierName}' has item '${itemId}' in stock. Stock Quantity: ${data.stockQuantity}`);
-        } else {
-          console.log(`Supplier '${supplierName}' does not have item '${itemId}' in stock.`);
-        }
-      })
-      .catch(error => {
-        console.error('Error checking supplier stock:', error);
-      });
+  let stockUpdates = {};
+
+  const promises = cartItems.map(async item => {
+    const itemId = item.itemId;
+    const url = `/suppliers/${supplierName}/stock/itemId:${itemId}`;
+    console.log('URL:', url);
+    try {
+      
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(`Supplier '${supplierName}' stock array:`, data);
+      if (data && data.stockQuantity) {
+        const stockQuantity = data.stockQuantity;
+        console.log(`Supplier '${supplierName}' has item '${itemId}' in stock. Stock Quantity: ${stockQuantity}`);
+      
+          // Update the stock quantity
+          const updatedStockQuantity = stockQuantity - 1;
+          stockUpdates[itemId] = updatedStockQuantity;
+      
+        // Update the supplier's stock in the frontend
+        data.stockQuantity = updatedStockQuantity;
+      
+        // Update the supplier's stock in the database
+        await updateSupplierStock(supplierName, itemId, updatedStockQuantity);
+      } else {
+        const itemName = item.name; // Replace with the actual property name of the item in your data structure
+        const message = `Supplier '${supplierName}' does not have item '${itemName}' in stock. Please select a different supplier for pickup.`;
+        showToast(message);
+      
+        // Clear the selected supplier
+        const selectSupplierElement = document.getElementById('supplier');
+        selectSupplierElement.value = '';
+      
+       // Revert the stock updates
+Object.entries(stockUpdates).forEach(([itemId, stockQuantity]) => {
+  const updatedStockQuantity = stockQuantity + 1;
+  updateSupplierStock(supplierName, itemId, updatedStockQuantity);
+});
+
+// Clear the stock updates
+stockUpdates = {};
+      }
+      
+    } catch (error) {
+      console.error('Error checking supplier stock:', error);
+    }
   });
-
+  
   // Wait for all promises to resolve
   Promise.all(promises)
     .then(() => {
@@ -480,3 +501,20 @@ function checkSupplierStock(supplierName, selectedItems) {
     });
 }
 });
+async function updateSupplierStock(supplierName, itemId, updatedStockQuantity) {
+  const updateStockUrl = `/suppliers/${supplierName}/stock`;
+  const postData = {
+    itemId: itemId,
+    stockQuantity: updatedStockQuantity
+  };
+  await fetch(updateStockUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(postData)
+  });
+  
+  // Log the updated stock
+  console.log(`Updated stock of supplier '${supplierName}' - Item '${itemId}': ${updatedStockQuantity}`);
+}
