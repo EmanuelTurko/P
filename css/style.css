@@ -1174,18 +1174,19 @@ a.btn-register,
             font-weight: bold;
             text-align: center;
           }  
-  .stock_value.in-stock {
-    text-align: center;
-    color: green;
-    font-size: 25px;
-    font-weight: bold;
-  }
-  .stock_value.out-of-Stock {
-    text-align: center;
-    color: red;
-    font-size: 25px;
-    font-weight:bold;
-}
+          .stock-value.in-stock {
+            text-align: center;
+            color: green;
+            font-size: 25px;
+            font-weight: bold;
+          }
+          
+          .stock-value.out-of-stock {
+            text-align: center;
+            color: red;
+            font-size: 25px;
+            font-weight: bold;
+          }
  /*moon end*/  
  /*admin / admin forms */
  .admin_section {

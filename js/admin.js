@@ -642,7 +642,7 @@ function renderUsers(users) {
     tableRow.appendChild(cityCell);
 
     const ordersCell = document.createElement('td');
-    ordersCell.textContent = user.orders || 0; // If 'orders' is undefined, set it to 0
+    ordersCell.textContent = user.NumOfOrders;
     tableRow.appendChild(ordersCell);
 
     const roleCell = document.createElement('td');
@@ -772,31 +772,54 @@ function handleCitySearch(event) {
     });
 }
 
-function createOrdersSearchForm() {
-  const searchFormContainer = document.getElementById('searchFormContainer');
-  searchFormContainer.innerHTML = '';
-
-  const ordersSearchForm = document.createElement('form');
-  ordersSearchForm.innerHTML = `
-    <label for="orderStatus">Order By:</label>
-    <select id="orderStatus" class="form-control">
-      <option value="all">All</option>
-      <option value="made">Orders Made</option>
-      <option value="not-made">Orders Not Made</option>
-    </select>
-    <button type="submit"class="btn btn-primary">Search</button>
-  `;
-  ordersSearchForm.addEventListener('submit', handleOrdersSearch);
-
-  searchFormContainer.appendChild(ordersSearchForm);
-}
-
 function handleOrdersSearch(event) {
   event.preventDefault();
 
   const orderStatus = document.getElementById('orderStatus').value;
 
-  // Perform the search and update the user table
-  // Fetch the users from the server based on the order status and update the table accordingly
-  // ...
+  // Fetch the users from the server based on the order status
+  fetchUsersByOrderStatus(orderStatus)
+    .then(users => {
+      // Sort the users based on the order status
+      const sortedUsers = sortUsersByOrderStatus(users, orderStatus);
+
+      // Update the user table with the sorted users
+      updateUsersTable(sortedUsers);
+    })
+    .catch(error => {
+      console.error('Error fetching users:', error);
+      // Handle the error, show an error message, etc.
+    });
+}
+
+function fetchUsersByOrderStatus(orderStatus) {
+  // Make a fetch request to the server to get the users based on the order status
+  // Return a promise that resolves with the fetched users
+  return fetch(`/users?orderStatus=${orderStatus}`)
+    .then(response => response.json())
+    .then(data => data.users);
+}
+
+function sortUsersByOrderStatus(users, orderStatus) {
+  // Sort the users based on the order status
+  if (orderStatus === 'all') {
+    // No sorting required if all users are selected
+    return users;
+  } else if (orderStatus === 'made') {
+    // Sort users with orders first
+    return users.filter(user => user.NumOfOrders > 0).concat(users.filter(user => user.NumOfOrders === 0));
+  } else if (orderStatus === 'not-made') {
+    // Sort users without orders first
+    return users.filter(user => user.NumOfOrders === 0).concat(users.filter(user => user.NumOfOrders > 0));
+  } else {
+    // Invalid order status, return the original array
+    return users;
+  }
+}
+
+function updateUsersTable(users) {
+  // Update the user table with the sorted users
+  // ...
+  // Add your logic to update the table with the sorted users
+  // ...
 }

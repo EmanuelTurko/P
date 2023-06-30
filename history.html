@@ -146,18 +146,20 @@
       </div>
         <input type="submit" class="btn btn-primary" value="Update Profile">
       </form>
+      <table id="cartItemsHistoryTable" class="cartItemsHistoryTable">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <!-- Add more table headers as needed -->
+          </tr>
+        </thead>
+        <tbody id="cartItemsHistoryTableBody" class="cartItemsHistoryTableBody"></tbody>
+      </table>
+      
+      <button id="clearTableButton">Clear Purchase History</button>
     </div>
-    <table id="cartItemsHistoryTable">
-      <thead>
-        <tr>
-          <th>Item Name</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <!-- Add more table headers as needed -->
-        </tr>
-      </thead>
-      <tbody id="cartItemsHistoryTableBody"></tbody>
-    </table>
   </div>
 </div>  
 <!-- update -->
@@ -216,51 +218,60 @@
       <script src="js/search.js"></script>
       <script>
         document.addEventListener('DOMContentLoaded', () => {
-  const cartItemsHistoryTableBody = document.getElementById('cartItemsHistoryTableBody');
-
-  // Retrieve the cart items history from localStorage
-  const cartItemsHistory = JSON.parse(localStorage.getItem('cartItemsHistory')) || [];
-
-  // Populate the table with the cart items history
-  populateCartItemsHistoryTable(cartItemsHistory, cartItemsHistoryTableBody);
-});
-
-function populateCartItemsHistoryTable(cartItemsHistory, tableBody) {
-  // Clear the table body
-  removeAllTableRows(tableBody);
-
-  // Iterate over the cart items history and populate the table rows
-  cartItemsHistory.forEach(item => {
-    const { name, price, quantity } = item;
-
-    // Create a table row for the item
-    const row = document.createElement('tr');
-
-    // Create table cells for the item details
-    const nameCell = document.createElement('td');
-    nameCell.textContent = name;
-
-    const priceCell = document.createElement('td');
-    priceCell.textContent = price;
-
-    const quantityCell = document.createElement('td');
-    quantityCell.textContent = quantity;
-
-    // Append the cells to the row
-    row.appendChild(nameCell);
-    row.appendChild(priceCell);
-    row.appendChild(quantityCell);
-
-    // Append the row to the table body
-    tableBody.appendChild(row);
-  });
-}
-
-function removeAllTableRows(tableBody) {
-  while (tableBody.firstChild) {
-    tableBody.firstChild.remove();
-  }
-}
+          const cartItemsHistoryTableBody = document.getElementById('cartItemsHistoryTableBody');
+          const clearTableButton = document.getElementById('clearTableButton');
+      
+          // Retrieve the cart items history from localStorage
+          let cartItemsHistory = JSON.parse(localStorage.getItem('cartItemsHistory')) || [];
+      
+          // Populate the table with the cart items history
+          populateCartItemsHistoryTable(cartItemsHistory, cartItemsHistoryTableBody);
+      
+          // Add event listener to the "Clear Table" button
+          clearTableButton.addEventListener('click', () => {
+            removeAllTableRows(cartItemsHistoryTableBody);
+            clearCartItemsHistory();
+          });
+        });
+      
+        function populateCartItemsHistoryTable(cartItemsHistory, tableBody) {
+          // Clear the table body
+          removeAllTableRows(tableBody);
+      
+          // Iterate over the cart items history and populate the table rows
+          cartItemsHistory.forEach(item => {
+            const { name, price, quantity } = item;
+      
+            // Create a table row for the item
+            const row = document.createElement('tr');
+      
+            // Create table cells for the item details
+            const nameCell = document.createElement('td');
+            nameCell.textContent = name;
+      
+            const priceCell = document.createElement('td');
+            priceCell.textContent = price;
+      
+      
+            // Append the cells to the row
+            row.appendChild(nameCell);
+            row.appendChild(priceCell);
+      
+            // Append the row to the table body
+            tableBody.appendChild(row);
+          });
+        }
+      
+        function removeAllTableRows(tableBody) {
+          while (tableBody.firstChild) {
+            tableBody.firstChild.remove();
+          }
+        }
+      
+        function clearCartItemsHistory() {
+          // Clear the cart items history from localStorage
+          localStorage.removeItem('cartItemsHistory');
+        }
       </script>
    </body>
 </html>

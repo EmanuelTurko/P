@@ -404,6 +404,9 @@ function addShippingFee() {
   
 }
 
+
+// Purchase Events
+
 // Event listener for Confirm Pickup button
 const confirmPickupButton = document.getElementById('confirmPickup');
 confirmPickupButton.addEventListener('click', () => {
@@ -419,36 +422,128 @@ confirmPickupButton.addEventListener('click', () => {
   // Store the updated cart items in localStorage
   localStorage.setItem('cartItemsHistory', JSON.stringify(updatedCartItems));
 
-  // Clear the cart
-  clearCart();
-  location.reload(); 
+  // Retrieve the username from the cookie
+  const loggedInUsername = document.cookie.split('; ').find(row => row.startsWith('username')).split('=')[1];
 
-  // Show confirmation message or perform any other actions for confirming the pickup
-  console.log('Pickup confirmed');
+  // Retrieve the logged-in user's information from the server (e.g., using an API request)
+  fetch(`/users/${loggedInUsername}`)
+    .then(response => response.json())
+    .then(user => {
+      // Update the logged-in user's NumOfOrders field
+      user.NumOfOrders += 1;
+
+      // Send the updated user information back to the server to update the database
+      fetch(`/users/${loggedInUsername}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      })
+        .then(response => response.json())
+        .then(updatedUser => {
+          // Show confirmation message or perform any other actions for confirming the pickup
+          console.log('Pickup confirmed');
+
+          // Clear the cart
+          clearCart();
+          location.reload();
+
+          // Render the updated purchase history for the logged-in user
+          renderPurchaseHistory(loggedInUsername);
+        })
+        .catch(error => {
+          console.error('Error updating user information:', error);
+        });
+    })
+    .catch(error => {
+      console.error('Error retrieving user information:', error);
+    });
 });
+
+
 // Event listener for Confirm Delivery button
 const confirmDeliveryButton = document.getElementById('confirmDelivery');
 confirmDeliveryButton.addEventListener('click', () => {
-    // Retrieve the cart items from localStorage
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  // Retrieve the cart items from localStorage
+  const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-    // Retrieve the existing cart items from localStorage (if any)
-    const existingCartItems = JSON.parse(localStorage.getItem('cartItemsHistory')) || [];
-  
-    // Add the purchased items to the existing cart items
-    const updatedCartItems = existingCartItems.concat(cartItems);
-  
-    // Store the updated cart items in localStorage
-    localStorage.setItem('cartItemsHistory', JSON.stringify(updatedCartItems));
-  
-    // Clear the cart
-    clearCart();
-    location.reload(); 
-  
-    // Show confirmation message or perform any other actions for confirming the pickup
-    console.log('delivery confirmed');
+  // Retrieve the existing cart items from localStorage (if any)
+  const existingCartItems = JSON.parse(localStorage.getItem('cartItemsHistory')) || [];
+
+  // Add the purchased items to the existing cart items
+  const updatedCartItems = existingCartItems.concat(cartItems);
+
+  // Store the updated cart items in localStorage
+  localStorage.setItem('cartItemsHistory', JSON.stringify(updatedCartItems));
+
+  // Retrieve the username from the cookie
+  const loggedInUsername = document.cookie.split('; ').find(row => row.startsWith('username')).split('=')[1];
+
+  // Retrieve the logged-in user's information from the server (e.g., using an API request)
+  fetch(`/users/${loggedInUsername}`)
+    .then(response => response.json())
+    .then(user => {
+      // Update the logged-in user's NumOfOrders field
+      user.NumOfOrders += 1;
+
+      // Send the updated user information back to the server to update the database
+      fetch(`/users/${loggedInUsername}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      })
+        .then(response => response.json())
+        .then(updatedUser => {
+          // Show confirmation message or perform any other actions for confirming the delivery
+          console.log('Delivery confirmed');
+
+          // Clear the cart
+          clearCart();
+          location.reload();
+
+          // Render the updated purchase history for the logged-in user
+          renderPurchaseHistory(loggedInUsername);
+        })
+        .catch(error => {
+          console.error('Error updating user information:', error);
+        });
+    })
+    .catch(error => {
+      console.error('Error retrieving user information:', error);
+    });
+});
+
+// Function to render the purchase history for the logged-in user
+function renderPurchaseHistory(loggedInUsername) {
+  const cartItemsHistoryTableBody = document.getElementById(`cartItemsHistoryTableBody_${loggedInUsername}`);
+  cartItemsHistoryTableBody.innerHTML = '';
+
+  // Retrieve the purchase history for the logged-in user from localStorage
+  const purchaseHistory = JSON.parse(localStorage.getItem('cartItemsHistory')) || [];
+
+  // Filter the purchase history to include only items belonging to the logged-in user
+  const userPurchaseHistory = purchaseHistory.filter(item => item.username === loggedInUsername);
+
+  // Create table rows for each purchased item
+  userPurchaseHistory.forEach(item => {
+    const tableRow = document.createElement('tr');
+
+    // Create table cells for each item property
+    const itemNameCell = document.createElement('td');
+    itemNameCell.textContent = item.name;
+    tableRow.appendChild(itemNameCell);
+
+    const priceCell = document.createElement('td');
+    priceCell.textContent = item.price;
+    tableRow.appendChild(priceCell);
+
+    const quantityCell = document.createElement('td');
+    quantityCell.textContent = item.quantity;
+    tableRow.appendChild(quantityCell);
+
+    // Add the row to the table body
+    cartItemsHistoryTableBody.appendChild(tableRow);
   });
-
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const supplierSelect = document.getElementById('supplier');

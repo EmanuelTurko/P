@@ -594,6 +594,35 @@ app.post('/userDetails', (req, res) => {
       });
     });
   });
+
+  // Handle PUT request to update user's NumOfOrders
+app.put('/users/:username', async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    // Find the user in the database
+    const user = await Register.findOne({ name: username });
+
+    if (user) {
+      // Update the NumOfOrders field
+      user.NumOfOrders += 1;
+      console.log(user.NumOfOrders);
+      // Save the updated user
+      await user.save();
+
+      // Send a success response
+      res.status(200).json({ message: 'NumOfOrders updated successfully' });
+    } else {
+      // User not found
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    // Handle any errors that occur during the update
+    console.error('Error updating user information:', error);
+    res.status(500).json({ error: 'An error occurred while updating user information' });
+  }
+});
+
 // Serve the update profile form
 app.get('/profile.html', async (req, res) => {
   try {
