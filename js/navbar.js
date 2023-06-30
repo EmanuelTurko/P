@@ -72,7 +72,7 @@ window.addEventListener('DOMContentLoaded', updateNavbar);
 
 // client.js
 
-// Function to fetch user details and populate the input fields
+/*// Function to fetch user details and populate the input fields
 async function populateProfile() {
   try {
     const response = await fetch('/api/login-status');
@@ -89,7 +89,7 @@ async function populateProfile() {
     console.error('Error fetching user details:', error);
   }
 }
-
+*/
 // Function to handle form submission
 async function updateProfile(event) {
   event.preventDefault(); // Prevent the default form submission behavior
@@ -123,10 +123,10 @@ async function updateProfile(event) {
 }
 
 // Add an event listener to the form submit button
-document.getElementById('updateProfileForm').addEventListener('submit', updateProfile);
+//document.getElementById('updateProfileForm').addEventListener('submit', updateProfile); error
 
 // Populate the profile fields on page load
-populateProfile();
+//populateProfile();
 
 
 fetch('/suppliers/locations')

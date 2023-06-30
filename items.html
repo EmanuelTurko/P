@@ -15,7 +15,7 @@
       <link rel="stylesheet" href="css/responsive.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
       <link rel="stylesheet" href="css/owl.carousel.min.css">
-      <link rel="stylesheet" href="css/owl.theme.default.min.css">
+       <!--link rel="stylesheet" href="css/owl.theme.default.min.css"-->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
       <style>
          body {
@@ -328,10 +328,8 @@
       <script src="js/popper.min.js"></script>
       <script src="js/bootstrap.bundle.min.js"></script>
       <script src="js/jquery-3.0.0.min.js"></script>
-      <script src="js/plugin.js"></script>
       <!-- sidebar -->
       <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-      <script src="js/custom.js"></script>
       <script src="js/navbar.js"></script>
       <script src="js/logout.js"></script>
       <script src="js/cart.js"></script>
@@ -339,61 +337,61 @@
       <script src="js/items.js"></script>
       <script src="js/search.js"></script>
       <script>
-      // Fetch item data from the server
-// Wrap the code within a DOMContentLoaded event listener
-document.addEventListener('DOMContentLoaded', function() {
-  // Fetch item data from the server
-  fetch('/items')
-    .then(response => response.json())
-    .then(items => {
-      // Get the item elements
-      const itemElements = document.querySelectorAll('.item-data');
+                  // Fetch item data from the server
+            // Wrap the code within a DOMContentLoaded event listener
+            document.addEventListener('DOMContentLoaded', function() {
+            // Fetch item data from the server
+            fetch('/items')
+               .then(response => response.json())
+               .then(items => {
+                  // Get the item elements
+                  const itemElements = document.querySelectorAll('.item-data');
 
-      // Loop through each item element and populate it with the corresponding data
-      items.forEach((item, index) => {
-        const itemElement = itemElements[index];
-        if (itemElement) {
-          let stock;
-          let stockClass = '';
-          if (item.stock > 0) {
-            stock = 'In-Stock';
-            stockClass = 'in-stock';
-          } else if (item.stock === 0) {
-            stock = 'Out-Of-Stock';
-            stockClass = 'out-of-stock';
-          } else {
-            stock = 'Unknown';
-          }
+                  // Loop through each item element and populate it with the corresponding data
+                  items.forEach((item, index) => {
+                  const itemElement = itemElements[index];
+                  if (itemElement) {
+                     let stock;
+                     let stockClass = '';
+                     if (item.stock > 0) {
+                        stock = 'In-Stock';
+                        stockClass = 'in-stock';
+                     } else if (item.stock === 0) {
+                        stock = 'Out-Of-Stock';
+                        stockClass = 'out-of-stock';
+                     } else {
+                        stock = 'Unknown';
+                     }
 
-          // Determine the shipping fee display
-          let shippingDisplay = item.shipping === 'free' ? 'FREE' : item.shipping;
+                     // Determine the shipping fee display
+                     let shippingDisplay = item.shipping === 'free' ? 'FREE' : item.shipping;
 
-          // Apply CSS class for free shipping
-          let shippingClass = item.shipping === 'free' ? 'free-shipping' : '';
+                     // Apply CSS class for free shipping
+                     let shippingClass = item.shipping === 'free' ? 'free-shipping' : '';
 
-          // Populate the item data within the item element
-          itemElement.innerHTML = `
-            <h4 class="item-name">${item.name}</h4>
-            <p class="item-price">
-              <span class="price-label">Price:</span>
-              <span class="price-value">$${item.price}</span>
-            </p>
-            <p class="item-shipping ${shippingClass}">
-              <span class="shipping-label">Shipping: </span>
-              <span class="shipping-value">$${shippingDisplay}</span>
-            </p>
-            <p class="item-stock">
-              <span class="stock-value ${stockClass}">${stock}</span>
-            </p>
-            <!-- Add more item data here -->
-          `;
-        }
-      });
-    })
-    .catch(error => {
-      console.error('Error fetching items:', error);
-    });
-});
+                     // Populate the item data within the item element
+                     itemElement.innerHTML = `
+                        <h4 class="item-name">${item.name}</h4>
+                        <p class="item-price">
+                        <span class="price-label">Price:</span>
+                        <span class="price-value">$${item.price}</span>
+                        </p>
+                        <p class="item-shipping ${shippingClass}">
+                        <span class="shipping-label">Shipping: </span>
+                        <span class="shipping-value">$${shippingDisplay}</span>
+                        </p>
+                        <p class="item-stock">
+                        <span class="stock-value ${stockClass}">${stock}</span>
+                        </p>
+                        <!-- Add more item data here -->
+                     `;
+                  }
+                  });
+               })
+               .catch(error => {
+                  console.error('Error fetching items:', error);
+               });
+            });
           </script>
    </body>
 </html>

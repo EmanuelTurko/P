@@ -26,7 +26,7 @@ function example_1(moon){
     "" + ((moon.phase[day].isPhaseLimit )? ""  :   Math.round(moon.phase[day].lighting) + "%") +
     "</div>" +
     "</div>"
-    document.getElementById("ex1").innerHTML = html
+    //document.getElementById("ex1").innerHTML = html
 }   
 var configMoon = {
     lang  		:'en', 
