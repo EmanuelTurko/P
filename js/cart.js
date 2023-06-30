@@ -346,11 +346,11 @@ deliveryOption.addEventListener('change', () => {
   } else if (selectedOption === 'delivery') {
     pickupOptions.style.display = 'none';
     deliveryOptions.style.display = 'block';
-    calculateAndDisplayTotalAmount(); // Add this line to recalculate the total amount
+    addShippingFee(); // Add this line to recalculate the total amount
   } else {
     pickupOptions.style.display = 'none';
     deliveryOptions.style.display = 'none';
-    calculateAndDisplayTotalAmount(); // Add this line to recalculate the total amount
+    addShippingFee(); // Add this line to recalculate the total amount
   }
 });
 
@@ -385,6 +385,15 @@ function calculateShippingFee() {
   return totalShippingFee;
 }
 
+function addShippingFee() {
+  const totalAmountCell = document.getElementById('totalAmountCell');
+  const totalAmount = parseFloat(totalAmountCell.textContent);
+  const shippingFee = calculateShippingFee(); // Calculate the shipping fee
+
+  // Subtract the shipping fee from the total amount
+  const newTotalAmount = totalAmount + shippingFee;
+  totalAmountCell.textContent = newTotalAmount.toFixed(2);
+}
 
 
 // Event listener for Confirm Pickup button
