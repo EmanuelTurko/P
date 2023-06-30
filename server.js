@@ -288,7 +288,7 @@ app.post('/items/:itemId', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-app.get('/items/', async (req, res) => {
+app.get('/items/most-ordered', async (req, res) => {
   try {
     // Fetch the items from the database and sort them based on the Ordered field in descending order
     const items = await Item.find().sort({ Ordered: -1 }).limit(3);
@@ -297,6 +297,18 @@ app.get('/items/', async (req, res) => {
     res.json(items);
   } catch (error) {
     console.error('Error fetching most ordered items:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+app.get('/items/least-ordered', async (req, res) => {
+  try {
+    // Fetch the items from the database and sort them based on the Ordered field in ascending order
+    const items = await Item.find().sort({ Ordered: 1 }).limit(3);
+
+    // Send the items as JSON response
+    res.json(items);
+  } catch (error) {
+    console.error('Error fetching least ordered items:', error);
     res.status(500).send('Internal Server Error');
   }
 });
