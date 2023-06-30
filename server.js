@@ -134,6 +134,10 @@ const itemSchema = new mongoose.Schema({
   itemId: {
     type: String,
     required: true
+  },
+  Ordered: {
+  type: Number,
+  default : 0
   }
 });
 // Create a model for the "items" collection
@@ -262,7 +266,40 @@ app.get('/users/:city', (req, res) => {
     });
 });
 
+app.post('/items/:itemId', async (req, res) => {
+  try {
+    const itemId = req.params.itemId;
 
+    // Find the item by itemId
+    const item = await Item.findOne({ itemId });
+
+    if (!item) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    // Update the Ordered field
+    item.Ordered += 1;
+    console.log(item.Ordered);
+    await item.save();
+
+    res.json({ message: 'Item purchased successfully' });
+  } catch (error) {
+    console.error('Error purchasing item:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+app.get('/items/', async (req, res) => {
+  try {
+    // Fetch the items from the database and sort them based on the Ordered field in descending order
+    const items = await Item.find().sort({ Ordered: -1 }).limit(3);
+
+    // Send the items as JSON response
+    res.json(items);
+  } catch (error) {
+    console.error('Error fetching most ordered items:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 app.get('/items', async (req, res) => {
   try {
     // Fetch the items from the database

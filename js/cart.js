@@ -440,8 +440,23 @@ confirmPickupButton.addEventListener('click', () => {
       })
         .then(response => response.json())
         .then(updatedUser => {
-          // Show confirmation message or perform any other actions for confirming the pickup
-          console.log('Pickup confirmed');
+          // Loop through the cart items and send a POST request for each item
+          cartItems.forEach(item => {
+            const itemId = item.itemId;
+            console.log(itemId);
+            // Send a POST request to update the Ordered field of the item
+            fetch(`/items/${itemId}`, {
+              method: 'POST',
+            })
+              .then(response => response.json())
+              .then(data => {
+                // Handle the response from the server (e.g., show confirmation message)
+                console.log(data.message);
+              })
+              .catch(error => {
+                console.error('Error purchasing item:', error);
+              });
+          });
 
           // Clear the cart
           clearCart();
@@ -493,8 +508,23 @@ confirmDeliveryButton.addEventListener('click', () => {
       })
         .then(response => response.json())
         .then(updatedUser => {
-          // Show confirmation message or perform any other actions for confirming the delivery
-          console.log('Delivery confirmed');
+          // Loop through the cart items and send a POST request for each item
+          cartItems.forEach(item => {
+            const itemId = item.itemId;
+
+            // Send a POST request to update the Ordered field of the item
+            fetch(`/items/${itemId}`, {
+              method: 'POST',
+            })
+              .then(response => response.json())
+              .then(data => {
+                // Handle the response from the server (e.g., show confirmation message)
+                console.log(data.message);
+              })
+              .catch(error => {
+                console.error('Error purchasing item:', error);
+              });
+          });
 
           // Clear the cart
           clearCart();
@@ -511,7 +541,6 @@ confirmDeliveryButton.addEventListener('click', () => {
       console.error('Error retrieving user information:', error);
     });
 });
-
 // Function to render the purchase history for the logged-in user
 function renderPurchaseHistory(loggedInUsername) {
   const cartItemsHistoryTableBody = document.getElementById(`cartItemsHistoryTableBody_${loggedInUsername}`);
