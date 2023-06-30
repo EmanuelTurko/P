@@ -688,3 +688,20 @@ app.get('/profile.html', async (req, res) => {
     res.redirect('/login.html');
   }
 });
+// Handle suppliers/locations endpoint
+app.get('/suppliers/locations', async (req, res) => {
+  try {
+    // Fetch the locations from the database
+    const locations = await Supplier.find({}, 'location');
+    console.log(locations); // Log the locations to the server's console
+    res.json(locations);
+  } catch (err) {
+    console.error('Error fetching suppliers\' locations:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Handle unknown routes (404 Not Found)
+app.use((req, res) => {
+  res.status(404).json({ error: 'Endpoint not found' });
+});
