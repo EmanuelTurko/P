@@ -129,3 +129,19 @@ document.getElementById('updateProfileForm').addEventListener('submit', updatePr
 populateProfile();
 
 
+fetch('/suppliers/locations')
+  .then(response => response.json())
+  .then(locations => {
+    // Assuming the locations array contains a single location object
+    const location = locations[0];
+
+    // Get the iframe element
+    const iframe = document.getElementById('map-iframe');
+
+    // Update the iframe source with the fetched location
+    const locationUrl = `https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=${encodeURIComponent(location)}&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed`;
+    iframe.src = locationUrl;
+  })
+  .catch(error => {
+    console.error('Error fetching suppliers\' locations:', error);
+  });
